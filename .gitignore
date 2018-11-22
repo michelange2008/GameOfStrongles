@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /node_modules
 /public/hot
 /public/storage
@@ -15,6 +16,8 @@ yarn-error.log
 .env
 .phpunit.result.cache
 =======
+=======
+>>>>>>> 4e1485f4913c8c04b48fcf8a097fb8b705c983bc
 vendor/
 node_modules/
 npm-debug.log
@@ -35,4 +38,7 @@ Homestead.json
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
+<<<<<<< HEAD
+>>>>>>> 4e1485f4913c8c04b48fcf8a097fb8b705c983bc
+=======
 >>>>>>> 4e1485f4913c8c04b48fcf8a097fb8b705c983bc
