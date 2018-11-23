@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Formation;
-use App\Models\Liste;
+use App\Models\Troupeau;
+use App\Models\Parcelle;
+
 
 class MainController extends Controller
 {
 
     public function index()
     {
+      $troupeau = new Troupeau('caprins', 50);
+
       $nb_lots = 100;
       $nb_parasite = 5;
       for($i = 0; $i < $nb_lots ; $i++)
@@ -55,8 +58,8 @@ class MainController extends Controller
         ];
         $X= $X + $parcelle['longueur_cote'];
       }
-
-      return view('index', [
+      dd($troupeau->espece());
+      return view('gos_main', [
         'parcelles' => $parcelles,
         'total_parasite' => $total_parasite,
       ]);

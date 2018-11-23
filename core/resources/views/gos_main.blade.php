@@ -19,11 +19,11 @@
         </div>
 
         </div>
-        @for($i = 0 ; $i < 4; $i++)
+        @foreach($parcelles as $parcelle)
           <div id="pature_{{$i}}" class="pature" troupeau = false nom = 'nom_{{$i}}'>
 
           </div>
-        @endfor
+        @endforeach
     </div>
 
 
