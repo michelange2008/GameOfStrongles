@@ -6,6 +6,7 @@ const l3_infestante = 21;
 const l3_morte = 60;
 const preriode_prepatente = 10;
 const infestation_maximum = 20;
+const adulte_mort = 100;
 // constantes pour les états des strongles
 const non_infestant = 'non_infestant';
 const infestant = 'infestant';
@@ -19,27 +20,28 @@ const parcelle_avec_troupeau = "green";
 //################################# STRONGLES ##################################
 class Strongle
 {
-  constructor (jour_depart)
+  constructor ()
   {
-    this.depart = jour_depart;
+    this.vie = 1;
   }
 }
 
 class StrongleOut extends Strongle {
-  constructor(jour_depart)
+  constructor()
   {
-    super(jour_depart);
+    super();
     this.etat = non_infestant;
   }
 }
 
 StrongleOut.prototype.evolution =  function(jours)
 {
-  if(this.depart + jours < l3_infestante)
+  this.vie = this.vie + jours;
+  if(this.vie < l3_infestante)
   {
     this.etat = 'non_infestant';
   }
-  else if (this.depart + jours > l3_morte)
+  else if (this.vie > l3_morte)
   {
     this.etat = 'mort';
   }
@@ -49,22 +51,26 @@ StrongleOut.prototype.evolution =  function(jours)
 }
 
 class StrongleIn extends Strongle {
-  constructor(jour_depart)
+  constructor()
   {
-    super(jour_depart);
+    super();
     this.etat = prepatent;
   }
 }
 
 StrongleIn.prototype.evolution = function(jours)
 {
-  if(Number(this.depart) + Number(jours) > preriode_prepatente)
+  this.vie = Number(this.vie) + Number(jours);
+  if(this.vie < preriode_prepatente)
   {
-    this.etat = ponte;
+    this.etat = prepatent;
+  }
+  else if (this.vie > adulte_mort) {
+    this.etat = mort;
   }
   else
   {
-    this.etat = prepatent;
+    this.etat = ponte;
   }
 }
 
@@ -113,6 +119,15 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
     this.infestation.push(strongle);
   }
 }
+Troupeau.prototype.evolutionStrongles = function(jours)
+{
+  if(this.infestation.length > 0)
+  {
+    this.infestation.forEach(function(strongle) {
+      strongle.evolution(jours);
+    });
+  }
+}
 
 //################################# START ######################################
   $(function() {
@@ -150,23 +165,25 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
 
 //################################ AVANCEE D'UN PAS DE TEMPS DONNEE################################################
 
-  var pas_de_temps = 1;
+  var pas_de_temps = 7;
 
   $(document).on('keyup', function(e) {
     // pature avec troupeau
     var pature_avec_troupeau = $('#troupeau').attr('lieu');
+    // evolution troupeau
+    troupeau.evolutionStrongles(pas_de_temps);
 
     // troupeau augmente infestation si sur pature avec larves infestantes
     parcelles.forEach(function(parcelle){
       if(parcelle.id == pature_avec_troupeau && parcelle.strongles.length > 0)
       {
-        parcelles.strongles.forEach(function(strongle))
+        parcelle.strongles.forEach(function(strongle)
         {
           if(strongle.etat = infestant)
           {
             troupeau.sinfeste(1);
           }
-        }
+        });
       }
     })
 
@@ -174,7 +191,7 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
 
     // pature évolution des larves
 
-
+    // console.log(troupeau.infestation);
   })
 
 });

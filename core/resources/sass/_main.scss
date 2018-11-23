@@ -1,0 +1,72 @@
+@mixin background-image($img, $background-position, $background-color) {
+    background-image: url('../img/#{$img}');
+    background-repeat: no-repeat;
+    background-position: $background-position;
+    background-color: $background-color ;
+    background-size: contain;
+}
+.panneau {
+  width: 100%;
+}
+#paturage {
+
+}
+
+.pature {
+  position: relative;
+  border: solid 1px darkgrey;
+  background: hsl(100, 180%, 50%);
+  .pature-nom {
+    display: inline-block;
+    padding: 1px 4px;
+    background: darkgreen;
+    color: white;
+    font-weight: bold;
+  }
+}
+.time-line {
+  height: 50px;
+  width: 100%;
+  background: lightgrey;
+
+  .cursor {
+    width: 10px;
+    height: 100%;
+    background: darkgrey;
+    position: relative;
+    left: 0;
+  }
+}
+.infos {
+
+}
+.lot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.parasite {
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  border-radius: 100%;
+  border: solid 1px black;
+}
+.invisible {
+  visibility: hidden;
+}
+.troupeaux {
+  margin: 2px 0;
+  height: 50px;
+  width: 100%;
+  background: lightblue;
+}
+.troupeau {
+  height: 100%;
+  img {
+    z-index: 10000;
+    height: 100%;
+  }
+}
