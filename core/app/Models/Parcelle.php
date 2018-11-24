@@ -6,30 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parcelle extends Model
 {
-    protected $id;
     protected $nom;
     protected $superficie;
-    protected $X;
-    protected $longueur;
     protected $infestation;
 
-    public function __construct($id, $nom, $superficie)
+    public function __construct($nom, $superficie)
     {
-      $this->id = $id;
       $this->nom = $nom;
       $this->superficie = $superficie;
-      $this->infestation = [];
-      $this->setLongueur();
-    }
-
-    public function setLongueur()
-    {
-      $this->longueur = sqrt($this->superficie);
-    }
-
-    public function id()
-    {
-      return $this->id;
+      $this->infestation = collect();
     }
 
     public function nom()
@@ -45,5 +30,13 @@ class Parcelle extends Model
     public function infestation()
     {
       return $this->infestation;
+    }
+
+    public function setInfestation($nb_strongles)
+    {
+      for ($i=0; $i <$nb_strongles ; $i++) {
+        $strongle = new StrongleOut();
+        $this->infestation->push($strongle);
+      }
     }
 }
