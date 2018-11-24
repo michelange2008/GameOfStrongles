@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Troupeau;
 use App\Models\Parcelle;
-
+use App\Traits\NbLignes;
 
 class MainController extends Controller
 {
+  use NbLignes;
 
     public function index()
     {
@@ -27,11 +28,11 @@ class MainController extends Controller
       }
 
       $listes_parcelles = collect([
-        ['nom' => 'petit champ', 'longueur_cote' => sqrt(4)],
-        ['nom' => 'grand pré', 'longueur_cote' => sqrt(8)],
-        ['nom' => 'chez Marcel', 'longueur_cote' => sqrt(0.5)],
-        ['nom' => 'en-bas', 'longueur_cote' => sqrt(3)],
-        ['nom' => 'en-haut', 'longueur_cote' => sqrt(10)],
+        ['nom' => 'petit champ', 'superficie' => 4],
+        ['nom' => 'grand pré', 'superficie' => 8],
+        ['nom' => 'chez Marcel', 'superficie' => 0.5],
+        ['nom' => 'en-bas', 'superficie' => 3],
+        ['nom' => 'en-haut', 'superficie' => 10],
       ]);
       $nb_parcelles = $listes_parcelles->count();
       $longueurs_cotes = $listes_parcelles->sum('longueur_cote');
@@ -48,17 +49,15 @@ class MainController extends Controller
         $nb_lignes = 4;
       }
 
-      $parcelles = [];
-      $X = 0;
+
+      $parcelles = collect();
+      $i = 0;
       foreach ($listes_parcelles as $parcelle) {
-        $parcelles[] = [
-          'nom' => $parcelle['nom'],
-          'X' => $X,
-          'longueur_cote' => $parcelle['longueur_cote']*100/$longueurs_cotes,
-        ];
-        $X= $X + $parcelle['longueur_cote'];
+        $parcelles->push(new Parcelle($i, $parcelle['nom'], $parcelle['superficie'] ));
+        $i++;
       }
-      dd($troupeau->espece());
+      $nb_lignes = $this->nblignes($parcelles->count());
+      dd($nb_lignes);
       return view('gos_main', [
         'parcelles' => $parcelles,
         'total_parasite' => $total_parasite,
