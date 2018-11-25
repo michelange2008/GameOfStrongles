@@ -3,12 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>Game of Strongles</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
         <link href="{{URL::asset('core/public/css')}}/app.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
         <!-- Styles -->
 
     </head>
@@ -34,6 +35,7 @@
         <script src="{{asset('core/public/js/app.js')}}"></script>
         <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+        </script>
     </body>
 </html>

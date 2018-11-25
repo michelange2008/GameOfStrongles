@@ -66,9 +66,9 @@ class MainController extends Controller
         $dessinparcellaire->addDessinparcelle($dessinparcelle); // On ajoute cet objet à la liste de l'objet dessinParcellaire
       }
       $dessinparcellaire->SetLongueur_et_X_DessinParcelle(); // On fixe les valeurs de X (position dans la page) et de longueur des objets dessinparcelle
-
+// dd($dessinparcellaire);
       return view('gos_main', [
-        'lsite_mois' => $liste_mois;
+        'liste_mois' => $liste_mois,
         'troupeau' => $troupeau,
         'liste_parcelles' => $dessinparcellaire,
       ]);

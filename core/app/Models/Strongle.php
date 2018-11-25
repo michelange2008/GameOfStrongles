@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Constantes\Constantes;
 
 abstract class Strongle extends Model
 {
+    protected $nombre; //nombre de strongle
     protected $age; // age en jour
     protected $pathogen;
     protected $etat;
@@ -14,6 +16,7 @@ abstract class Strongle extends Model
     {
       $this->age = 1; // correspond soit à la ponte sur paturage soit à l'ingestion d'une L3
       $this->pathogen = 1; // correspond à un niveau de pathogénicité moyen
+      $this->nombre = Constantes::NB_STRONGLE_PAR_LOT;
     }
 
     public function setAge($age)

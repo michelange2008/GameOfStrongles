@@ -19,13 +19,13 @@ trait ListeMois
 
       if($i == $mois_sortie)
       {
-        $duree_mois = $date->diffInDays($date->copy()->addMonth()) - $mise_a_l_herbe->day;
+        $duree_mois = ($date->diffInDays($date->copy()->addMonth()) - $mise_a_l_herbe->day)*100/$duree_paturage;
       }
       elseif ($i == $mois_entree) {
-        $duree_mois = $entre_etable->day;
+        $duree_mois = $entre_etable->day*100/$duree_paturage;
       }
       else {
-        $duree_mois = $date->diffInDays($date->copy()->addMonth());
+        $duree_mois = $date->diffInDays($date->copy()->addMonth())*100/$duree_paturage;
       }
 
       $liste_mois->push(['mois'=> $date, 'nb_jours' => $duree_mois]);

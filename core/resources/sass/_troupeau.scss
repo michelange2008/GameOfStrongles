@@ -1,0 +1,18 @@
+.etable {
+  margin: 2px 0;
+  height: 50px;
+  width: 100%;
+  background: lightblue;
+}
+.flock {
+  width: 150px;
+  height: 100%;
+  cursor: pointer;
+  z-index: 10000;
+  background-image: url("../svg/caprins.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  img {
+    height: 100%;
+  }
+}

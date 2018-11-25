@@ -23,6 +23,11 @@ final class Dessinparcellaire extends Model
     $this->listeDessinparcelles->push($dessinparcelle);
   }
 
+  public function listeDessinparcelles()
+  {
+    return $this->listeDessinparcelles;
+  }
+
   public function SetLongueur_et_X_DessinParcelle()
   {
     $nbLignes = $this->NbLignes($this->listeDessinparcelles->count());
@@ -36,7 +41,7 @@ final class Dessinparcellaire extends Model
     $x = 0; // permet d'additionner les longueurs relatives en partant de 0 pour la première
     $tour = 1; // permet de remettre x à 0 pour tenir compte du saut de ligne
     foreach ($this->listeDessinparcelles as $dessinparcelle) {
-      $longueurRelative = $dessinparcelle->longueurAbsolue() * 100 * $nbLignes / $longueurTotale;
+      $longueurRelative = $dessinparcelle->longueurAbsolue() * 80 * $nbLignes / $longueurTotale;
       $dessinparcelle->setLongueurRelative($longueurRelative); // on ajoute la longueur relative à l'objet dessinparcelle
       $x_origine = $dessinparcelle->X(); // on récupère la valeur initiale de la parcelle
       $dessinparcelle->setX($x); // on fixe une nouvelle valeur en fonction de la somme des précédentes

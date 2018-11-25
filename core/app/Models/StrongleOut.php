@@ -7,10 +7,14 @@ use App\Constantes\Constantes;
 
 class StrongleOut extends Strongle
 {
+
+  protected $lot; // ensemble de strongles au nombre de $nombre (cf. Strongle et Constantes)
+
   public function __construct()
   {
     parent::__construct();
     $this->etat = Constantes::NON_INFESTANT;
+    $this->lot = $this->setLot();
   }
 
   public function evolution($duree_vie)
@@ -27,5 +31,21 @@ class StrongleOut extends Strongle
       $this->etat = Constantes::INFESTANT;
     }
   }
+  public function setLot()
+  {
+    for($j = 0; $j < $this->nombre; $j++)
+    {
+      $parasite = ['x' => rand(0, 98), 'y' => rand(0,95)];
+      $lot[$j] = $parasite;
+    }
+
+    return $lot;
+  }
+
+  public function lot()
+  {
+    return $this->lot;
+  }
+
 
 }

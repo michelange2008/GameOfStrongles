@@ -9,6 +9,7 @@ class Constantes
 
   const NB_PARCELLES_PAR_LIGNE = 3;
 
+  const NB_STRONGLE_PAR_LOT = 5;
   // modélisation parasites
   const L3_INFESTANTE = 21;
   const L3_MORTE = 60;

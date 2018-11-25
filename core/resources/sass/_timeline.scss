@@ -1,0 +1,32 @@
+.time-line {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background-image: linear-gradient(to right, lightgreen, yellow, orange, yellow, lightgreen);
+
+  .saison {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    .mois {
+      border: solid 1px darkgrey;
+      text-align: center;
+      line-height: -moz-block-height;
+      overflow: hidden;
+      height: 100%;
+      }
+    }
+
+
+  .cursor {
+    width: 7px;
+    height: 60px;
+    background: darkgrey;
+    position: absolute;
+    left: 0;
+    top: -5px;
+  }
+}

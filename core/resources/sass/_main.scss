@@ -5,68 +5,32 @@
     background-color: $background-color ;
     background-size: contain;
 }
-.panneau {
-  width: 100%;
-}
-#paturage {
 
+@font-face{
+     font-family: "GameOfThrones";
+     src: url("../font/Game_of_Thrones.ttf");
 }
 
-.pature {
-  position: relative;
-  border: solid 1px darkgrey;
-  background: hsl(100, 180%, 50%);
-  .pature-nom {
-    display: inline-block;
-    padding: 1px 4px;
-    background: darkgreen;
+#bandeau {
+  background-image: linear-gradient(to right, black, darkgrey);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  #titre {
+    font-family: 'GameOfThrones';
     color: white;
-    font-weight: bold;
+    text-shadow: 3px 3px 3px lightgrey;
+  }
+  img {
+    width: 50px;
+    cursor: pointer;
   }
 }
-.time-line {
-  height: 50px;
-  width: 100%;
-  background: lightgrey;
+.petit {
+	font-size: 50%;
+	vertical-align: middle;
+}
 
-  .cursor {
-    width: 10px;
-    height: 100%;
-    background: darkgrey;
-    position: relative;
-    left: 0;
-  }
-}
-.infos {
-
-}
-.lot {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-.parasite {
-  position: absolute;
-  height: 5px;
-  width: 5px;
-  border-radius: 100%;
-  border: solid 1px black;
-}
 .invisible {
   visibility: hidden;
-}
-.troupeaux {
-  margin: 2px 0;
-  height: 50px;
-  width: 100%;
-  background: lightblue;
-}
-.troupeau {
-  height: 100%;
-  img {
-    z-index: 10000;
-    height: 100%;
-  }
 }
