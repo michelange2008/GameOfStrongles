@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use App\Constantes\Constantes;
+
 use App\Models\Troupeau;
 use App\Models\Parcelle;
 use App\Models\Dessinparcelle;
@@ -33,7 +35,7 @@ class MainController extends Controller
       $nb_strongles_initial = 1;
       $mois = 3;
       $jour = 18;
-      $duree_paturage = 200; // nombre de jours
+      $duree_paturage = Constantes::DUREE_PATURAGE; // nombre de jours
       $mise_a_l_herbe = Carbon::createFromDate(Carbon::now()->year, $mois, $jour);
       $liste_mois = $this->listeMois($mise_a_l_herbe, $duree_paturage);
       // dd($liste_mois);
@@ -68,6 +70,7 @@ class MainController extends Controller
       $dessinparcellaire->SetLongueur_et_X_DessinParcelle(); // On fixe les valeurs de X (position dans la page) et de longueur des objets dessinparcelle
 // dd($dessinparcellaire);
       return view('gos_main', [
+        'duree_paturage' => $duree_paturage,
         'mise_a_l_herbe' => $mise_a_l_herbe,
         'liste_mois' => $liste_mois,
         'troupeau' => $troupeau,

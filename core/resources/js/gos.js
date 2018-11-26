@@ -17,6 +17,7 @@ const ponte = 'ponte';
 const parcelle_sans_troupeau = 'lightgreen';
 const parcelle_avec_troupeau = "green";
 // construit l'adresse des images
+var options_date = { month: 'long', day: 'numeric' }; //date avec affichage type 15 mars
 var url_svg = "";
 var tab_url_bg = $('#troupeau').css('background-image').split("/");
 tab_url_bg.pop();
@@ -219,16 +220,20 @@ $('.parcellaire').masonry({
   });
 
 //################################ AVANCEE D'UN PAS DE TEMPS DONNEE################################################
-
-  var pas_de_temps = 7;
-  console.log($('#date').data());
-  console.log(new Date($('#date').data()));
+  var duree_paturage = $('#temps').attr('paturage');
+  var pas_de_temps = 5;
+  var largeur_time_line = $('#temps').innerWidth() ; //largeur en pixel de la time-line
+  var saut_curseur = pas_de_temps * largeur_time_line / duree_paturage;
+  var date = new Date($('#date').attr('data'));
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
+    // avancée de la Date
+    date.setDate(date.getDate()+pas_de_temps);
+    $('#date').html(date.toLocaleDateString('fr-FR', options_date));
     // avancée du curseur
     var position_curseur = $('#curseur').css('left');
-    var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(pas_de_temps));
+    var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
     // pature avec troupeau
     var pature_avec_troupeau = $('#troupeau').attr('lieu');
     // evolution troupeau
@@ -268,9 +273,12 @@ $('.parcellaire').masonry({
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
+    //recul de la Date
+    date.setDate(date.getDate()-pas_de_temps);
+    $('#date').html(date.toLocaleDateString('fr-FR', options_date));
     // recul du curseur
     var position_curseur = $('#curseur').css('left');
-    var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(pas_de_temps));
+    var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(saut_curseur));
 
     troupeau.evolutionStrongles(-pas_de_temps);
     troupeau_evolution_excretion();

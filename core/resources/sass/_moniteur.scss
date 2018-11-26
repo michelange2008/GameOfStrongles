@@ -1,0 +1,38 @@
+#moniteur {
+  background: darkgrey;
+}
+#resultats {
+  margin-left: -15px;
+  margin-right: -15px;
+  text-align: center;
+  border: none;
+}
+.cadran {
+  border: solid 1px black;
+  font-family: 'GameOfThrones';
+  margin-bottom: 10px;
+  .titre {
+    padding: 5px;
+    background: lightgrey
+  }
+  p {
+    padding: 5px;
+    margin: 5px;
+  }
+  .chiffres {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    font-size: 0.75rem;
+    .soustitre {
+      align-self: center;
+      padding: 0;
+    }
+    p {
+      padding: 5px 0;
+    }
+    .valeur {
+      text-align: right;
+      color: red;
+    }
+  }
+}
