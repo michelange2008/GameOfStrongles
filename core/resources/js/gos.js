@@ -25,7 +25,7 @@ tab_url_bg.forEach(function(e){
     url_svg += e+"/";
 });
 url_svg = "http:/"+url_svg;
-console.log(url_svg);
+
 //################################# STRONGLES ##################################
 class Strongle
 {
@@ -151,14 +151,11 @@ Troupeau.prototype.evolutionStrongles = function(jours)
 
 //######################################### FONCTIONS ##############################################################
 function troupeau_infestant(){ // change l'aspect du troupeau quand il a des adultes qui pondent
-  // $('#troupeau').css('background', "");
   $('#troupeau').css('background-image', 'url('+url_svg+'caprins.svg), url('+url_svg+'crottes.svg)');
   troupeau.contaminant = true;
   $('#troupeau').attr('contaminant', 'true');
 }
 function troupeau_non_infestant(){// change l'aspect du troupeau quand il n'a plus d'adultes qui pondent
-  // $('#troupeau').css('background', "");
-  console.log('toto');
   $('#troupeau').css('background-image', 'url('+url_svg+'caprins.svg)');
   troupeau.contaminant = false;
   $('#troupeau').attr('contaminant', 'false');
@@ -224,8 +221,8 @@ $('.parcellaire').masonry({
 //################################ AVANCEE D'UN PAS DE TEMPS DONNEE################################################
 
   var pas_de_temps = 7;
-  console.log(troupeau.infestation.length);
-
+  console.log($('#date').data());
+  console.log(new Date($('#date').data()));
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
@@ -244,10 +241,11 @@ $('.parcellaire').masonry({
         nb_parasite++;
       }
     });
-    console.log(nb_parasite);
     troupeau.sinfeste(nb_parasite);
-    console.log(troupeau.infestation);
-
+    var couleur_troupeau_infestation = troupeau.infestation.length* (-5);
+    couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
+    console.log(couleur_troupeau_infestation);
+    $("#troupeau").css('filter', 'hue-rotate('+couleur_troupeau_infestation+'deg)')
     // troupeau augmente infestation si sur pature avec larves infestantes
     // parcelles.forEach(function(parcelle){
     //   if(parcelle.id == pature_avec_troupeau && parcelle.strongles.length > 0)
@@ -266,7 +264,7 @@ $('.parcellaire').masonry({
 
     // pature évolution des larves
 
-    // console.log(troupeau.infestation);
+
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {

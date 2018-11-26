@@ -39,7 +39,37 @@
   src: url("../font/Game_of_Thrones.ttf");
 }
 
-#bandeau {
+#main {
+  margin-left: 0;
+}
+
+#moniteur {
+  background: darkgrey;
+}
+
+#resultats {
+  margin-left: -15px;
+  margin-right: -15px;
+  text-align: center;
+  border: none;
+}
+
+.cadran {
+  border: solid 1px black;
+  font-family: 'GameOfThrones';
+}
+
+.cadran .titre {
+  padding: 5px;
+  background: lightgrey;
+}
+
+.cadran p {
+  padding: 5px;
+  margin: 5px;
+}
+
+.bandeau {
   background-image: -webkit-gradient(linear, left top, right top, from(black), to(darkgrey));
   background-image: linear-gradient(to right, black, darkgrey);
   display: -webkit-box;
@@ -54,13 +84,13 @@
           justify-content: space-between;
 }
 
-#bandeau #titre {
+.bandeau .titre {
   font-family: 'GameOfThrones';
   color: white;
   text-shadow: 3px 3px 3px lightgrey;
 }
 
-#bandeau img {
+.bandeau img {
   width: 50px;
   cursor: pointer;
 }

@@ -68,6 +68,7 @@ class MainController extends Controller
       $dessinparcellaire->SetLongueur_et_X_DessinParcelle(); // On fixe les valeurs de X (position dans la page) et de longueur des objets dessinparcelle
 // dd($dessinparcellaire);
       return view('gos_main', [
+        'mise_a_l_herbe' => $mise_a_l_herbe,
         'liste_mois' => $liste_mois,
         'troupeau' => $troupeau,
         'liste_parcelles' => $dessinparcellaire,
