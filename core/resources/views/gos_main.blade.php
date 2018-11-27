@@ -27,7 +27,7 @@
         </div>
         <div class="chiffres">
           <p id="infestation" class="soustitre" >Infestation: </p><p class="valeur">{{$troupeau->infestation()->count()}}</p>
-          <p id="contaminant" class="soustitre">Excretion: </p><p class="valeur">NON</p>
+          <p id="contaminant" class="soustitre">Excretion: </p><p class="valeur">{{$troupeau->contaminantForHuman()}}</p>
         </div>
       </div>
       <div class="cadran">
@@ -36,7 +36,8 @@
         </div>
         <div class="chiffres">
           @foreach ($liste_parcelles->listeDessinparcelles() as $dessinparcelle)
-            <p class="soustitre">{{$dessinparcelle->parcelle()->nom()}}</p><p class="valeur" >valeurs</p>
+            <p class="soustitre">{{$dessinparcelle->parcelle()->nom()}}</p>
+            <p class="valeur" >{{$dessinparcelle->parcelle()->contaminant()}} / {{$dessinparcelle->parcelle()->infestation()->count()}}</p>
           @endforeach
       </div>
       </div>

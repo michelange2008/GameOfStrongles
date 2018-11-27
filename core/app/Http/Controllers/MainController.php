@@ -26,11 +26,11 @@ class MainController extends Controller
       //################### Données temporairesp pour créer les objets #########
       $troupeau_exemple = ['caprins', 50];
       $listes_parcelles = collect([
-        ['nom' => 'petit champ', 'superficie' => 4],
-        ['nom' => 'grand pré', 'superficie' => 8],
-        ['nom' => 'chez Marcel', 'superficie' => 0.5],
-        ['nom' => 'en-bas', 'superficie' => 3],
-        ['nom' => 'en-haut', 'superficie' => 10],
+        ['nom' => 'petit champ', 'superficie' => 4, 'oeuf'=> 0, "L3" => 1],
+        ['nom' => 'grand pré', 'superficie' => 8, 'oeuf'=> 0, "L3" => 0],
+        ['nom' => 'chez Marcel', 'superficie' => 0.5, 'oeuf'=> 0, "L3" => 1],
+        ['nom' => 'en-bas', 'superficie' => 3, 'oeuf'=> 0, "L3" => 0],
+        ['nom' => 'en-haut', 'superficie' => 10,  'oeuf'=> 0, "L3" => 3],
       ]);
       $nb_strongles_initial = 1;
       $mois = 3;
@@ -63,10 +63,12 @@ class MainController extends Controller
       $dessinparcellaire = new Dessinparcellaire(); // Nouvel objet dessinParcellaire
       for($i = 0; $i < $listes_parcelles->count(); $i++) { // On boucle sur la liste des parcelles
         $parcelle = new Parcelle($listes_parcelles[$i]['nom'], $listes_parcelles[$i]['superficie']);
-        $parcelle->setInfestation($nb_strongles_initial);
+        $parcelle->setInfestation($listes_parcelles[$i]['oeuf'], $listes_parcelles[$i]['L3']);
+
         $dessinparcelle = new Dessinparcelle($i, $parcelle); // On crée un objet dessinparcelle avec chaque parcelle
         $dessinparcellaire->addDessinparcelle($dessinparcelle); // On ajoute cet objet à la liste de l'objet dessinParcellaire
       }
+
       $dessinparcellaire->SetLongueur_et_X_DessinParcelle(); // On fixe les valeurs de X (position dans la page) et de longueur des objets dessinparcelle
 // dd($dessinparcellaire);
       return view('gos_main', [

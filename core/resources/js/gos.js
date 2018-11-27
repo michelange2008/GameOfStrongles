@@ -91,27 +91,39 @@ function Parcelle(id, nom, longueur, hauteur)
   this.nom = nom;
   this.longueur = longueur;
   this.hauteur = hauteur;
-  this.strongles = [];
+  this.infestation = [];
 }
 // AJout d'un objet strongle à la parcelle
 Parcelle.prototype.addStrongles = function(nb_strongles)
 {
   for($i = 1 ; $i <= nb_strongles; $i++)
   {
-    strongle = new StrongleOut(0);
-    this.strongles.push(strongle);
+    strongle = new StrongleOut();
+    this.infestation.push(strongle);
   }
 }
 // Méthode d'évolution de l'infestation par les strongle d'une parcelle
 Parcelle.prototype.evolutionStrongles = function(jours)
 {
-  if(this.strongles.length > 0)
+  if(this.infestation.length > 0)
   {
-    this.strongles.forEach(function(strongle) {
+    this.infestation.forEach(function(strongle) {
       strongle.evolution(jours);
     });
   }
 }
+// Méthode qui renvoie le nombre de strongles infestantes
+Parcelle.prototype.contaminant = function ()
+{
+  var nb_L3 = 0;
+  this.infestation.forEach(function(strongle) {
+    if(strongle.etat = infestant)
+    {
+      nb_L3++;
+    }
+  });
+  return nb_L3;
+};
 
 //################################ TROUPEAU ####################################
 function Troupeau(espece, taille)

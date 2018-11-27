@@ -10,10 +10,10 @@ class StrongleOut extends Strongle
 
   protected $lot; // ensemble de strongles au nombre de $nombre (cf. Strongle et Constantes)
 
-  public function __construct()
+  public function __construct($etat)
   {
     parent::__construct();
-    $this->etat = Constantes::NON_INFESTANT;
+    $this->etat = $etat;
     $this->lot = $this->setLot();
   }
 
@@ -31,7 +31,7 @@ class StrongleOut extends Strongle
       $this->etat = Constantes::INFESTANT;
     }
   }
-  public function setLot()
+  public function setLot() // méthode pour définir 5 points aléatoires = position des strongles dans la parcelle
   {
     for($j = 0; $j < $this->nombre; $j++)
     {
