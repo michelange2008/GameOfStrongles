@@ -24,7 +24,7 @@ class MainController extends Controller
         ['nom' => 'grand pré', 'superficie' => 8, 'oeuf'=> 0, "L3" => 0],
         ['nom' => 'chez Marcel', 'superficie' => 0.5, 'oeuf'=> 0, "L3" => 1],
         ['nom' => 'en-bas', 'superficie' => 3, 'oeuf'=> 0, "L3" => 0],
-        ['nom' => 'en-haut', 'superficie' => 10,  'oeuf'=> 0, "L3" => 3],
+        ['nom' => 'en-haut', 'superficie' => 10,  'oeuf'=> 0, "L3" => 10],
       ]);
       $nb_strongles_initial = 1;
       $mois = 3;
