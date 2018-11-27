@@ -10,13 +10,17 @@
      font-family: "GameOfThrones";
      src: url("../font/Game_of_Thrones.ttf");
 }
+#main {
+  margin-left: 0;
+}
 
-#bandeau {
+
+.bandeau {
   background-image: linear-gradient(to right, black, darkgrey);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  #titre {
+  .titre {
     font-family: 'GameOfThrones';
     color: white;
     text-shadow: 3px 3px 3px lightgrey;

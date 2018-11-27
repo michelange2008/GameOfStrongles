@@ -10,15 +10,14 @@ class Troupeau extends Model
     protected $espece;
     protected $taille;
     protected $infestation;
-    protected $contaminant;
     protected $sensibilite;
+    private $contaminant;
 
     public function __construct($espece, $taille)
     {
       $this->espece = $espece;
       $this->taille = $taille;
       $this->infestation = collect();
-      $this->contaminant = false;
       $sensibilite = 1;
     }
     public function espece()
@@ -35,7 +34,18 @@ class Troupeau extends Model
     }
     public function contaminant()
     {
-      return $this->contaminant;
+      $nb_adultes = 0;
+      foreach ($this->infestation as $strongle) {
+        if($strongle->etat() ==  Constantes::PONTE)
+        {
+          $nb_adultes++;
+        }
+      }
+      return $nb_adultes;
+    }
+    public function contaminantForHuman()
+    {
+      return ($this->contaminant() > 0) ? "OUI" : "NON" ;
     }
     public function sensibilite()
     {
@@ -63,9 +73,6 @@ class Troupeau extends Model
         if($strongle->etat() == Constantes::PONTE)
         {
           $this->contaminant = true;
-        }
-        else {
-          $this->contaminant = "tutu";
         }
       }
     }

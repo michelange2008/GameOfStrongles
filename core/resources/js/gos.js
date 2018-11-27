@@ -16,13 +16,17 @@ const ponte = 'ponte';
 // considérations de style
 const parcelle_sans_troupeau = 'lightgreen';
 const parcelle_avec_troupeau = "green";
-
+// construit l'adresse des images
+var options_date = { month: 'long', day: 'numeric' }; //date avec affichage type 15 mars
 var url_svg = "";
 var tab_url_bg = $('#troupeau').css('background-image').split("/");
 tab_url_bg.pop();
+tab_url_bg.shift();
 tab_url_bg.forEach(function(e){
     url_svg += e+"/";
 });
+url_svg = "http:/"+url_svg;
+
 //################################# STRONGLES ##################################
 class Strongle
 {
@@ -87,27 +91,39 @@ function Parcelle(id, nom, longueur, hauteur)
   this.nom = nom;
   this.longueur = longueur;
   this.hauteur = hauteur;
-  this.strongles = [];
+  this.infestation = [];
 }
 // AJout d'un objet strongle à la parcelle
 Parcelle.prototype.addStrongles = function(nb_strongles)
 {
-  for($i = 0 ; $i <= nb_strongles; $i++)
+  for($i = 1 ; $i <= nb_strongles; $i++)
   {
-    strongle = new StrongleOut(0);
-    this.strongles.push(strongle);
+    strongle = new StrongleOut();
+    this.infestation.push(strongle);
   }
 }
 // Méthode d'évolution de l'infestation par les strongle d'une parcelle
 Parcelle.prototype.evolutionStrongles = function(jours)
 {
-  if(this.strongles.length > 0)
+  if(this.infestation.length > 0)
   {
-    this.strongles.forEach(function(strongle) {
+    this.infestation.forEach(function(strongle) {
       strongle.evolution(jours);
     });
   }
 }
+// Méthode qui renvoie le nombre de strongles infestantes
+Parcelle.prototype.contaminant = function ()
+{
+  var nb_L3 = 0;
+  this.infestation.forEach(function(strongle) {
+    if(strongle.etat = infestant)
+    {
+      nb_L3++;
+    }
+  });
+  return nb_L3;
+};
 
 //################################ TROUPEAU ####################################
 function Troupeau(espece, taille)
@@ -120,7 +136,7 @@ function Troupeau(espece, taille)
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
 
-  for($i = 0 ; $i <= nb_strongles; $i++)
+  for($i = 1 ; $i <= nb_strongles; $i++)
   {
     strongle = new StrongleIn(0);
     this.infestation.push(strongle);
@@ -148,23 +164,26 @@ Troupeau.prototype.evolutionStrongles = function(jours)
 
 //######################################### FONCTIONS ##############################################################
 function troupeau_infestant(){ // change l'aspect du troupeau quand il a des adultes qui pondent
-  $('#troupeau').css('background-image', $('#troupeau').css('background-image')+","+url_svg+'crottes.svg")');
+  $('#troupeau').css('background-image', 'url('+url_svg+'caprins.svg), url('+url_svg+'crottes.svg)');
   troupeau.contaminant = true;
   $('#troupeau').attr('contaminant', 'true');
 }
 function troupeau_non_infestant(){// change l'aspect du troupeau quand il n'a plus d'adultes qui pondent
-  $('#troupeau').css('background-image', url_svg+'caprins.svg")');
+  $('#troupeau').css('background-image', 'url('+url_svg+'caprins.svg)');
   troupeau.contaminant = false;
   $('#troupeau').attr('contaminant', 'false');
 }
 function troupeau_evolution_excretion(){ // change l'aspect du troupeau en fonction de sa situation
+  contamine = false;
   troupeau.infestation.forEach(function(strongle){
-    if(strongle.etat == ponte && !troupeau.contaminant)
+    if(strongle.etat == ponte)
     {
+      contamine = true;
+    }
+    if(contamine){
       troupeau_infestant();
     }
-    else if (strongle.etat == prepatent || strongle.etat == mort)
-    {
+    else if (!contamine) {
       troupeau_non_infestant();
     }
   });
@@ -213,16 +232,20 @@ $('.parcellaire').masonry({
   });
 
 //################################ AVANCEE D'UN PAS DE TEMPS DONNEE################################################
-
-  var pas_de_temps = 7;
-  console.log(troupeau.infestation.length);
-
+  var duree_paturage = $('#temps').attr('paturage');
+  var pas_de_temps = 5;
+  var largeur_time_line = $('#temps').innerWidth() ; //largeur en pixel de la time-line
+  var saut_curseur = pas_de_temps * largeur_time_line / duree_paturage;
+  var date = new Date($('#date').attr('data'));
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
+    // avancée de la Date
+    date.setDate(date.getDate()+pas_de_temps);
+    $('#date').html(date.toLocaleDateString('fr-FR', options_date));
     // avancée du curseur
     var position_curseur = $('#curseur').css('left');
-    var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(pas_de_temps));
+    var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
     // pature avec troupeau
     var pature_avec_troupeau = $('#troupeau').attr('lieu');
     // evolution troupeau
@@ -235,10 +258,11 @@ $('.parcellaire').masonry({
         nb_parasite++;
       }
     });
-    console.log(nb_parasite);
     troupeau.sinfeste(nb_parasite);
-    console.log(troupeau.infestation.length);
-
+    var couleur_troupeau_infestation = troupeau.infestation.length* (-5);
+    couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
+    console.log(couleur_troupeau_infestation);
+    $("#troupeau").css('filter', 'hue-rotate('+couleur_troupeau_infestation+'deg)')
     // troupeau augmente infestation si sur pature avec larves infestantes
     // parcelles.forEach(function(parcelle){
     //   if(parcelle.id == pature_avec_troupeau && parcelle.strongles.length > 0)
@@ -257,13 +281,16 @@ $('.parcellaire').masonry({
 
     // pature évolution des larves
 
-    // console.log(troupeau.infestation);
+
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
+    //recul de la Date
+    date.setDate(date.getDate()-pas_de_temps);
+    $('#date').html(date.toLocaleDateString('fr-FR', options_date));
     // recul du curseur
     var position_curseur = $('#curseur').css('left');
-    var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(pas_de_temps));
+    var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(saut_curseur));
 
     troupeau.evolutionStrongles(-pas_de_temps);
     troupeau_evolution_excretion();

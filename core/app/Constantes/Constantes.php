@@ -6,6 +6,7 @@ namespace App\Constantes;
  */
 class Constantes
 {
+  const DUREE_PATURAGE = 200;
 
   const NB_PARCELLES_PAR_LIGNE = 3;
 
