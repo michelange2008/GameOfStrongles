@@ -188,7 +188,17 @@ function troupeau_evolution_excretion(){ // change l'aspect du troupeau en fonct
     }
   });
 }
-
+function pature_infeste_troupeau(parcelle, troupeau_infeste)
+{
+  var nb_parasite = 0;
+  $("#"+parcelle).children().each(function(index, valeur)
+  {
+    if(valeur.id == "parasite"){
+      nb_parasite++;
+    }
+  });
+  troupeau_infeste.sinfeste(nb_parasite);
+}
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
 $('.parcellaire').masonry({
   // options
@@ -248,17 +258,23 @@ $('.parcellaire').masonry({
     var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
     // pature avec troupeau
     var pature_avec_troupeau = $('#troupeau').attr('lieu');
-    // evolution troupeau
+    // evolution troupeau #####################################################
+    // évolution interne et éventuellement transformation du troupeau en excréteur
     troupeau.evolutionStrongles(pas_de_temps);
     troupeau_evolution_excretion();
-    var nb_parasite = 0;
-    $("#"+pature_avec_troupeau).children().each(function(index, valeur)
-    {
-      if(valeur.id == "parasite"){
-        nb_parasite++;
-      }
-    });
-    troupeau.sinfeste(nb_parasite);
+    // nouvelle infestation du troupeau à partir de la parcelle
+    console.log(troupeau.infestation);
+    pature_infeste_troupeau(pature_avec_troupeau, troupeau);
+    // var nb_parasite = 0;
+    // $("#"+pature_avec_troupeau).children().each(function(index, valeur)
+    // {
+    //   if(valeur.id == "parasite"){
+    //     nb_parasite++;
+    //   }
+    // });
+    // troupeau.sinfeste(nb_parasite);
+    console.log(troupeau.infestation);
+
     var couleur_troupeau_infestation = troupeau.infestation.length* (-5);
     couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
     console.log(couleur_troupeau_infestation);
