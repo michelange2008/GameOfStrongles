@@ -32,10 +32,13 @@
           src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
           integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
           crossorigin="anonymous"></script>
-        <script src="{{asset('core/public/js/app.js')}}"></script>
-        <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
-        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+      <script src="{{asset('core/public/js/constantes.js')}}"></script>
+      <script src="{{asset('core/public/js/classes.js')}}"></script>
+      <script src="{{asset('core/public/js/fonctions.js')}}"></script>
+      <script src="{{asset('core/public/js/gos.js')}}"></script>
+      <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
+      <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
         </script>
     </body>
 </html>

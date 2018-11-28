@@ -131,7 +131,7 @@ function Troupeau(espece, taille)
   this.espece = espece;
   this.taille = taille;
   this.infestation = [];
-  this.contaminant = false;
+
 }
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){

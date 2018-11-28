@@ -26,8 +26,8 @@
             <h6>Troupeau</h6>
         </div>
         <div class="chiffres">
-          <p id="infestation" class="soustitre" >Infestation: </p><p class="valeur">{{$troupeau->infestation()->count()}}</p>
-          <p id="contaminant" class="soustitre">Excretion: </p><p class="valeur">{{$troupeau->contaminantForHuman()}}</p>
+          <p class="soustitre" >Infestation: </p><p id="troupeau_infestation" class="valeur">{{$troupeau->infestation()->count()}}</p>
+          <p class="soustitre">Excretion: </p><p id="troupeau_contaminant" class="valeur">{{$troupeau->contaminantForHuman()}}</p>
         </div>
       </div>
       <div class="cadran">
@@ -74,11 +74,14 @@
         </div>
         <div id="ensemble-parcelles" class="parcellaire">
           @foreach ($liste_parcelles->listeDessinparcelles() as $parcelle)
-            <div id="pature_{{$parcelle->id()}}" class="pature" style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh">
-              @foreach ($parcelle->parcelle()->infestation() as $strongle)
+            <div id="pature_{{$parcelle->id()}}"
+              class="pature"
+              style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
+              infestation = {{$parcelle->parcelle()->infestation()->count()}}>
+              @foreach ($parcelle->parcelle()->infestation() as $strongles)
                 <div id="parasite" class="lot strongleOut" name="parasite">
-                  @foreach ($strongle->lot() as $element)
-                    <div class="parasite" style="left:{{$element['x']}}%;top:{{$element['y']}}%">
+                  @foreach ($strongles->lot() as $strongle)
+                    <div class="parasite" style="left:{{$strongle['x']}}%;top:{{$strongle['y']}}%">
 
                     </div>
                   @endforeach
