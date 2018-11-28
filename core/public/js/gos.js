@@ -21,13 +21,11 @@ $('.pature').each(function(index, pature) {
   $('#parasite').each(function(index, valeur) {
     strongle = new StrongleOut($(valeur).attr('age'));
     strongle.pathogen = parseInt($(valeur).attr('pathogen'));
-
     parcelle.infestation.push(strongle);
-
   })
-  console.log(parcelle);
-  // pature.evolutionStrongles(pas_de_temps);
+  exploitation.push(parcelle);
 })
+console.log(exploitation);
 $('.parcellaire').masonry({
   // options
   itemSelector: '.pature',
