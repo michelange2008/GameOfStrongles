@@ -1,8 +1,9 @@
 class Strongle
 {
-  constructor ()
+  constructor (age = 1)
   {
-    this.age = 1;
+    this.age = age;
+    this.pathogen = 1;
   }
 }
 
@@ -55,12 +56,10 @@ StrongleIn.prototype.evolution = function(jours)
 }
 
 //################################# PARCELLES ##################################
-function Parcelle(id, nom, longueur, hauteur)
+function Parcelle(id, nom)
 {
   this.id = id;
   this.nom = nom;
-  this.longueur = longueur;
-  this.hauteur = hauteur;
   this.infestation = [];
 }
 // AJout d'un objet strongle à la parcelle

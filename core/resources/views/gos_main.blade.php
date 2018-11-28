@@ -75,11 +75,15 @@
         <div id="ensemble-parcelles" class="parcellaire">
           @foreach ($liste_parcelles->listeDessinparcelles() as $parcelle)
             <div id="pature_{{$parcelle->id()}}"
+              nom = "{{$parcelle->parcelle()->nom()}}"
               class="pature"
               style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
-              infestation = {{$parcelle->parcelle()->infestation()->count()}}>
+              infestation = {{$parcelle->parcelle()->infestation()->count()}}
+              contaminant = {{$parcelle->parcelle()-> contaminant()}}>
               @foreach ($parcelle->parcelle()->infestation() as $strongles)
-                <div id="parasite" class="lot strongleOut" name="parasite">
+                <div id="parasite" class="lot strongleOut"
+                  age = "{{$strongles->age()}}" pathogen = "{{$strongles->pathogen()}}"
+                  etat = "{{$strongles->etat()}}">
                   @foreach ($strongles->lot() as $strongle)
                     <div class="parasite" style="left:{{$strongle['x']}}%;top:{{$strongle['y']}}%">
 

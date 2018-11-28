@@ -14,6 +14,20 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 //######################################### FONCTIONS ##############################################################
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
+var exploitation = [];
+$('.pature').each(function(index, pature) {
+  // création d'une nouvelle parcelle
+  parcelle = new Parcelle($(pature).attr('id').split('_')[1], $(pature).attr('nom'));
+  $('#parasite').each(function(index, valeur) {
+    strongle = new StrongleOut($(valeur).attr('age'));
+    strongle.pathogen = parseInt($(valeur).attr('pathogen'));
+
+    parcelle.infestation.push(strongle);
+
+  })
+  console.log(parcelle);
+  // pature.evolutionStrongles(pas_de_temps);
+})
 $('.parcellaire').masonry({
   // options
   itemSelector: '.pature',
@@ -72,7 +86,7 @@ $('.parcellaire').masonry({
     var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
     // pature avec troupeau
     var pature_avec_troupeau = $('#troupeau').attr('lieu');
-    // evolution troupeau #####################################################
+    // EVOLUTION TROUPEAU #####################################################
     // évolution interne et éventuellement transformation du troupeau en excréteur
     troupeau.evolutionStrongles(pas_de_temps);
     troupeau_evolution_excretion();
@@ -83,12 +97,20 @@ $('.parcellaire').masonry({
     couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
     console.log(couleur_troupeau_infestation);
     $("#troupeau").css('filter', 'hue-rotate('+couleur_troupeau_infestation+'deg)')
-
+    // suppression des strongles morts du troupeau
     elimination_morts();
-    // troupeau infeste pature
-
-
+    // EVOLUTION PATURE #######################################################
     // pature évolution des larves
+    $('.pature').each(function() {
+      $('#parasite').each(function(index, valeur) {
+        console.log(valeur);
+
+      })
+      // pature.evolutionStrongles(pas_de_temps);
+    })
+
+
+    // troupeau infeste pature
 
 
   }
