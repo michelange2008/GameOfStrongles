@@ -7,10 +7,21 @@
   width: 100%;
   height: 100%;
 }
-.parasite {
+.infestant {
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  border-radius: 100%;
+  border: solid 2px red;
+  background: red;
+}
+.non_infestant {
   position: absolute;
   height: 5px;
   width: 5px;
   border-radius: 100%;
   border: solid 1px black;
+}
+.mort {
+  visibility: hidden;
 }

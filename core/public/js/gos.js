@@ -17,15 +17,17 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 var exploitation = [];
 $('.pature').each(function(index, pature) {
   // création d'une nouvelle parcelle
-  parcelle = new Parcelle($(pature).attr('id').split('_')[1], $(pature).attr('nom'));
-  $('#parasite').each(function(index, valeur) {
+  var num_parcelle = $(pature).attr('id').split('_')[1]; //numéro de la parcelle
+  parcelle = new Parcelle(num_parcelle, $(pature).attr('nom')); //création d'une nouvelle parcelle
+  parcelle.contaminant = parseInt($(pature).attr('contaminant'));
+  $('.strongleOut_'+num_parcelle).each(function(index, valeur) { // recherche des strongles présents sur cette parcelle
     strongle = new StrongleOut($(valeur).attr('age'));
+    strongle.etat = $(valeur).attr('etat');
     strongle.pathogen = parseInt($(valeur).attr('pathogen'));
-    parcelle.infestation.push(strongle);
+    parcelle.infestation.push(strongle); // association de ces strongles à la parcelle
   })
-  exploitation.push(parcelle);
+  exploitation.push(parcelle); // association de cette parcelle à l'exploitation
 })
-console.log(exploitation);
 $('.parcellaire').masonry({
   // options
   itemSelector: '.pature',
@@ -46,19 +48,16 @@ $('.parcellaire').masonry({
     parcelle_troupeau = document.elementFromPoint(pointer.clientX, pointer.clientY).id; // on identifie l'élément qui est en dessous par la position du pointer
     if(parcelle_troupeau == "ensemble-parcelles" || parcelle_troupeau == "month" || parcelle_troupeau == "titre") // le troupeau n'est pas dans une parcelle
     {
-      $.alert({
-        escapeKey: 'Ok',
-          buttons: {
-              Ok: function(){
-              }
-          },
-        theme: 'dark',
-        title: 'Attention !',
-        content: 'Le troupeau est sorti du pré !</br> Mais que fait le chien ?',
-        type: 'red',
-    });
+      troupeau_dehors()
     }
     else {
+      exploitation.forEach(function(parcelle) {
+        if(parcelle.id == parcelle_troupeau.split("_")[1])
+        {
+          troupeau.entreDansParcelle(parcelle);
+          parcelle.entreTroupeau(troupeau);
+        }
+      })
       $(this).attr('lieu', parcelle_troupeau); // on attribue au troupeau le nom de la parcelle où il est
       $("#"+parcelle_troupeau).attr('troupeau', true); // on passer à true la variable troupeau de la parcelle où est le pointer cad le troupeau
       $("#"+parcelle_troupeau).css('background', parcelle_avec_troupeau); // attribution d'un couleur pour la parcelle avec troupeau
@@ -76,6 +75,7 @@ $('.parcellaire').masonry({
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
+
     // avancée de la Date
     date.setDate(date.getDate()+pas_de_temps);
     $('#date').html(date.toLocaleDateString('fr-FR', options_date));
@@ -83,30 +83,35 @@ $('.parcellaire').masonry({
     var position_curseur = $('#curseur').css('left');
     var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
     // pature avec troupeau
-    var pature_avec_troupeau = $('#troupeau').attr('lieu');
+    var pature_avec_troupeau = troupeau.parcelle;
+
     // EVOLUTION TROUPEAU #####################################################
-    // évolution interne et éventuellement transformation du troupeau en excréteur
+    // évolution interne des strongles
     troupeau.evolutionStrongles(pas_de_temps);
+    // transformation éventuelle du troupeau en excréteur
     troupeau_evolution_excretion();
-    // nouvelle infestation du troupeau à partir de la parcelle
-    pature_infeste_troupeau(pature_avec_troupeau, troupeau); // modification du troupeau
-    $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
-    var couleur_troupeau_infestation = troupeau.infestation.length* (-5);
-    couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
-    console.log(couleur_troupeau_infestation);
-    $("#troupeau").css('filter', 'hue-rotate('+couleur_troupeau_infestation+'deg)')
+
+    if(troupeau.parcelle !== null) {
+      // nouvelle infestation du troupeau à partir de la parcelle
+      troupeau.sinfeste(troupeau.parcelle.contaminant); // modification du troupeau
+      $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
+    }
+    // modification de l'aspect du troupeau
+    troupeau_evolution_aspect(troupeau);
     // suppression des strongles morts du troupeau
     elimination_morts();
     // EVOLUTION PATURE #######################################################
     // pature évolution des larves
-    $('.pature').each(function() {
-      $('#parasite').each(function(index, valeur) {
-        console.log(valeur);
-
+    exploitation.forEach(function(parcelle) {
+      parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
+      parcelle.contaminant = parcelle.getContaminant();
+      parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
+      // console.log(strongle);
+        $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
       })
-      // pature.evolutionStrongles(pas_de_temps);
+      $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
+      // console.log($("#pature_"+parcelle.id).attr('contaminant'));
     })
-
 
     // troupeau infeste pature
 

@@ -1,6 +1,6 @@
 class Strongle
 {
-  constructor (age = 1)
+  constructor (age)
   {
     this.age = age;
     this.pathogen = 1;
@@ -8,16 +8,16 @@ class Strongle
 }
 
 class StrongleOut extends Strongle {
-  constructor()
+  constructor(age)
   {
-    super();
+    super(age);
     this.etat = non_infestant;
   }
 }
 
 StrongleOut.prototype.evolution =  function(jours)
 {
-  this.age = this.age + jours;
+  this.age = parseInt(this.age) + parseInt(jours);
   if(this.age < l3_infestante)
   {
     this.etat = 'non_infestant';
@@ -60,7 +60,9 @@ function Parcelle(id, nom)
 {
   this.id = id;
   this.nom = nom;
+  this.troupeau = null;
   this.infestation = [];
+  this.contaminant = 0;
 }
 // AJout d'un objet strongle à la parcelle
 Parcelle.prototype.addStrongles = function(nb_strongles)
@@ -81,17 +83,21 @@ Parcelle.prototype.evolutionStrongles = function(jours)
     });
   }
 }
+
 // Méthode qui renvoie le nombre de strongles infestantes
-Parcelle.prototype.contaminant = function ()
+Parcelle.prototype.getContaminant = function ()
 {
   var nb_L3 = 0;
   this.infestation.forEach(function(strongle) {
-    if(strongle.etat = infestant)
+    if(strongle.etat == infestant)
     {
       nb_L3++;
     }
   });
   return nb_L3;
+}
+Parcelle.prototype.entreTroupeau = function (troupeau) {
+  this.troupeau = troupeau;
 };
 
 //################################ TROUPEAU ####################################
@@ -99,6 +105,7 @@ function Troupeau(espece, taille)
 {
   this.espece = espece;
   this.taille = taille;
+  this.parcelle = null;
   this.infestation = [];
   this.contaminant = false;
 }
@@ -111,8 +118,7 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
     this.infestation.push(strongle);
   }
 }
-Troupeau.prototype.evolutionStrongles = function(jours)
-{
+Troupeau.prototype.evolutionStrongles = function(jours) {
   if(this.infestation.length > 0)
   {
     this.infestation.forEach(function(strongle) {
@@ -120,3 +126,7 @@ Troupeau.prototype.evolutionStrongles = function(jours)
     });
   }
 }
+
+Troupeau.prototype.entreDansParcelle = function(parcelle) {
+  this.parcelle = parcelle;
+};

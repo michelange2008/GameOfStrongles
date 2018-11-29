@@ -81,11 +81,11 @@
               infestation = {{$parcelle->parcelle()->infestation()->count()}}
               contaminant = {{$parcelle->parcelle()-> contaminant()}}>
               @foreach ($parcelle->parcelle()->infestation() as $strongles)
-                <div id="parasite" class="lot strongleOut"
+                <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="lot strongleOut strongleOut_{{$parcelle->id()}}"
                   age = "{{$strongles->age()}}" pathogen = "{{$strongles->pathogen()}}"
                   etat = "{{$strongles->etat()}}">
                   @foreach ($strongles->lot() as $strongle)
-                    <div class="parasite" style="left:{{$strongle['x']}}%;top:{{$strongle['y']}}%">
+                    <div class="{{$strongles->etat()}}" style="left:{{$strongle['x']}}%;top:{{$strongle['y']}}%">
 
                     </div>
                   @endforeach

@@ -34,12 +34,13 @@ class Parcelle extends Model
       return $this->infestation;
     }
 
-    public function setInfestation($nb_oeuf = 0, $nb_L3 = 0)
+    public function setInfestation($age = 1, $nb_oeuf = 0, $nb_L3 = 0)
     {
       if($nb_oeuf > 0)
       {
         for ($i=0; $i <$nb_oeuf ; $i++) {
           $strongle = new StrongleOut(Constantes::NON_INFESTANT);
+          $strongle->setAge(1);
           $this->infestation->push($strongle);
         }
       }
@@ -47,6 +48,7 @@ class Parcelle extends Model
       {
         for ($i=0; $i <$nb_L3 ; $i++) {
           $strongle = new StrongleOut(Constantes::INFESTANT);
+          $strongle->setAge($age);
           $this->infestation->push($strongle);
         }
       }

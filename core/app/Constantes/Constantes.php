@@ -12,6 +12,7 @@ class Constantes
 
   const NB_STRONGLE_PAR_LOT = 5;
   // modélisation parasites
+  const AGE_L3_FIN_HIVER = 30;
   const L3_INFESTANTE = 21;
   const L3_MORTE = 60;
   const PERIODE_PREPATENTE = 15;

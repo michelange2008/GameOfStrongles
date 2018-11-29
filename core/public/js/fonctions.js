@@ -23,17 +23,7 @@ function troupeau_evolution_excretion(){ // change l'aspect du troupeau en fonct
   }
   $('#troupeau_contaminant').html(nb_strongles_adultes);
 }
-function pature_infeste_troupeau(parcelle, troupeau_infeste)
-{
-  var nb_parasite = 0;
-  $("#"+parcelle).children().each(function(index, valeur)
-  {
-    if(valeur.id == "parasite"){ // cible l'élément enfant contenant l'id parasite (pour ne pas prendre le texte et autre p ou div)
-      nb_parasite++;
-    }
-  });
-  troupeau_infeste.sinfeste(nb_parasite);
-}
+
 
 function elimination_morts()
 {
@@ -47,4 +37,26 @@ function elimination_morts()
   troupeau.infestation = nouvelle_situation;
   $('#infestation').html(troupeau.infestation.length);
   $('#troupeau').attr('infestation',troupeau.infestation.length);
+}
+
+function troupeau_dehors()
+{
+  $.alert({
+    escapeKey: 'Ok',
+      buttons: {
+          Ok: function(){
+          }
+      },
+    theme: 'dark',
+    title: 'Attention !',
+    content: 'Le troupeau est sorti du pré !</br> Mais que fait le chien ?',
+    type: 'red',
+});
+}
+
+function troupeau_evolution_aspect(troupeau) {
+  var couleur_troupeau_infestation = troupeau.infestation.length* (-5);
+  couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
+  $("#troupeau").css('filter', 'hue-rotate('+couleur_troupeau_infestation+'deg)')
+
 }
