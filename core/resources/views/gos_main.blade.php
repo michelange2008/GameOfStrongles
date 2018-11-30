@@ -1,8 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-
-<div class="container-fluid">
+<div class="container-fluid" style="background:forestgreen">
 {{-- Panneau de titre --}}
   <div id="" class="bandeau alert alert-success rounded-0">
     <h1 class='titre'>GAME <span class="petit">OF</span> STRONGLES</h1>
@@ -37,14 +36,14 @@
         <div class="chiffres">
           @foreach ($liste_parcelles->listeDessinparcelles() as $dessinparcelle)
             <p class="soustitre">{{$dessinparcelle->parcelle()->nom()}}</p>
-            <p class="valeur" >{{$dessinparcelle->parcelle()->contaminant()}} / {{$dessinparcelle->parcelle()->infestation()->count()}}</p>
+            <p id="valeur_{{$dessinparcelle->id()}}" class="valeur" >{{$dessinparcelle->parcelle()->contaminant()}} / {{$dessinparcelle->parcelle()->infestation()->count()}}</p>
           @endforeach
       </div>
       </div>
     </div>
     {{-- Grand panneau de droite avec time-line, troupeau et paturages --}}
     <div id="plateau" class="col-sm-10">
-      <div id="temps" class="time-line" paturage="{{$duree_paturage}}">
+      <div id="temps" class="time-line" paturage="{{$param_biologiques['DUREE_PATURAGE']}}">
         <div class="saison">
           @foreach ($liste_mois as $mois)
             <div id="month" class="mois" style="width:{{$mois['nb_jours']}}%">
@@ -99,5 +98,13 @@
     </div>
   </div>
 </div>
+<ul id="constantes">
+
+    @php
+      foreach ($param_biologiques as $key => $parametre) {
+        echo '<li id="'.$key.'" class="parametres" data="'.$parametre.'"></li>';
+      }
+    @endphp
+</ul>
 
 @endsection

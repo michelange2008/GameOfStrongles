@@ -11,23 +11,23 @@ class StrongleOut extends Strongle {
   constructor(age)
   {
     super(age);
-    this.etat = non_infestant;
+    this.etat = NON_INFESTANT;
   }
 }
 
 StrongleOut.prototype.evolution =  function(jours)
 {
   this.age = parseInt(this.age) + parseInt(jours);
-  if(this.age < l3_infestante)
+  if(this.age < L3_INFESTANTE)
   {
-    this.etat = 'non_infestant';
+    this.etat = NON_INFESTANT;
   }
-  else if (this.age > l3_morte)
+  else if (this.age > L3_MORTE)
   {
-    this.etat = 'mort';
+    this.etat = MORT;
   }
   else {
-    this.etat = 'infestant';
+    this.etat = INFESTANT;
   }
 }
 
@@ -35,23 +35,23 @@ class StrongleIn extends Strongle {
   constructor()
   {
     super();
-    this.etat = prepatent;
+    this.etat = PREPATENT;
   }
 }
 
 StrongleIn.prototype.evolution = function(jours)
 {
   this.age = Number(this.age) + Number(jours);
-  if(this.age < preriode_prepatente)
+  if(this.age < PERIODE_PREPATENTE)
   {
-    this.etat = prepatent;
+    this.etat = PREPATENT;
   }
-  else if (this.age > adulte_mort) {
-    this.etat = mort;
+  else if (this.age > ADULTE_MORT) {
+    this.etat = MORT;
   }
   else
   {
-    this.etat = ponte;
+    this.etat = PONTE;
   }
 }
 
@@ -89,7 +89,7 @@ Parcelle.prototype.getContaminant = function ()
 {
   var nb_L3 = 0;
   this.infestation.forEach(function(strongle) {
-    if(strongle.etat == infestant)
+    if(strongle.etat == INFESTANT)
     {
       nb_L3++;
     }

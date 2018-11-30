@@ -57,6 +57,7 @@
 }
 
 .bandeau {
+  border: 0 !important;
   background-image: -webkit-gradient(linear, left top, right top, from(black), to(darkgrey));
   background-image: linear-gradient(to right, black, darkgrey);
   display: -webkit-box;
@@ -89,6 +90,13 @@
 
 .invisible {
   visibility: hidden;
+}
+
+#constantes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10000;
 }
 
 .etable {

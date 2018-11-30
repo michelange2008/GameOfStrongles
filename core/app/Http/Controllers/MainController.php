@@ -60,9 +60,10 @@ class MainController extends Controller
         $dessinparcellaire->addDessinparcelle($dessinparcelle); // On ajoute cet objet à la liste de l'objet dessinParcellaire
       }
       $dessinparcellaire->SetLongueur_et_X_DessinParcelle(); // On fixe les valeurs de X (position dans la page) et de longueur des objets dessinparcelle
-// dd($dessinparcellaire);
+      $param_biologiques = Constantes::param_bio();
+
       return view('gos_main', [
-        'duree_paturage' => $duree_paturage,
+        'param_biologiques' => $param_biologiques,
         'mise_a_l_herbe' => $mise_a_l_herbe,
         'liste_mois' => $liste_mois,
         'troupeau' => $troupeau,

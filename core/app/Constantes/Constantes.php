@@ -24,4 +24,26 @@ class Constantes
   const MORT = 'mort'; // L3 morte
   const PREPATENT = 'prepatent'; // L3 ingérée mais non encore adulte
   const PONTE = 'ponte'; // stronge adulte prête à pondre
+
+  protected $param_biologiques;
+
+  public static function param_bio()
+  {
+    $param_biologiques = [
+      "DUREE_PATURAGE" => self::DUREE_PATURAGE,
+      "NB_STRONGLE_PAR_LOT" => self::NB_STRONGLE_PAR_LOT,
+      "AGE_L3_FIN_HIVER" => self::AGE_L3_FIN_HIVER,
+      "L3_INFESTANTE" => self::L3_INFESTANTE,
+      "L3_MORTE" => self::L3_MORTE,
+      "PERIODE_PREPATENTE" => self::PERIODE_PREPATENTE,
+      "INFESTATION_MAXIMUM" => self::INFESTATION_MAXIMUM,
+      "ADULTE_MORT" => self::ADULTE_MORT,
+      "NON_INFESTANT" => self::NON_INFESTANT,
+      "INFESTANT" => self::INFESTANT,
+      "MORT" => self::MORT,
+      "PREPATENT" => self::PREPATENT,
+      "PONTE" => self::PONTE,
+    ];
+    return $param_biologiques;
+  }
 }

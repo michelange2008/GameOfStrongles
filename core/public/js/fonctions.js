@@ -10,7 +10,7 @@ function troupeau_non_infestant(){// change l'aspect du troupeau quand il n'a pl
 function troupeau_evolution_excretion(){ // change l'aspect du troupeau en fonction de sa situation et le compteur
   var nb_strongles_adultes = 0;
   troupeau.infestation.forEach(function(strongle){
-    if(strongle.etat == ponte)
+    if(strongle.etat == PONTE)
     {
       nb_strongles_adultes++;
     }
@@ -25,11 +25,11 @@ function troupeau_evolution_excretion(){ // change l'aspect du troupeau en fonct
 }
 
 
-function elimination_morts()
+function elimination_morts(troupeau)
 {
   var nouvelle_situation = [];
   troupeau.infestation.forEach(function(strongle){
-    if(strongle.etat !== mort)
+    if(strongle.etat !== MORT)
     {
       nouvelle_situation.push(strongle);
     }

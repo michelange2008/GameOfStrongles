@@ -99,18 +99,19 @@ $('.parcellaire').masonry({
     // modification de l'aspect du troupeau
     troupeau_evolution_aspect(troupeau);
     // suppression des strongles morts du troupeau
-    elimination_morts();
+    elimination_morts(troupeau);
     // EVOLUTION PATURE #######################################################
     // pature évolution des larves
     exploitation.forEach(function(parcelle) {
       parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
-      parcelle.contaminant = parcelle.getContaminant();
+      parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
+      elimination_morts(parcelle)
       parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
-      // console.log(strongle);
         $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
       })
       $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
-      // console.log($("#pature_"+parcelle.id).attr('contaminant'));
+      $("#valeur_"+parcelle.id).html(parcelle.contaminant+" / "+parcelle.infestation.length);
+
     })
 
     // troupeau infeste pature

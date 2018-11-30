@@ -1,18 +1,10 @@
 // modélisation sensibilité hôte
-
-// modélisation parasites
-const l3_infestante = 21;
-const l3_morte = 60;
-const preriode_prepatente = 10;
-const infestation_maximum = 100;
-const adulte_mort = 100;
-// constantes pour les états des strongles
-const non_infestant = 'non_infestant';
-const infestant = 'infestant';
-const mort = 'mort';
-const prepatent = 'prepatent';
-const ponte = 'ponte';
-// considérations de style
+// modélisation parasites repris du HTML (définition dans php class Constantes)
+$('.parametres').each(function(index, param) {
+  console.log($("#"+param.id).attr('data'));
+  window[param.id] = $("#"+param.id).attr('data');
+});
+// variables d'affichage
 const parcelle_sans_troupeau = 'lightgreen';
 const parcelle_avec_troupeau = "green";
 //date avec affichage type 15 mars
