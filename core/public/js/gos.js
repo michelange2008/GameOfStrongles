@@ -107,8 +107,10 @@ $('.parcellaire').masonry({
       parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
       elimination_morts(parcelle)
       parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
+        console.log(strongle);
+        strongle.evolution(pas_de_temps);
         $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
-      })
+      });
       $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
       $("#valeur_"+parcelle.id).html(parcelle.contaminant+" / "+parcelle.infestation.length);
 

@@ -41,7 +41,6 @@ class StrongleIn extends Strongle {
 
 StrongleIn.prototype.evolution = function(jours)
 {
-  this.age = Number(this.age) + Number(jours);
   if(this.age < PERIODE_PREPATENTE)
   {
     this.etat = PREPATENT;
