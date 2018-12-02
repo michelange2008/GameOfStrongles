@@ -1,12 +1,8 @@
 var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
-
 //################################# START ######################################
+
   $(function() {
-    // redémarrage en cliquant sur l'icone à droite
-    $('#epee').on('click', function(){
-      location.reload();
-    });
     // création de l'objet troupeau sur la base du div #troupeau
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
@@ -40,7 +36,7 @@ $('.parcellaire').masonry({
   $draggable.on( 'dragEnd', function( event, pointer ) {
     $('.pature').each(function() { // on passe en revue toutes les parcelles
       $(this).attr('troupeau', false); // on passe à false la variable troupeau de toutes les patures
-      $(this).css('background', parcelle_sans_troupeau); // attribution d'une couleur fond parcelle sans troupeau
+      $(this).css('border', 'none'); // attribution d'une couleur fond parcelle sans troupeau
     })
     $('#troupeau').css('visibility', 'collapse'); // on rend invisible le troupeau (pour pouvoir connaitre l'élément qui est en dessous)
     $('.lot').css('visibility', 'collapse'); // et aussi les lots de strongle qui sont sur les parcelles
@@ -59,7 +55,7 @@ $('.parcellaire').masonry({
       // On traduit ça dans le html (est-utile ?)
       $(this).attr('lieu', parcelle_avec_troupeau_id); // on attribue au troupeau le nom de la parcelle où il est
       $("#"+parcelle_avec_troupeau_id).attr('troupeau', true); // on passer à true la variable troupeau de la parcelle où est le pointer cad le troupeau
-      $("#"+parcelle_avec_troupeau_id).css('background', parcelle_avec_troupeau); // attribution d'un couleur pour la parcelle avec troupeau
+      $("#"+parcelle_avec_troupeau_id).css('border', 'dotted 2px black'); // attribution d'un couleur pour la parcelle avec troupeau
     }
     // Si le troupeau est dans la chevrerie il y a une alerte (et on attribue au troupeau la chevrerie ???)
     else if (parcelle_avec_troupeau_id == "chevrerie") {
@@ -75,82 +71,82 @@ $('.parcellaire').masonry({
 
 //################################ AVANCEE D'UN PAS DE TEMPS DONNEE################################################
   var duree_paturage = $('#temps').attr('paturage');
-  var pas_de_temps = 5;
   var largeur_time_line = $('#temps').innerWidth() ; //largeur en pixel de la time-line
-  var saut_curseur = pas_de_temps * largeur_time_line / duree_paturage;
   var date = new Date($('#date').attr('data'));
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
+      var saut_curseur = pas_de_temps * largeur_time_line / duree_paturage;
+      // avancée de la Date
+      date.setDate(date.getDate()+pas_de_temps);
+      $('#date').html(date.toLocaleDateString('fr-FR', options_date));
+      // avancée du curseur
+      var position_curseur = $('#curseur').css('left');
+      var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
 
-    // avancée de la Date
-    date.setDate(date.getDate()+pas_de_temps);
-    $('#date').html(date.toLocaleDateString('fr-FR', options_date));
-    // avancée du curseur
-    var position_curseur = $('#curseur').css('left');
-    var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
-    // pature avec troupeau
-    var pature_avec_troupeau = troupeau.parcelle;
+      // EVOLUTION TROUPEAU #####################################################
+      // évolution interne des strongles
+      troupeau.evolutionStrongles(pas_de_temps);
+      // transformation éventuelle du troupeau en excréteur
+      troupeau_evolution_excretion(troupeau);
 
-    // EVOLUTION TROUPEAU #####################################################
-    // évolution interne des strongles
-    troupeau.evolutionStrongles(pas_de_temps);
-    // transformation éventuelle du troupeau en excréteur
-    troupeau_evolution_excretion(troupeau);
-
-    if(troupeau.parcelle !== null) {
-      // nouvelle infestation du troupeau à partir de la parcelle
-      troupeau.sinfeste(troupeau.parcelle.contaminant); // modification du troupeau
-      $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
-    }
-    // modification de l'aspect du troupeau
-    troupeau_evolution_aspect(troupeau);
-    // suppression des strongles morts du troupeau
-    elimination_morts(troupeau);
-    // EVOLUTION PATURE #######################################################
-    // pature évolution des larves
-    exploitation.forEach(function(parcelle) {
-      parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
-      // console.log(parcelle.infestation[0].age);
-      if(parcelle.troupeau instanceof Troupeau)
-      {
-        var nb_oeufs = troupeau.infestation.length;
-        parcelle.addStrongles(troupeau.infestation.length);
-        for(var i = 0; i < nb_oeufs; i++)
+      if(troupeau.parcelle !== null) {
+        // nouvelle infestation du troupeau à partir de la parcelle
+        troupeau.sinfeste(troupeau.parcelle.contaminant); // modification du troupeau
+        $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
+      }
+      // modification de l'aspect du troupeau
+      troupeau_evolution_aspect(troupeau);
+      // suppression des strongles morts du troupeau
+      elimination_morts(troupeau);
+      // EVOLUTION PATURE #######################################################
+      // pature évolution des larves
+      exploitation.forEach(function(parcelle) {
+        parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
+        // console.log(parcelle.infestation[0].age);
+        if(parcelle.troupeau instanceof Troupeau)
         {
-          nouveau_lot_de_strongles(parcelle, i,nb_oeufs);
+          var nb_oeufs = troupeau.infestation.length;
+          parcelle.addStrongles(troupeau.infestation.length);
+          for(var i = 0; i < nb_oeufs; i++)
+          {
+            nouveau_lot_de_strongles(parcelle, i,nb_oeufs);
+          }
+
         }
 
-      }
-      parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
-      parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
-        $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
-      });
-      $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
-      $("#valeur_"+parcelle.id).html(Math.round(parcelle.contaminant)+" / "+parcelle.infestation.length);
+        parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
 
-      elimination_morts(parcelle)
-      if($("#pature_"+parcelle.id+" > div > div").attr('class') == MORT)
-      {
-        var mort_id = $("#pature_"+parcelle.id+" > div").attr('id');
-        $("#"+mort_id).remove();
-      }
-      // troupeau infeste pature
-    })
+        evolution_strongles_parcelle(parcelle);
+
+        parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
+        // console.log(strongle);
+          $("#parasite_"+index+"_"+parcelle.id).attr('etat', strongle.etat);
+
+          // $("#parasite_"+index+"_"+parcelle.id).attr('age', strongle.age);
+          $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
+        });
+        $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
+        $("#valeur_"+parcelle.id).html(Math.round(parcelle.contaminant)+" / "+parcelle.infestation.length);
+
+        elimination_morts_de_la_parcelle(parcelle)
+      })
+      console.log(troupeau);
 
 
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
-    //recul de la Date
-    date.setDate(date.getDate()-pas_de_temps);
-    $('#date').html(date.toLocaleDateString('fr-FR', options_date));
-    // recul du curseur
-    var position_curseur = $('#curseur').css('left');
-    var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(saut_curseur));
-
-    troupeau.evolutionStrongles(-pas_de_temps);
-    troupeau_evolution_excretion();
+    //remise à zéro
+    location.reload();
+    // date.setDate(date.getDate()-pas_de_temps);
+    // $('#date').html(date.toLocaleDateString('fr-FR', options_date));
+    // // recul du curseur
+    // var position_curseur = $('#curseur').css('left');
+    // var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(saut_curseur));
+    //
+    // troupeau.evolutionStrongles(-pas_de_temps);
+    // troupeau_evolution_excretion();
   }
   })
 

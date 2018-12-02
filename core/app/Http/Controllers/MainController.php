@@ -22,7 +22,7 @@ class MainController extends Controller
       $listes_parcelles = collect([
         ['nom' => 'petit champ', 'superficie' => 4, 'oeuf'=> 0, "L3" => 1],
         ['nom' => 'grand pré', 'superficie' => 8, 'oeuf'=> 0, "L3" => 0],
-        ['nom' => 'chez Marcel', 'superficie' => 0.5, 'oeuf'=> 0, "L3" => 1],
+        ['nom' => 'chez Marcel', 'superficie' => 0.5, 'oeuf'=> 0, "L3" => 0],
         ['nom' => 'en-bas', 'superficie' => 3, 'oeuf'=> 0, "L3" => 0],
         ['nom' => 'en-haut', 'superficie' => 10,  'oeuf'=> 0, "L3" => 1],
       ]);
@@ -65,6 +65,7 @@ class MainController extends Controller
       return view('gos_main', [
         'param_biologiques' => $param_biologiques,
         'mise_a_l_herbe' => $mise_a_l_herbe,
+        'pas_de_temps' => Constantes::PAS_DE_TEMPS,
         'liste_mois' => $liste_mois,
         'troupeau' => $troupeau,
         'liste_parcelles' => $dessinparcellaire,

@@ -36,6 +36,7 @@
       <script src="{{asset('core/public/js/troupeau.js')}}"></script>
       <script src="{{asset('core/public/js/parcelle.js')}}"></script>
       <script src="{{asset('core/public/js/strongle.js')}}"></script>
+      <script src="{{asset('core/public/js/fonctions.js')}}"></script>
       <script src="{{asset('core/public/js/gos.js')}}"></script>
       <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
       <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>

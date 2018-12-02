@@ -43,7 +43,6 @@ StrongleOut.prototype.setLot = function () {// méthode pour définir 5 points a
   this.lot = lot;
 };
 
-
 class StrongleIn extends Strongle {
   constructor()
   {

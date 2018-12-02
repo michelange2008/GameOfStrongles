@@ -34,28 +34,32 @@ Troupeau.prototype.sortDeParcelle = function () {
 };
 
 //###################################### FONCTIONS #################################
-// Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes et de la taille
+// Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la taille et d'un parametre TTC
 function tauxTroupeauContaminant(nb_strongles_adultes, taille) {
-  return nb_strongles_adultes * taille / TAUX_TROUPEAU_CONTAMINANT;
+  return nb_strongles_adultes * taille * TAUX_TROUPEAU_CONTAMINANT / 100;
 }
 function risqueMortalite(nb_strongles_adultes){
   return nb_strongles_adultes * PATHOGEN;
 }
 
-function troupeau_infestant(nb_strongles_adultes, troupeau){ // change l'aspect du troupeau quand il a des adultes qui pondent
+function troupeau_infestant(nb_strongles_adultes, troupeau){ // aspect du troupeau quand il a des adultes qui pondent
   $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'.svg), url('+url_svg+'crottes.svg)');
   $('#troupeau').attr('contaminant', tauxTroupeauContaminant(nb_strongles_adultes, troupeau.taille));
 }
-function troupeau_non_infestant(){// change l'aspect du troupeau quand il n'a plus d'adultes qui pondent
+function troupeau_non_infestant(){// aspect du troupeau quand il n'a plus d'adultes qui pondent
   $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'.svg)');
   troupeau.contaminant = false;
   $('#troupeau').attr('contaminant', 0);
 }
-function troupeau_malade() {
-  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'_malades.svg)');
+function troupeau_malade() { // aspect du troupeau quand infesté au dessus d'un certain niveau
+  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'_malades.svg), url('+url_svg+'crottes.svg)');
+}
+function troupeau_presque_mort() { // aspect du troupeau quand infesté au dessus d'un certain niveau
+  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'_morts.svg)');
 }
 function troupeau_mort() {
-  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'_morts.svg)');
+  $('#troupeau').css('visibility', 'hidden');
+  alerte_troupeau_mort();
 }
 function troupeau_evolution_excretion(troupeau){ // change l'aspect du troupeau en fonction de sa situation et le compteur
   var nb_strongles_adultes = 0;
@@ -65,19 +69,26 @@ function troupeau_evolution_excretion(troupeau){ // change l'aspect du troupeau 
       nb_strongles_adultes++;
     }
   });
-  if(nb_strongles_adultes > 0 && nb_strongles_adultes < RISQUE_MORTALITE_MOYEN){
-    troupeau_infestant(nb_strongles_adultes, troupeau);
+  var nb_strongles_pathogenes = nb_strongles_adultes * PATHOGEN;
+  if(nb_strongles_pathogenes > 0 && nb_strongles_pathogenes < RISQUE_MORTALITE_MOYEN){
+    troupeau_infestant(nb_strongles_pathogenes, troupeau);
   }
-  else if (nb_strongles_adultes > RISQUE_MORTALITE_MOYEN && nb_strongles_adultes < RISQUE_MORTALITE_ELEVE) {
+  else if (nb_strongles_pathogenes > RISQUE_MORTALITE_MOYEN && nb_strongles_pathogenes < RISQUE_MORTALITE_ELEVE) {
     troupeau_malade();
   }
-  else if (nb_strongles_adultes > RISQUE_MORTALITE_ELEVE) {
+  else if (nb_strongles_pathogenes > RISQUE_MORTALITE_ELEVE && nb_strongles_pathogenes < TROUPEAU_MORT) {
+    troupeau_presque_mort();
+  }
+  else if (nb_strongles_pathogenes > TROUPEAU_MORT) {
     troupeau_mort();
   }
   else {
     troupeau_non_infestant();
   }
-  $('#troupeau_contaminant').html(nb_strongles_adultes);
+  var indice_contaminant = Math.round(tauxTroupeauContaminant(nb_strongles_adultes, troupeau.taille));
+  $('#troupeau_contaminant').html(indice_contaminant);
+  $('#troupeau').attr('contaminant', indice_contaminant);
+  troupeau.contaminant = indice_contaminant;
 }
 
 
@@ -124,6 +135,23 @@ function troupeau_chevrerie()
     title: 'Et voilà...',
     content: 'Le troupeau est rentré dans la chevrerie !',
     type: 'green',
+  });
+}
+
+function alerte_troupeau_mort()
+{
+
+
+  $.confirm({
+      title: 'Désolé !',
+      content: 'Le troupeau est mort',
+      type: 'red',
+      typeAnimated: true,
+      buttons: {
+          close: function () {
+              location.reload();
+          }
+      }
   });
 }
 

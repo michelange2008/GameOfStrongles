@@ -7,7 +7,7 @@ namespace App\Constantes;
 class Constantes
 {
   const DUREE_PATURAGE = 200;
-
+  const PAS_DE_TEMPS = 5;
   const NB_PARCELLES_PAR_LIGNE = 3;
 
   const NB_STRONGLE_PAR_LOT = 5;
@@ -27,9 +27,10 @@ class Constantes
   const PREPATENT = 'prepatent'; // L3 ingérée mais non encore adulte
   const PONTE = 'ponte'; // stronge adulte prête à pondre
   // constantes pour les troupeaux
-  const TAUX_TROUPEAU_CONTAMINANT = 100;
+  const TAUX_TROUPEAU_CONTAMINANT = 2;
   const RISQUE_MORTALITE_MOYEN = 1000;
   const RISQUE_MORTALITE_ELEVE = 2000;
+  const TROUPEAU_MORT = 3000;
 
   protected $param_biologiques;
 
@@ -55,6 +56,7 @@ class Constantes
       "TAUX_TROUPEAU_CONTAMINANT" => self::TAUX_TROUPEAU_CONTAMINANT,
       "RISQUE_MORTALITE_MOYEN" => self::RISQUE_MORTALITE_MOYEN,
       "RISQUE_MORTALITE_ELEVE" => self::RISQUE_MORTALITE_ELEVE,
+      "TROUPEAU_MORT" => self::TROUPEAU_MORT,
     ];
     return $param_biologiques;
   }

@@ -18,7 +18,9 @@
         <div class="titre">
           <h6 class="">date</h6>
         </div>
-        <p id="date" data="{{$mise_a_l_herbe->toAtomString()}}" style="text-align:center">{{$mise_a_l_herbe->day}} {{$mise_a_l_herbe->localeMonth}}</p>
+        <p id="date" data="{{$mise_a_l_herbe->toAtomString()}}"
+          style="text-align:center">{{$mise_a_l_herbe->day}} {{$mise_a_l_herbe->localeMonth}}</p>
+        <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">{{$pas_de_temps}}</span> jours)</p>
       </div>
       <div class="cadran">
         <div class="titre">
@@ -80,6 +82,7 @@
               superficie = {{$parcelle->parcelle()->superficie()}}
               infestation = {{$parcelle->parcelle()->infestation()->count()}}
               contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_biologiques['TAUX_PARCELLE_CONTAMINANTE'])}}>
+              <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
               @foreach ($parcelle->parcelle()->infestation() as $strongles)
                 <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="lot strongleOut strongleOut_{{$parcelle->id()}}"
                   age = "{{$strongles->age()}}" pathogen = "{{$strongles->pathogen()}}"
@@ -91,7 +94,6 @@
                   @endforeach
                 </div>
               @endforeach
-              <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
             </div>
           @endforeach
         </div>

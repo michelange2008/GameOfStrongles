@@ -1,12 +1,13 @@
 // modélisation sensibilité hôte
 // modélisation parasites repris du HTML (définition dans php class Constantes)
 $('.parametres').each(function(index, param) {
-  console.log($("#"+param.id).attr('data'));
+  // console.log($("#"+param.id).attr('data'));
   window[param.id] = $("#"+param.id).attr('data');
 });
+pas_de_temps = parseInt($("#pas_de_temps").html());
 // variables d'affichage
-const parcelle_sans_troupeau = 'lightgreen';
-const parcelle_avec_troupeau = "green";
+parcelle_sans_troupeau = 'lightgreen';
+var parcelle_avec_troupeau = "green";
 //date avec affichage type 15 mars
 var options_date = { month: 'long', day: 'numeric' };
 // construit l'adresse des images
