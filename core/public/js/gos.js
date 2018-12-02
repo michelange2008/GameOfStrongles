@@ -10,7 +10,6 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     // création de l'objet troupeau sur la base du div #troupeau
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
-
 //######################################### FONCTIONS ##############################################################
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
@@ -18,7 +17,7 @@ var exploitation = [];
 $('.pature').each(function(index, pature) {
   // création d'une nouvelle parcelle
   var num_parcelle = $(pature).attr('id').split('_')[1]; //numéro de la parcelle
-  parcelle = new Parcelle(num_parcelle, $(pature).attr('nom')); //création d'une nouvelle parcelle
+  parcelle = new Parcelle(num_parcelle, $(pature).attr('nom'), $(pature).attr('superficie')); //création d'une nouvelle parcelle
   parcelle.contaminant = parseInt($(pature).attr('contaminant'));
   $('.strongleOut_'+num_parcelle).each(function(index, valeur) { // recherche des strongles présents sur cette parcelle
     strongle = new StrongleOut($(valeur).attr('age'));
@@ -44,23 +43,31 @@ $('.parcellaire').masonry({
       $(this).css('background', parcelle_sans_troupeau); // attribution d'une couleur fond parcelle sans troupeau
     })
     $('#troupeau').css('visibility', 'collapse'); // on rend invisible le troupeau (pour pouvoir connaitre l'élément qui est en dessous)
-    $('.lot').css('visibility', 'collapse'); // et aussi les lots de stronle qui sur les parcelles
-    parcelle_troupeau = document.elementFromPoint(pointer.clientX, pointer.clientY).id; // on identifie l'élément qui est en dessous par la position du pointer
-    if(parcelle_troupeau == "ensemble-parcelles" || parcelle_troupeau == "month" || parcelle_troupeau == "titre") // le troupeau n'est pas dans une parcelle
+    $('.lot').css('visibility', 'collapse'); // et aussi les lots de strongle qui sont sur les parcelles
+    var parcelle_avec_troupeau_id = document.elementFromPoint(pointer.clientX, pointer.clientY).id; // on identifie l'élément qui est en dessous par la position du pointer
+    var parcelle_avec_troupeau = exploitation[parcelle_avec_troupeau_id.split("_")[1]]; // on définit la parcelle qui a le troupeau
+    // On enlève le troupeau de toutes les parcelles
+    exploitation.forEach(function(parcelle) {
+      troupeau.sortDeParcelle();
+      parcelle.sortTroupeau();
+    })
+    // Si le troupeau est dans une parcelle on attribue le troupeau à la parcelle et vice versa
+    if(parcelle_avec_troupeau instanceof Parcelle) // le troupeau n'est pas dans une parcelle
     {
-      troupeau_dehors()
+      troupeau.entreDansParcelle(parcelle_avec_troupeau);
+      parcelle_avec_troupeau.entreTroupeau(troupeau);
+      // On traduit ça dans le html (est-utile ?)
+      $(this).attr('lieu', parcelle_avec_troupeau_id); // on attribue au troupeau le nom de la parcelle où il est
+      $("#"+parcelle_avec_troupeau_id).attr('troupeau', true); // on passer à true la variable troupeau de la parcelle où est le pointer cad le troupeau
+      $("#"+parcelle_avec_troupeau_id).css('background', parcelle_avec_troupeau); // attribution d'un couleur pour la parcelle avec troupeau
     }
+    // Si le troupeau est dans la chevrerie il y a une alerte (et on attribue au troupeau la chevrerie ???)
+    else if (parcelle_avec_troupeau_id == "chevrerie") {
+      troupeau_chevrerie();
+    }
+    // Si le troupeau n'est pas dans une parcelle, il y a une alerte
     else {
-      exploitation.forEach(function(parcelle) {
-        if(parcelle.id == parcelle_troupeau.split("_")[1])
-        {
-          troupeau.entreDansParcelle(parcelle);
-          parcelle.entreTroupeau(troupeau);
-        }
-      })
-      $(this).attr('lieu', parcelle_troupeau); // on attribue au troupeau le nom de la parcelle où il est
-      $("#"+parcelle_troupeau).attr('troupeau', true); // on passer à true la variable troupeau de la parcelle où est le pointer cad le troupeau
-      $("#"+parcelle_troupeau).css('background', parcelle_avec_troupeau); // attribution d'un couleur pour la parcelle avec troupeau
+      troupeau_dehors()
     }
     $('.lot').css('visibility', 'visible'); // et on réaffiche les strongles
     $('#troupeau').css('visibility', 'visible'); // on remet le troupeau visible
@@ -89,7 +96,7 @@ $('.parcellaire').masonry({
     // évolution interne des strongles
     troupeau.evolutionStrongles(pas_de_temps);
     // transformation éventuelle du troupeau en excréteur
-    troupeau_evolution_excretion();
+    troupeau_evolution_excretion(troupeau);
 
     if(troupeau.parcelle !== null) {
       // nouvelle infestation du troupeau à partir de la parcelle
@@ -104,19 +111,32 @@ $('.parcellaire').masonry({
     // pature évolution des larves
     exploitation.forEach(function(parcelle) {
       parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
+      // console.log(parcelle.infestation[0].age);
+      if(parcelle.troupeau instanceof Troupeau)
+      {
+        var nb_oeufs = troupeau.infestation.length;
+        parcelle.addStrongles(troupeau.infestation.length);
+        for(var i = 0; i < nb_oeufs; i++)
+        {
+          nouveau_lot_de_strongles(parcelle, i,nb_oeufs);
+        }
+
+      }
       parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
-      elimination_morts(parcelle)
       parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
-        console.log(strongle);
-        strongle.evolution(pas_de_temps);
         $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
       });
       $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
-      $("#valeur_"+parcelle.id).html(parcelle.contaminant+" / "+parcelle.infestation.length);
+      $("#valeur_"+parcelle.id).html(Math.round(parcelle.contaminant)+" / "+parcelle.infestation.length);
 
+      elimination_morts(parcelle)
+      if($("#pature_"+parcelle.id+" > div > div").attr('class') == MORT)
+      {
+        var mort_id = $("#pature_"+parcelle.id+" > div").attr('id');
+        $("#"+mort_id).remove();
+      }
+      // troupeau infeste pature
     })
-
-    // troupeau infeste pature
 
 
   }

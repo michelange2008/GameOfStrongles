@@ -15,7 +15,7 @@ abstract class Strongle extends Model
     public function __construct()
     {
       $this->age = 1; // correspond soit à la ponte sur paturage soit à l'ingestion d'une L3
-      $this->pathogen = 1; // correspond à un niveau de pathogénicité moyen
+      $this->pathogen = Constantes::PATHOGEN; // correspond à un niveau de pathogénicité moyen
       $this->nombre = Constantes::NB_STRONGLE_PAR_LOT;
     }
 

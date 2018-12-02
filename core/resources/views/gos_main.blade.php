@@ -61,7 +61,7 @@
                 espece="{{$troupeau->espece()}}"
                 taille="{{$troupeau->taille()}}"
                 infestation="{{$troupeau->infestation()->count()}}"
-                contaminant = "{{$troupeau->contaminant()}}"
+                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$param_biologiques['TAUX_TROUPEAU_CONTAMINANT']}}"
                 lieu="chevrerie">
                 {{-- <img src="{{config('fichiers.svg').$troupeau->espece().".svg"}}" alt="{{$troupeau->espece()}}"> --}}
             @foreach ($troupeau->infestation() as $strongle)
@@ -77,8 +77,9 @@
               nom = "{{$parcelle->parcelle()->nom()}}"
               class="pature"
               style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
+              superficie = {{$parcelle->parcelle()->superficie()}}
               infestation = {{$parcelle->parcelle()->infestation()->count()}}
-              contaminant = {{$parcelle->parcelle()-> contaminant()}}>
+              contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_biologiques['TAUX_PARCELLE_CONTAMINANTE'])}}>
               @foreach ($parcelle->parcelle()->infestation() as $strongles)
                 <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="lot strongleOut strongleOut_{{$parcelle->id()}}"
                   age = "{{$strongles->age()}}" pathogen = "{{$strongles->pathogen()}}"

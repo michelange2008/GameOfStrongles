@@ -33,8 +33,9 @@
           integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
           crossorigin="anonymous"></script>
       <script src="{{asset('core/public/js/constantes.js')}}"></script>
-      <script src="{{asset('core/public/js/classes.js')}}"></script>
-      <script src="{{asset('core/public/js/fonctions.js')}}"></script>
+      <script src="{{asset('core/public/js/troupeau.js')}}"></script>
+      <script src="{{asset('core/public/js/parcelle.js')}}"></script>
+      <script src="{{asset('core/public/js/strongle.js')}}"></script>
       <script src="{{asset('core/public/js/gos.js')}}"></script>
       <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
       <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
