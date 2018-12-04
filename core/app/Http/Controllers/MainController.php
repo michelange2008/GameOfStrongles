@@ -15,6 +15,18 @@ class MainController extends Controller
 {
   use NbLignes;
   use ListeMois;
+
+    public function action()
+    {
+
+      return view('action');
+    }
+
+    public function data(Request $request)
+    {
+      dd($request->all());
+    }
+
     public function index()
     {
       //################### Données temporairesp pour créer les objets #########

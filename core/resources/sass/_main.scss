@@ -13,6 +13,19 @@
 #main {
   margin-left: 0;
 }
+.main-titre {
+  margin: 5px 0;
+  padding: 40px;
+  background-image: linear-gradient(to right, darkgrey, black , darkgrey);
+  h1, h3 {
+    text-align: center;
+    margin: 25px 0;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+
+}
 
 .bandeau {
   border: 0 !important;
@@ -20,15 +33,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  .titre {
-    font-family: 'GameOfThrones';
-    color: white;
-    text-shadow: 3px 3px 3px lightgrey;
-  }
   img {
     width: 50px;
     cursor: pointer;
   }
+}
+.titre {
+  font-family: 'GameOfThrones';
+  color: white;
+  text-shadow: 3px 3px 3px lightgrey;
 }
 .petit {
 	font-size: 50%;
