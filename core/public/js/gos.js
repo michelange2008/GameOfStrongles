@@ -131,7 +131,7 @@ $('.parcellaire').masonry({
 
         elimination_morts_de_la_parcelle(parcelle)
       })
-      console.log(troupeau);
+      // console.log(troupeau);
 
 
   }

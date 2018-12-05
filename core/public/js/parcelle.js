@@ -58,6 +58,7 @@ function tauxInfestant(nb_L3, superficie) {
 function evolution_strongles_parcelle(parcelle) {
   $("#pature_"+parcelle.id+"> div").each(function(e, parasite) {
     var age_parasite = parseInt($(parasite).attr('age'));
+    console.log($(parasite).attr('class').split(' ')[1]);
     $(parasite).attr('age', age_parasite + pas_de_temps);
     if(age_parasite + pas_de_temps < L3_INFESTANTE) {
       $(parasite).attr('etat', NON_INFESTANT);
