@@ -58,12 +58,26 @@
 
 .main-titre {
   margin: 5px 0;
-  padding: 40px;
   background-image: -webkit-gradient(linear, left top, right top, from(darkgrey), color-stop(black), to(darkgrey));
   background-image: linear-gradient(to right, darkgrey, black, darkgrey);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .main-titre h1, .main-titre h3 {
+  -ms-flex-item-align: center;
+      align-self: center;
   text-align: center;
   margin: 25px 0;
 }
@@ -133,11 +147,20 @@
 }
 
 .categories-titres {
+  padding: 40px;
   margin-left: 0.5rem 0;
   padding: 1rem;
   font-family: "GameOfThrones";
   font-size: 2rem;
   color: white;
+}
+
+.main-titre-image {
+  height: 300px;
+}
+
+.main-titre-image img {
+  height: 100%;
 }
 
 .categories-contenu {

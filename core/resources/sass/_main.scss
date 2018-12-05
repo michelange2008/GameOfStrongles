@@ -15,9 +15,13 @@
 }
 .main-titre {
   margin: 5px 0;
-  padding: 40px;
   background-image: linear-gradient(to right, darkgrey, black , darkgrey);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   h1, h3 {
+    align-self: center;
     text-align: center;
     margin: 25px 0;
   }
