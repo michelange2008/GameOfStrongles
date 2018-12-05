@@ -8,13 +8,13 @@ use App\Constantes\Constantes;
 class StrongleOut extends Strongle
 {
 
-  protected $lot; // ensemble de strongles au nombre de $nombre (cf. Strongle et Constantes)
+  protected $localisation;
 
   public function __construct($etat)
   {
     parent::__construct();
     $this->etat = $etat;
-    $this->lot = $this->setLot();
+    $this->localisation = ['x' => rand(0, 98), 'y' => rand(0,95)];
   }
 
   public function evolution($duree_vie)
@@ -31,21 +31,9 @@ class StrongleOut extends Strongle
       $this->etat = Constantes::INFESTANT;
     }
   }
-  public function setLot() // méthode pour définir 5 points aléatoires = position des strongles dans la parcelle
+
+  public function localisation()
   {
-    for($j = 0; $j < $this->nombre; $j++)
-    {
-      $parasite = ['x' => rand(0, 98), 'y' => rand(0,95)];
-      $lot[$j] = $parasite;
-    }
-
-    return $lot;
+    return $this->localisation;
   }
-
-  public function lot()
-  {
-    return $this->lot;
-  }
-
-
 }

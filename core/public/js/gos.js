@@ -99,15 +99,16 @@ $('.parcellaire').masonry({
       troupeau_evolution_aspect(troupeau);
       // suppression des strongles morts du troupeau
       elimination_morts(troupeau);
+
       // EVOLUTION PATURE #######################################################
       // pature évolution des larves
       exploitation.forEach(function(parcelle) {
         parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
-        // console.log(parcelle.infestation[0].age);
-        if(parcelle.troupeau instanceof Troupeau)
+
+        if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
         {
-          var nb_oeufs = troupeau.infestation.length;
-          parcelle.addStrongles(troupeau.infestation.length);
+          var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau
+          parcelle.addStrongles(troupeau.infestation.length); // On additionne ces oeufs à l'objet parcelle
           for(var i = 0; i < nb_oeufs; i++)
           {
             nouveau_lot_de_strongles(parcelle, i,nb_oeufs);
@@ -120,10 +121,9 @@ $('.parcellaire').masonry({
         evolution_strongles_parcelle(parcelle);
 
         parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
-        // console.log(strongle);
+
           $("#parasite_"+index+"_"+parcelle.id).attr('etat', strongle.etat);
 
-          // $("#parasite_"+index+"_"+parcelle.id).attr('age', strongle.age);
           $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
         });
         $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);

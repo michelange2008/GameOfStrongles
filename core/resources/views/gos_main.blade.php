@@ -83,15 +83,12 @@
               infestation = {{$parcelle->parcelle()->infestation()->count()}}
               contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_biologiques['TAUX_PARCELLE_CONTAMINANTE'])}}>
               <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
-              @foreach ($parcelle->parcelle()->infestation() as $strongles)
-                <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="lot strongleOut strongleOut_{{$parcelle->id()}}"
-                  age = "{{$strongles->age()}}" pathogen = "{{$strongles->pathogen()}}"
-                  etat = "{{$strongles->etat()}}">
-                  @foreach ($strongles->lot() as $strongle)
-                    <div class="{{$strongles->etat()}}" style="left:{{$strongle['x']}}%;top:{{$strongle['y']}}%">
-
-                    </div>
-                  @endforeach
+              @foreach ($parcelle->parcelle()->infestation() as $strongle)
+                <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}} strongleOut"
+                  age = "{{$strongle->age()}}"
+                  pathogen = "{{$strongle->pathogen()}}"
+                  etat = "{{$strongle->etat()}}"
+                  style="left:{{$strongle->localisation()['x']}}%;top:{{$strongle->localisation()['y']}}%">
                 </div>
               @endforeach
             </div>

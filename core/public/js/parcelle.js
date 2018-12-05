@@ -14,7 +14,6 @@ Parcelle.prototype.addStrongles = function(nb_strongles)
   for($i = 1 ; $i <= nb_strongles; $i++)
   {
     strongle = new StrongleOut(1);
-    strongle.setLot();
     this.infestation.push(strongle);
   }
 }
@@ -85,25 +84,21 @@ function elimination_morts_de_la_parcelle(parcelle) {
   })
 }
 // ajout d'un nouveau lot de strongle dans une parcelle donnée
-function nouveau_lot_de_strongles(parcelle, i, nb_oeufs)
+function nouveau_lot_de_strongles(parcelle, num_strongle, nb_oeufs)
 {
   // manip destinée à diminuer le nb de strongles quand parcelle très infestée pour ne pas planter le navigateur
   var nb_oeufs_corrige = (parcelle.infestation.length > 500 ? 1 : nb_oeufs);
     for(var j = (parcelle.infestation.length-nb_oeufs_corrige); j < parcelle.infestation.length; j++) // on compte à partir des nouveau parasites
-    {
-      var lot_html = []
-      for(let parasite of parcelle.infestation[j].lot)
       {
-        // on crée la position du parasite
-        var parasite_html = '<div class="non_infestant" style="left:'+Math.round(parasite[0])+'%; top: '+Math.round(parasite[1])+'%"></div>';
-        lot_html.push(parasite_html); // on l'ajoute au lot
+        nouveau_strongle(parcelle, num_strongle, j);
       }
-    };
-    // on crée le div correspondant
-    return $("#pature_"+parcelle.id).append('<div id="parasite_'
-      +(parcelle.infestation.length-1+i)
-      +'_'+parcelle.id
-      +'" class="lot strongleOut" age = 1 etat = "non_infestant">'
-      +lot_html
-      +'</div>');
+
+}
+function nouveau_strongle(parcelle, num_strongle, j)
+{
+  return $("#pature_"+parcelle.id).append('<div id="parasite_'
+    +(parcelle.infestation.length+num_strongle)
+    +'_'+parcelle.id
+    +'" class="strongleOut non_infestant" age = 1 etat = "non_infestant" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
+    +'</div>');
 }

@@ -12,7 +12,7 @@ class StrongleOut extends Strongle {
   {
     super(age);
     this.etat = NON_INFESTANT;
-    this.lot = [];
+    this.localisation = [Math.round(Math.random()*98), Math.round(Math.random()*95)];
   }
 }
 
@@ -31,17 +31,9 @@ StrongleOut.prototype.evolution =  function(jours)
     this.etat = INFESTANT;
   }
 }
-StrongleOut.prototype.setLot = function () {// méthode pour définir 5 points aléatoires = position des strongles dans la parcelle
-  var lot = [];
-
-  for(var k = 0; k < NB_STRONGLE_PAR_LOT; k++)
-  {
-    var parasite = [Math.random()*98, Math.random()*95];
-    lot[k] = parasite;
-  }
-
-  this.lot = lot;
-};
+// StrongleOut.prototype.setLocalisation = function () {// méthode pour définir 1 point aléatoire = position du strongle dans la parcelle
+//   this.localisation = [Math.random()*98, Math.random()*95];
+// };
 
 class StrongleIn extends Strongle {
   constructor()
