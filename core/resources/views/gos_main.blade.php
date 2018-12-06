@@ -84,7 +84,7 @@
               contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_biologiques['TAUX_PARCELLE_CONTAMINANTE'])}}>
               <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
               @foreach ($parcelle->parcelle()->infestation() as $strongle)
-                <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="strongleOut {{$strongle->etat()}}"
+                <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}}"
                   age = "{{$strongle->age()}}"
                   pathogen = "{{$strongle->pathogen()}}"
                   etat = "{{$strongle->etat()}}"

@@ -16,11 +16,13 @@
   <div class="categories">
     <h5 class="categories-titres" >Troupeau</h5>
     <div class="categories-contenu">
-        <div class="categorie-troupeau">
-
+        <div class="categories-troupeau">
+          @foreach ($liste_espece as $espece)
+            <img src="public/svg/{{$espece["url"]}}" alt="{{$espece["nom"]}}" title="{{$espece["nom"]}}">
+          @endforeach
         </div>
-        <div class="categorie-effectif">
-          {{Form::number('effectif', '', ['placeholder' => "nombre d'animaux"])}}
+        <div class="categories-effectif">
+          {{Form::number('effectif', '', ['placeholder' => "effectif"])}}
         </div>
     </div>
   </div>

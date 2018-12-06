@@ -1,7 +1,7 @@
 // modélisation sensibilité hôte
 // modélisation parasites repris du HTML (définition dans php class Constantes)
 $('.parametres').each(function(index, param) {
-  // console.log($("#"+param.id).attr('data'));
+
   window[param.id] = $("#"+param.id).attr('data');
 });
 pas_de_temps = parseInt($("#pas_de_temps").html());

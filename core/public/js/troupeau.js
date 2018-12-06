@@ -10,13 +10,16 @@ function Troupeau(espece, taille)
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
 
-  for($i = 1 ; $i <= nb_strongles; $i++)
+var jours = (pas_de_temps ? pas_de_temps : 1);
+console.log(jours);
+  for($i = 1 ; $i <= nb_strongles*pas_de_temps; $i++)
   {
     strongle = new StrongleIn(1);
     this.infestation.push(strongle);
   }
 }
 Troupeau.prototype.evolutionStrongles = function(jours) {
+
   if(this.infestation.length > 0)
   {
     this.infestation.forEach(function(strongle) {
@@ -85,7 +88,7 @@ function troupeau_evolution_excretion(troupeau){ // change l'aspect du troupeau 
   else {
     troupeau_non_infestant();
   }
-  var indice_contaminant = Math.round(tauxTroupeauContaminant(nb_strongles_adultes, troupeau.taille));
+  var indice_contaminant = tauxTroupeauContaminant(decroissance(nb_strongles_adultes), troupeau.taille);
   $('#troupeau_contaminant').html(indice_contaminant);
   $('#troupeau').attr('contaminant', indice_contaminant);
   troupeau.contaminant = indice_contaminant;

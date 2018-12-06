@@ -58,14 +58,16 @@ function tauxInfestant(nb_L3, superficie) {
 function evolution_strongles_parcelle(parcelle) {
   $("#pature_"+parcelle.id+"> div").each(function(e, parasite) {
     var age_parasite = parseInt($(parasite).attr('age'));
-    console.log($(parasite).attr('class').split(' ')[1]);
     $(parasite).attr('age', age_parasite + pas_de_temps);
     if(age_parasite + pas_de_temps < L3_INFESTANTE) {
       $(parasite).attr('etat', NON_INFESTANT);
+      $(parasite).attr('class', NON_INFESTANT);
     } else if (age_parasite + pas_de_temps > L3_MORTE) {
       $(parasite).attr('etat', MORT);
+      $(parasite).attr('class', MORT);
     } else {
       $(parasite).attr('etat', INFESTANT);
+      $(parasite).attr('class', INFESTANT);
     }
   })
 }
@@ -79,27 +81,31 @@ function elimination_morts_de_la_parcelle(parcelle) {
   }
   // élimination balises html correspondantes
   $("#pature_"+parcelle.id).children().each(function(index) {
-    if($(this).attr('etat') == 'mort') {
+    if($(this).attr('etat') == MORT) {
       $(this).remove();
     }
   })
 }
 // ajout d'un nouveau lot de strongle dans une parcelle donnée
-function nouveau_lot_de_strongles(parcelle, num_strongle, nb_oeufs)
+function nouveau_lot_de_strongles(parcelle, nb_oeufs)
 {
   // manip destinée à diminuer le nb de strongles quand parcelle très infestée pour ne pas planter le navigateur
-  var nb_oeufs_corrige = (parcelle.infestation.length > 500 ? 1 : nb_oeufs);
+  var nb_oeufs_corrige = decroissance(nb_oeufs);
     for(var j = (parcelle.infestation.length-nb_oeufs_corrige); j < parcelle.infestation.length; j++) // on compte à partir des nouveau parasites
       {
-        nouveau_strongle(parcelle, num_strongle, j);
+        nouveau_strongle(parcelle, j);
       }
 
 }
-function nouveau_strongle(parcelle, num_strongle, j)
+function nouveau_strongle(parcelle, j)
 {
   return $("#pature_"+parcelle.id).append('<div id="parasite_'
-    +(parcelle.infestation.length+num_strongle)
+    +parcelle.infestation.length
     +'_'+parcelle.id
-    +'" class="strongleOut non_infestant" age = 1 etat = "non_infestant" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
+    +'" class="'+NON_INFESTANT+'" age = 1 etat = "'+NON_INFESTANT+'" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
     +'</div>');
+}
+// décroissance exponentielle
+function decroissance(nb_oeufs) {
+  return Math.round(nb_oeufs*(1 / Math.exp(Math.sqrt(nb_oeufs/DECROISSANCE))));
 }

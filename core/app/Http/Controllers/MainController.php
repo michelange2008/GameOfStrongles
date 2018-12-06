@@ -18,8 +18,15 @@ class MainController extends Controller
 
     public function action()
     {
+      $liste_espece = [
+        ["nom" => "chèvres", "id" => "caprins", "url" => "caprins_seuls.svg"],
+        ["nom" => "brebis", "id" => "ovins", "url" => "ovins_seuls.svg"],
+        ["nom" => "brebis + agneaux", "id" => "ovins_agneaux", "url" => "ovins_agneaux_seuls.svg"],
+      ];
 
-      return view('action');
+      return view('action', [
+        'liste_espece' => $liste_espece,
+      ]);
     }
 
     public function data(Request $request)

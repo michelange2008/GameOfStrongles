@@ -6,6 +6,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     // création de l'objet troupeau sur la base du div #troupeau
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
+
 //######################################### FONCTIONS ##############################################################
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
@@ -92,7 +93,7 @@ $('.parcellaire').masonry({
 
       if(troupeau.parcelle !== null) {
         // nouvelle infestation du troupeau à partir de la parcelle
-        troupeau.sinfeste(troupeau.parcelle.contaminant); // modification du troupeau
+        troupeau.sinfeste(troupeau.parcelle.contaminant, pas_de_temps); // modification du troupeau
         $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
       }
       // modification de l'aspect du troupeau
@@ -109,10 +110,7 @@ $('.parcellaire').masonry({
         {
           var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau
           parcelle.addStrongles(troupeau.infestation.length); // On additionne ces oeufs à l'objet parcelle
-          for(var i = 0; i < nb_oeufs; i++)
-          {
-            nouveau_lot_de_strongles(parcelle, i,nb_oeufs);
-          }
+            nouveau_lot_de_strongles(parcelle, decroissance(nb_oeufs));
 
         }
 
@@ -131,9 +129,6 @@ $('.parcellaire').masonry({
 
         elimination_morts_de_la_parcelle(parcelle)
       })
-      // console.log(troupeau);
-
-
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
