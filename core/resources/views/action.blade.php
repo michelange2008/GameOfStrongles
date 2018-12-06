@@ -18,7 +18,8 @@
     <div class="categories-contenu">
         <div class="categories-troupeau">
           @foreach ($liste_espece as $espece)
-            <img src="public/svg/{{$espece["url"]}}" alt="{{$espece["nom"]}}" title="{{$espece["nom"]}}">
+            <img id={{$espece["id"]}} class='image_troupeau' src="public/svg/{{$espece["url"]}}" alt="{{$espece["nom"]}}" title="{{$espece["nom"]}}">
+            {{ Form::radio('troupeau', $espece["id"], '', ['class' => 'invisible'])}}
           @endforeach
         </div>
         <div class="categories-effectif">

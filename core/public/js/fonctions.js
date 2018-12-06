@@ -43,3 +43,16 @@ $("#pas_de_temps").on('click', function() {
     }
 });
 });
+
+//############################## CHOIX DU TROUPEAU #############################
+$(".image_troupeau").on('click', function() {
+  var troupeau = $(this).attr('id');
+  $('.image_troupeau').css('box-shadow', '2px 2px 6px black');
+  $('input[type = "radio"]').each(function() {
+    if($(this).attr('value') == troupeau)
+    {
+      $(this).prop('checked', true);
+      $("#"+troupeau).css('box-shadow', '6px 6px 6px red');
+    }
+  })
+})

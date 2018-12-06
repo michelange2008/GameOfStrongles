@@ -20,6 +20,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  .main-titre-texte {
+    margin: 0 3rem;
+  }
   h1, h3 {
     align-self: center;
     text-align: center;

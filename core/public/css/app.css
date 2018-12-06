@@ -67,6 +67,10 @@
           align-items: center;
 }
 
+.main-titre .main-titre-texte {
+  margin: 0 3rem;
+}
+
 .main-titre h1, .main-titre h3 {
   -ms-flex-item-align: center;
       align-self: center;
@@ -197,6 +201,11 @@
 
 .categories-contenu {
   padding: 0.75rem;
+}
+
+.image_troupeau:hover {
+  -webkit-box-shadow: 6px 6px 6px black;
+          box-shadow: 6px 6px 6px black;
 }
 
 .etable {
