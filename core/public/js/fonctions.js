@@ -55,4 +55,14 @@ $(".image_troupeau").on('click', function() {
       $("#"+troupeau).css('box-shadow', '6px 6px 6px red');
     }
   })
+});
+
+//################################ AJOUT LIGNE PARCELLE ########################
+$("#ajout").on('click',function() {
+  var nb_lignes = $(".categories-contenu-parcelles").children().length;
+  var premiere_ligne = $(".categories-contenu-ligne").first().html();
+  console.log(premiere_ligne);
+  var nouvelle_ligne = premiere_ligne.replace("nom_0", "nom_"+nb_lignes).replace("taille_0", "taille_"+nb_lignes).replace("parcelle-histoire_0", "parcelle-histoire_"+nb_lignes);
+  console.log(nouvelle_ligne);
+  $(".categories-contenu-parcelles").append(nouvelle_ligne);
 })

@@ -24,8 +24,16 @@ class MainController extends Controller
         ["nom" => "brebis + agneaux", "id" => "ovins_agneaux", "url" => "ovins_agneaux_seuls.svg"],
       ];
 
+      $historique_parcelle = [
+        ["nom" => "paturage","infestation_initiale" => 2, "taux_parcelle_contaminante" => 1],
+        ["nom" => "pré de fauche","infestation_initiale" => 1, "taux_parcelle_contaminante" => 1],
+        ["nom" => "nouvelle prairie","infestation_initiale" => 0,"taux_parcelle_contaminante" => 1],
+        ["nom" => "parcours sous bois", "infestation_initiale" => 0, "taux_parcelle_contaminante" => 0],
+      ];
+
       return view('action', [
         'liste_espece' => $liste_espece,
+        'historique_parcelle' => $historique_parcelle,
       ]);
     }
 

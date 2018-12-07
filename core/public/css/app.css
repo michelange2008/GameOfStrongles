@@ -151,7 +151,7 @@
   color: white;
 }
 
-.categories-contenu {
+.categories-contenu-troupeau {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -164,6 +164,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0.75rem;
 }
 
 .categories-troupeau {
@@ -199,13 +200,63 @@
   height: 100%;
 }
 
-.categories-contenu {
-  padding: 0.75rem;
-}
-
 .image_troupeau:hover {
   -webkit-box-shadow: 6px 6px 6px black;
           box-shadow: 6px 6px 6px black;
+}
+
+.categories-contenu-parcelles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: columns;
+          flex-direction: columns;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.categories-contenu-parcelles .categories-contenu-ligne {
+  width: 100%;
+  margin: 0.5rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.categories-contenu-parcelles .categories-contenu-ligne input, .categories-contenu-parcelles .categories-contenu-ligne select {
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.plus {
+  color: lightgrey;
+  font-size: 3.9rem;
+  background: darkgreen;
+  border-radius: 50%;
+  margin: 0.5rem 1rem;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 2.9rem;
+}
+
+.plus:hover {
+  background: green;
+  color: black;
+}
+
+.plus img {
+  height: 50px;
 }
 
 .etable {

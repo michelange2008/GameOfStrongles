@@ -10,11 +10,12 @@
   font-size: 2rem;
   color: white;
 }
-.categories-contenu {
+.categories-contenu-troupeau {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  padding: 0.75rem;
 }
 .categories-troupeau {
   display: flex;
@@ -37,9 +38,41 @@
     height: 100%;
   }
 }
-.categories-contenu {
-  padding: 0.75rem;
-}
 .image_troupeau:hover {
   box-shadow: 6px 6px 6px black;
+}
+.categories-contenu-parcelles {
+  display: flex;
+  flex-direction: columns;
+  flex-wrap: wrap;
+  .categories-contenu-ligne {
+    width: 100%;
+    margin: 0.5rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    input, select {
+      margin: 0 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+}
+.plus {
+  color: lightgrey;
+  font-size: 3.9rem;
+  background: darkgreen;
+  border-radius: 50%;
+  margin: 0.5rem 1rem;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 2.9rem;
+  &:hover {
+    background: green;
+    color: black;
+  }
+  img{
+    height: 50px;
+  }
 }
