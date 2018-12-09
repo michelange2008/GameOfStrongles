@@ -10,7 +10,6 @@ class Constantes
   const PAS_DE_TEMPS = 1;
   const NB_PARCELLES_PAR_LIGNE = 3;
 
-  const NB_STRONGLE_PAR_LOT = 5;
   // modélisation parasites
   const PATHOGEN = 1;
   const AGE_L3_FIN_HIVER = 30;
@@ -38,9 +37,7 @@ class Constantes
   public static function param_bio()
   {
     $param_biologiques = [
-      "NB_STRONGLE_PAR_LOT" => self::NB_STRONGLE_PAR_LOT,
       "DUREE_PATURAGE" => self::DUREE_PATURAGE,
-      "NB_STRONGLE_PAR_LOT" => self::NB_STRONGLE_PAR_LOT,
       "TAUX_PARCELLE_CONTAMINANTE" => self::TAUX_PARCELLE_CONTAMINANTE,
       "PATHOGEN" => self::PATHOGEN,
       "AGE_L3_FIN_HIVER" => self::AGE_L3_FIN_HIVER,

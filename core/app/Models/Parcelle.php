@@ -11,12 +11,14 @@ class Parcelle extends Model
     protected $nom;
     protected $superficie;
     protected $infestation;
+    protected $contaminant;
 
     public function __construct($nom, $superficie)
     {
       $this->nom = $nom;
       $this->superficie = $superficie;
       $this->infestation = collect();
+      $this->contaminant = self::contaminant();
     }
 
     public function nom()

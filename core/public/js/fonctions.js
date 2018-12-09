@@ -52,17 +52,67 @@ $(".image_troupeau").on('click', function() {
     if($(this).attr('value') == troupeau)
     {
       $(this).prop('checked', true);
-      $("#"+troupeau).css('box-shadow', '6px 6px 6px red');
+      $("#"+troupeau).css('box-shadow', '6px 6px 6px green');
     }
   })
 });
-
+//################################### NIVEAU D'INFESTATON DU TROUPEAU ##########
+$('.feu').on('click', function() {
+  var id_feu = $(this).attr('id');
+  $('.feu').removeClass('feu-choisi');
+  $('#'+id_feu).addClass('feu-choisi');
+  $('input[name = "infestation_troupeau"]').prop('checked', true);
+  $('input[name = "infestation_troupeau"]').attr('value', id_feu);
+});
+//################################ CLIQUE SUR DEMO #############################
+$("#demo").on('click', function(){
+  $('input[name = "action"]').prop('checked', true);
+  $('input[name = "action"]').attr('value', 'demo');
+  $('input[type = "submit"]').click();
+});
+$("#param").on('click', function(){
+  $('input[name = "action"]').prop('checked', true);
+  $('input[name = "action"]').attr('value', 'param');
+  $('input[type = "submit"]').click();
+});
+$('input[type = "submit"]').on('mouseover', function(){
+  $('input[name = "action"]').prop('checked', true);
+  $('input[name = "action"]').attr('value', 'action');
+});
 //################################ AJOUT LIGNE PARCELLE ########################
 $("#ajout").on('click',function() {
   var nb_lignes = $(".categories-contenu-parcelles").children().length;
-  var premiere_ligne = $(".categories-contenu-ligne").first().html();
-  console.log(premiere_ligne);
-  var nouvelle_ligne = premiere_ligne.replace("nom_0", "nom_"+nb_lignes).replace("taille_0", "taille_"+nb_lignes).replace("parcelle-histoire_0", "parcelle-histoire_"+nb_lignes);
-  console.log(nouvelle_ligne);
+  console.log($(".categories-contenu-parcelles").first().html());
+  var premiere_ligne = "<div class='categories-contenu-ligne'>"
+    +$(".categories-contenu-ligne").first().html()
+    +"</div>";
+
+  var nouvelle_ligne = premiere_ligne.replace(/_0/g, "_"+nb_lignes);
   $(".categories-contenu-parcelles").append(nouvelle_ligne);
 })
+//############################# SAISON DE PATURAGE #############################
+var annee = new Date().getFullYear();
+var months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Août", "Sept", "Oct", "Nov", "Dec"];
+$("#slider").dateRangeSlider({
+  bounds: {min: new Date(annee, 0, 1), max: new Date(annee, 11, 31, 12, 59, 59)},
+  defaultValues: {min: new Date(annee, 2, 10), max: new Date(annee, 9, 22)},
+scales: [{
+  first: function(value){ return value; },
+  end: function(value) {return value; },
+  next: function(value){
+    var next = new Date(value);
+    return new Date(next.setMonth(value.getMonth() + 1));
+  },
+  label: function(value){
+    return months[value.getMonth()];
+  },
+  format: function(tickContainer, tickStart, tickEnd){
+    tickContainer.addClass("myCustomClass");
+  }
+}]
+});
+
+$("#slider").bind("valuesChanged", function(e, data){
+  $("#mise_a_l_herbe").val(new Date(data.values.min).toISOString().split('T')[0]);
+  $("#entre_bergerie").val(new Date(data.values.max).toISOString().split('T')[0]);
+});

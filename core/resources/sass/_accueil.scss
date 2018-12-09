@@ -1,5 +1,6 @@
 .categories {
   margin: 0.5rem auto;
+  padding: 1rem;
   background-image: linear-gradient(to right, black, darkgrey);
 }
 .categories-titres {
@@ -41,20 +42,55 @@
 .image_troupeau:hover {
   box-shadow: 6px 6px 6px black;
 }
+.categories-infestation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  .feu {
+    margin: 0.25rem;
+    border-radius: 100%;
+    filter: opacity(30%);
+    cursor: pointer;
+    &:hover {
+      border: solid 1px white;
+    }
+  }
+  input { display: none}
+  .vert {
+    background: lightgreen;
+    height: 20px;
+    width: 20px
+  }
+  .orange {
+    background: orange;
+    height: 40px;
+    width: 40px
+  }
+  .rouge {
+    background: red;
+    height: 60px;
+    width: 60px
+  }
+  .feu-choisi {
+    filter: opacity(100%);
+    box-shadow: 1px 1px 5px slategrey
+  }
+}
 .categories-contenu-parcelles {
   display: flex;
   flex-direction: columns;
   flex-wrap: wrap;
   .categories-contenu-ligne {
-    width: 100%;
     margin: 0.5rem 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    input, select {
-      margin: 0 0.5rem;
-      font-size: 1.5rem;
-    }
+  }
+  input, select {
+    box-shadow: 2px 2px 6px black;
+    margin: 0 0.5rem;
+    font-size: 1.5rem;
   }
 }
 .plus {
@@ -62,7 +98,7 @@
   font-size: 3.9rem;
   background: darkgreen;
   border-radius: 50%;
-  margin: 0.5rem 1rem;
+  margin: 1rem 1rem;
   width: 50px;
   height: 50px;
   cursor: pointer;
@@ -74,5 +110,22 @@
   }
   img{
     height: 50px;
+  }
+}
+#boutons {
+  display: flex;
+  justify-content: space-between;
+}
+.demo {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 1;
+  img {
+    height: 30px;
+  }
+  p {
+    font-size: 1rem;
+    margin: 0.25rem;
   }
 }

@@ -3,10 +3,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Constantes\Constantes;
+use App\Factory\ParcelleFactory;
+use App\Factory\ExploitationFactory;
+use App\Factory\Demo;
+use App\Factory\ListeEspeces;
+use App\Factory\ParcellesTypes;
+
 use App\Models\Troupeau;
-use App\Models\Parcelle;
-use App\Models\Dessinparcelle;
-use App\Models\Dessinparcellaire;
 use App\Models\StrongleIn;
 use App\Models\StrongleOut;
 use App\Traits\NbLignes;
@@ -16,35 +19,45 @@ class MainController extends Controller
   use NbLignes;
   use ListeMois;
 
-    public function action()
+  protected $exploitation;
+
+    public function index()
     {
-      $liste_espece = [
-        ["nom" => "chèvres", "id" => "caprins", "url" => "caprins_seuls.svg"],
-        ["nom" => "brebis", "id" => "ovins", "url" => "ovins_seuls.svg"],
-        ["nom" => "brebis + agneaux", "id" => "ovins_agneaux", "url" => "ovins_agneaux_seuls.svg"],
-      ];
+      $parcelles_type = new ParcellesTypes();
+      $especes = new ListeEspeces();
 
-      $historique_parcelle = [
-        ["nom" => "paturage","infestation_initiale" => 2, "taux_parcelle_contaminante" => 1],
-        ["nom" => "pré de fauche","infestation_initiale" => 1, "taux_parcelle_contaminante" => 1],
-        ["nom" => "nouvelle prairie","infestation_initiale" => 0,"taux_parcelle_contaminante" => 1],
-        ["nom" => "parcours sous bois", "infestation_initiale" => 0, "taux_parcelle_contaminante" => 0],
-      ];
-
-      return view('action', [
-        'liste_espece' => $liste_espece,
-        'historique_parcelle' => $historique_parcelle,
+      return view('index', [
+        'liste_espece' => $especes->especes(),
+        'parcelles_type' => $parcelles_type->listeParcellesType(),
       ]);
     }
 
     public function data(Request $request)
     {
-      dd($request->all());
+      // dd($request->all());
+      switch($request->all()['action'])
+      {
+        case 'action':
+          $this->exploitation = new ExploitationFactory($request->all());
+          dump($this->exploitation);
+          break;
+
+        case 'demo':
+          $demo = new Demo();
+          $this->exploitation = $demo->exploitation();
+          return redirect()->route('action');
+
+        case 'param':
+        dd('param');
+
+        default:
+        dd('defaut');
+      }
     }
 
-    public function index()
+    public function action()
     {
-      //################### Données temporairesp pour créer les objets #########
+      //################### Données temporaires pour créer les objets #########
       $troupeau_exemple = ['caprins', 50];
       $listes_parcelles = collect([
         ['nom' => 'petit champ', 'superficie' => 4, 'oeuf'=> 0, "L3" => 1],
@@ -59,34 +72,13 @@ class MainController extends Controller
       $duree_paturage = Constantes::DUREE_PATURAGE; // nombre de jours
       $mise_a_l_herbe = Carbon::createFromDate(Carbon::now()->year, $mois, $jour);
       $liste_mois = $this->listeMois($mise_a_l_herbe, $duree_paturage);
-      // dd($liste_mois);
-      //########################################################################
-      //################## Création des lots de strongles ######################
-      $nb_lots = 100;
-      $nb_parasite = 5;
-      for($i = 0; $i < $nb_lots ; $i++)
-      {
-        for($j = 0; $j < $nb_parasite; $j++)
-        {
-          $parasite = ['x' => rand(0, 98), 'y' => rand(0,95)];
-          $lot[$j] = $parasite;
-        }
-        $total_parasite[$i] = $lot;
-      }
-      //########################################################################
+
       //#################### CREATION D'UN NOUVEAU TROUPEAU ####################
       $troupeau = new Troupeau($troupeau_exemple[0], $troupeau_exemple[1]);
       $troupeau->setInfestation($nb_strongles_initial);
       //################## CREATION DE LA LISTE DES PARCELLES À DESSINER ######################
-      $dessinparcellaire = new Dessinparcellaire(); // Nouvel objet dessinParcellaire
-      for($i = 0; $i < $listes_parcelles->count(); $i++) { // On boucle sur la liste des parcelles
-        $parcelle = new Parcelle($listes_parcelles[$i]['nom'], $listes_parcelles[$i]['superficie']);
-        $parcelle->setInfestation(Constantes::AGE_L3_FIN_HIVER, $listes_parcelles[$i]['oeuf'], $listes_parcelles[$i]['L3']);
+      $parcelleFactory = new ParcelleFactory($listes_parcelles);
 
-        $dessinparcelle = new Dessinparcelle($i, $parcelle); // On crée un objet dessinparcelle avec chaque parcelle
-        $dessinparcellaire->addDessinparcelle($dessinparcelle); // On ajoute cet objet à la liste de l'objet dessinParcellaire
-      }
-      $dessinparcellaire->SetLongueur_et_X_DessinParcelle(); // On fixe les valeurs de X (position dans la page) et de longueur des objets dessinparcelle
       $param_biologiques = Constantes::param_bio();
 
       return view('gos_main', [
@@ -95,7 +87,7 @@ class MainController extends Controller
         'pas_de_temps' => Constantes::PAS_DE_TEMPS,
         'liste_mois' => $liste_mois,
         'troupeau' => $troupeau,
-        'liste_parcelles' => $dessinparcellaire,
+        'liste_parcelles' => $parcelleFactory->dessinParcellaire(),
       ]);
     }
 }
