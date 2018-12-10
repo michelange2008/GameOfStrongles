@@ -18,8 +18,8 @@
         <div class="titre">
           <h6 class="">date</h6>
         </div>
-        <p id="date" data="{{$mise_a_l_herbe->toAtomString()}}"
-          style="text-align:center">{{$mise_a_l_herbe->day}} {{$mise_a_l_herbe->localeMonth}}</p>
+        <p id="date" data="{{$dates['mise_a_l_herbe']->toAtomString()}}"
+          style="text-align:center">{{$dates['mise_a_l_herbe']->day}} {{$dates['mise_a_l_herbe']->localeMonth}}</p>
         <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">{{$pas_de_temps}}</span> jours)</p>
       </div>
       <div class="cadran">

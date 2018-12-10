@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-{{ Form::open(['route' => 'data', "id" => "form"])}}
+{{ Form::open(['route' => 'action', "id" => "form"])}}
 <div class="container-fluid">
   <div class="main-titre titre">
     <div class="main-titre-texte">
@@ -39,8 +39,8 @@
     <div class="categories-saison">
       <div id="slider"></div>
       <div style="display:none">
-        <input id="mise_a_l_herbe" class="date" type="date" name="mise_a_l_herbe" value="">
-        <input id="entre_bergerie" class="date" type="date" name="entre_bergerie" value="">
+        <input id="mise_a_l_herbe" class="date" type="date" name="mise_a_l_herbe" value="2018-03-18">
+        <input id="entre_bergerie" class="date" type="date" name="entre_bergerie" value="2018-10-22">
       </div>
     </div>
   </div>

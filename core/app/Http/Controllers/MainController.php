@@ -32,62 +32,43 @@ class MainController extends Controller
       ]);
     }
 
-    public function data(Request $request)
+    public function action(Request $request)
     {
       // dd($request->all());
       switch($request->all()['action'])
       {
         case 'action':
-          $this->exploitation = new ExploitationFactory($request->all());
-          dump($this->exploitation);
+          $exploitation = new ExploitationFactory($request->all());
           break;
 
         case 'demo':
           $demo = new Demo();
-          $this->exploitation = $demo->exploitation();
-          return redirect()->route('action');
+          $exploitation = $demo->exploitation();
+          break;
 
         case 'param':
-        dd('param');
+        return redirect()->route('param');
 
         default:
         dd('defaut');
       }
-    }
 
-    public function action()
-    {
-      //################### Données temporaires pour créer les objets #########
-      $troupeau_exemple = ['caprins', 50];
-      $listes_parcelles = collect([
-        ['nom' => 'petit champ', 'superficie' => 4, 'oeuf'=> 0, "L3" => 1],
-        ['nom' => 'grand pré', 'superficie' => 8, 'oeuf'=> 0, "L3" => 0],
-        ['nom' => 'chez Marcel', 'superficie' => 0.5, 'oeuf'=> 0, "L3" => 0],
-        ['nom' => 'en-bas', 'superficie' => 3, 'oeuf'=> 0, "L3" => 0],
-        ['nom' => 'en-haut', 'superficie' => 10,  'oeuf'=> 0, "L3" => 1],
-      ]);
-      $nb_strongles_initial = 1;
-      $mois = 3;
-      $jour = 18;
-      $duree_paturage = Constantes::DUREE_PATURAGE; // nombre de jours
-      $mise_a_l_herbe = Carbon::createFromDate(Carbon::now()->year, $mois, $jour);
-      $liste_mois = $this->listeMois($mise_a_l_herbe, $duree_paturage);
-
-      //#################### CREATION D'UN NOUVEAU TROUPEAU ####################
-      $troupeau = new Troupeau($troupeau_exemple[0], $troupeau_exemple[1]);
-      $troupeau->setInfestation($nb_strongles_initial);
-      //################## CREATION DE LA LISTE DES PARCELLES À DESSINER ######################
-      $parcelleFactory = new ParcelleFactory($listes_parcelles);
+      $liste_mois = $this->listeMois($exploitation->dates()['mise_a_l_herbe'], $exploitation->dates()['duree_paturage']);
 
       $param_biologiques = Constantes::param_bio();
 
       return view('gos_main', [
         'param_biologiques' => $param_biologiques,
-        'mise_a_l_herbe' => $mise_a_l_herbe,
         'pas_de_temps' => Constantes::PAS_DE_TEMPS,
         'liste_mois' => $liste_mois,
-        'troupeau' => $troupeau,
-        'liste_parcelles' => $parcelleFactory->dessinParcellaire(),
+        'troupeau' => $exploitation->troupeau(),
+        'liste_parcelles' => $exploitation->dessinparcellaire(),
+        'dates' => $exploitation->dates(),
       ]);
+    }
+
+    public function param()
+    {
+      return view('param');
     }
 }

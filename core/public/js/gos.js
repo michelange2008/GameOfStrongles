@@ -132,16 +132,7 @@ $('.parcellaire').masonry({
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
-    //remise à zéro
     location.reload();
-    // date.setDate(date.getDate()-pas_de_temps);
-    // $('#date').html(date.toLocaleDateString('fr-FR', options_date));
-    // // recul du curseur
-    // var position_curseur = $('#curseur').css('left');
-    // var curseur = $('#curseur').css('left',parseInt(position_curseur)-parseInt(saut_curseur));
-    //
-    // troupeau.evolutionStrongles(-pas_de_temps);
-    // troupeau_evolution_excretion();
   }
   })
 
