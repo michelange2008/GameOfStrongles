@@ -9,9 +9,6 @@ use App\Factory\Demo;
 use App\Factory\ListeEspeces;
 use App\Factory\ParcellesTypes;
 
-use App\Models\Troupeau;
-use App\Models\StrongleIn;
-use App\Models\StrongleOut;
 use App\Traits\NbLignes;
 use App\Traits\ListeMois;
 class MainController extends Controller
@@ -31,33 +28,33 @@ class MainController extends Controller
         'parcelles_type' => $parcelles_type->listeParcellesType(),
       ]);
     }
-
+    // affiche soit le plateau de jeu, soit la démonstration soit la modif des param bio
     public function action(Request $request)
     {
-      // dd($request->all());
-      switch($request->all()['action'])
+      switch($request->all()['action']) // en fonction du bouton cliqué
       {
-        case 'action':
+        case 'action': // mise en oeuvre du jeu en fonction des parametres
           $exploitation = new ExploitationFactory($request->all());
           break;
 
-        case 'demo':
+        case 'demo': // mis en jeu de la démonstration
           $demo = new Demo();
           $exploitation = $demo->exploitation();
           break;
 
-        case 'param':
+        case 'param': // modification des parametres biologiques
         return redirect()->route('param');
 
         default:
         dd('defaut');
       }
-
+      // définit la ligne de temps en fonction des dates de mise à l'herbe et d'entre en bergerie
       $liste_mois = $this->listeMois($exploitation->dates()['mise_a_l_herbe'], $exploitation->dates()['duree_paturage']);
-
+      // récupère les paramètres biologiques
       $param_biologiques = Constantes::param_bio();
 
       return view('gos_main', [
+        // TODO: qu'est ce qu'on fait du pas de temps?
         'param_biologiques' => $param_biologiques,
         'pas_de_temps' => Constantes::PAS_DE_TEMPS,
         'liste_mois' => $liste_mois,
@@ -69,6 +66,11 @@ class MainController extends Controller
 
     public function param()
     {
-      return view('param');
+      $param_json = file_get_contents(asset('core/resources/json/param.json'));
+      $param_bio= json_decode($param_json);
+
+      return view('param', [
+        'param_bio' => $param_bio,
+      ]);
     }
 }
