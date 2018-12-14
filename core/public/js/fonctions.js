@@ -116,3 +116,30 @@ $("#slider").bind("valuesChanged", function(e, data){
   $("#mise_a_l_herbe").val(new Date(data.values.min).toISOString().split('T')[0]);
   $("#entre_bergerie").val(new Date(data.values.max).toISOString().split('T')[0]);
 });
+//################################ MODIF PARAM #################################
+$('#adulte_mort').on('change', function(){
+  modifParam();
+});
+function modifParam() {
+  url = location+"/modification";
+  console.log(url);
+  $.ajaxSetup({
+     headers: {
+         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+     }
+ });
+  $.ajax({
+     type:'GET',
+     url:url,
+     dataType: "text",
+     data:'toto',
+
+     success:function(data){
+       alert("c'est bon");
+        // $("#msg").html(data.msg);
+     },
+     error: function (data) {
+    console.log(data);
+    }
+  });
+}

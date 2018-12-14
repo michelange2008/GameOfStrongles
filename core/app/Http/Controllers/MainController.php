@@ -68,9 +68,23 @@ class MainController extends Controller
     {
       $param_json = file_get_contents(asset('core/resources/json/param.json'));
       $param_bio= json_decode($param_json);
+      $param_bio->adulte_mort->valeur = 130;
+      $param_json_nouveau = json_encode($param_bio, JSON_UNESCAPED_UNICODE);
+
+      // Ouverture du fichier
+      $fichier = fopen('core/resources/json/param.json', 'w+');
+      // Ecriture dans le fichier
+      fwrite($fichier, $param_json_nouveau);
+      // Fermeture du fichier
+      fclose($fichier);
 
       return view('param', [
         'param_bio' => $param_bio,
       ]);
+    }
+
+    public function ecritParamBio()
+    {
+      dd('enfin !');
     }
 }

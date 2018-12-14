@@ -46,7 +46,17 @@
     <div id="pathogen" class="champs">
       <label for="pathogen">{{ucfirst($param_bio->pathogen->nom)}}</label>
       <div class="">
-        <input type="number" name="pathogen" value="{{$param_bio->pathogen->valeur}}">
+        <select class="" name="pathogen">
+          <option value="{{ucfirst($param_bio->pathogen->valeur->haemonchus_2->degre)}}">{{$param_bio->pathogen->valeur->haemonchus_2->intitule}}</option>
+          <option value="{{ucfirst($param_bio->pathogen->valeur->haemonchus_1->degre)}}" selected>{{$param_bio->pathogen->valeur->haemonchus_1->intitule}}</option>
+          <option value="{{ucfirst($param_bio->pathogen->valeur->haemonchus_0->degre)}}">{{$param_bio->pathogen->valeur->haemonchus_0->intitule}}</option>
+        </select>
+      </div>
+    </div>
+    <div id="param_model" class="model">
+      <h5>Parametres du modèle</h5>
+      <div class="model-contenu">
+
       </div>
     </div>
   </div>

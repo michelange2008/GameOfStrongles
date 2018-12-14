@@ -1,0 +1,39 @@
+{
+"L3_infestante" : {
+    "nom" : "oeuf à L3 infestante",
+    "valeur" : 21
+  },
+  "L3_morte" : {
+    "nom" : "longévite de L3",
+    "valeur" : 60
+  },
+  "periode_prepatente" : {
+    "nom" : "période prépatente",
+    "valeur" : 15
+  },
+  "infestation_maximum" : {
+    "nom" : "durée entre infestation et ponte maximum",
+    "valeur" : 20
+  },
+  "adulte_mort" : {
+    "nom" : "longévité des strongles adultes",
+    "valeur" : 100
+  },
+  "pathogen" : {
+    "nom" : "pathogénicité",
+    "valeur" : {
+      "haemonchus_2" : {
+        "intitule" : "haemonchus +++",
+        "degre" : 2
+      },
+      "haemonchus_1" : {
+        "intitule" : "haemonchus ++",
+        "degre" : 1
+      },
+      "haemonchus_0" : {
+        "intitule" : "haemonchus -",
+        "degre" : 0
+        }
+    }
+  }
+}

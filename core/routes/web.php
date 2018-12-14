@@ -15,3 +15,5 @@ Route::get('/' , ['uses' => 'MainController@index', 'as' => 'index']);
 Route::post('/action', ['uses' => 'MainController@action', 'as' => 'action']);
 
 Route::get('/parametres', ['uses' => 'MainController@param', 'as' => 'param']);
+
+Route::get('/parametres/modification', ['uses' => 'MainController@ecritParamBio', 'as' => 'ecritParamBio']);

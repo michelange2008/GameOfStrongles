@@ -1,6 +1,6 @@
 .categories-biologie {
   display: grid;
-  grid-template-columns: 25% 1fr 25%;
+  grid-template-columns: 18% 1fr 18% 25%;
   grid-template-rows: 100px 1fr 100px;
   align-items: center;
   justify-items: center;
@@ -35,6 +35,12 @@
 #adulte_mort {
   grid-row: 1;
   grid-column: 2;
+}
+#param_model {
+  grid-row: 1 /span 3;
+  grid-column: 4;
+  border-left: solid 5px black;
+  padding: 0.5rem;
 }
 .champs {
   display: inline-flex;
