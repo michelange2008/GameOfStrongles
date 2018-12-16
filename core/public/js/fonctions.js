@@ -117,26 +117,34 @@ $("#slider").bind("valuesChanged", function(e, data){
   $("#entre_bergerie").val(new Date(data.values.max).toISOString().split('T')[0]);
 });
 //################################ MODIF PARAM #################################
-$('#adulte_mort').on('change', function(){
-  modifParam();
+
+$('.zone_saisie').on('change', function(){
+  var id_input = $(this).attr('id');
+  var value = $(this).val();
+  modifParam(id_input, value);
 });
-function modifParam() {
+function modifParam(id_input, value) {
   url = location+"/modification";
-  console.log(url);
+
   $.ajaxSetup({
      headers: {
-         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
      }
  });
+ var json = {
+   "nom" : id_input,
+   "valeur" : value
+ };
+
   $.ajax({
-     type:'GET',
+     type:'POST',
      url:url,
-     dataType: "text",
-     data:'toto',
+     dataType: "json",
+     data: json,
 
      success:function(data){
-       alert("c'est bon");
-        // $("#msg").html(data.msg);
+       $('.helmet').fadeIn(0);
+       $('.helmet').fadeOut(2000);
      },
      error: function (data) {
     console.log(data);

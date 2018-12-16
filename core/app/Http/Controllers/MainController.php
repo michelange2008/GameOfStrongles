@@ -11,10 +11,13 @@ use App\Factory\ParcellesTypes;
 
 use App\Traits\NbLignes;
 use App\Traits\ListeMois;
+use App\Traits\LitJson;
+
 class MainController extends Controller
 {
   use NbLignes;
   use ListeMois;
+  use LitJson;
 
   protected $exploitation;
 
@@ -52,7 +55,7 @@ class MainController extends Controller
       $liste_mois = $this->listeMois($exploitation->dates()['mise_a_l_herbe'], $exploitation->dates()['duree_paturage']);
       // récupère les paramètres biologiques
       $param_biologiques = Constantes::param_bio();
-
+      dd($this->litJson("param.json"));
       return view('gos_main', [
         // TODO: qu'est ce qu'on fait du pas de temps?
         'param_biologiques' => $param_biologiques,
@@ -66,8 +69,7 @@ class MainController extends Controller
 
     public function param()
     {
-      $param_json = file_get_contents(asset('core/resources/json/param.json'));
-      $param_bio= json_decode($param_json);
+      $param_bio= $this->litJson("param.json"); // ouvre et décode le fichier json grâce au trait LitJson
       $param_bio->adulte_mort->valeur = 130;
       $param_json_nouveau = json_encode($param_bio, JSON_UNESCAPED_UNICODE);
 
@@ -83,8 +85,24 @@ class MainController extends Controller
       ]);
     }
 
-    public function ecritParamBio()
+    public function ecritParamBio(Request $request)
     {
-      dd('enfin !');
+      $nom = $request->nom;
+      $valeur = $request->valeur;
+
+      $param_json = file_get_contents(asset('core/resources/json/param.json'));
+      $param_bio= json_decode($param_json);
+      $param_bio->$nom->valeur = $valeur;
+
+      $param_json_nouveau = json_encode($param_bio, JSON_UNESCAPED_UNICODE);
+
+      // Ouverture du fichier
+      $fichier = fopen('core/resources/json/param.json', 'w+');
+      // Ecriture dans le fichier
+      fwrite($fichier, $param_json_nouveau);
+      // Fermeture du fichier
+      fclose($fichier);
+
+      return $request;
     }
 }

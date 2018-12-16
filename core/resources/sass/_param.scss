@@ -57,3 +57,11 @@
     border: none;
   }
 }
+.helmet {
+  display: none;
+  img {
+    border-radius: 100%;
+    box-shadow: 1px 1px 1px lime;
+    width: 50px;
+  }
+}

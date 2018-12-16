@@ -769,6 +769,17 @@ input::-o-inner-spin-button {
   border: none;
 }
 
+.helmet {
+  display: none;
+}
+
+.helmet img {
+  border-radius: 100%;
+  -webkit-box-shadow: 1px 1px 1px lime;
+          box-shadow: 1px 1px 1px lime;
+  width: 50px;
+}
+
 /*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
