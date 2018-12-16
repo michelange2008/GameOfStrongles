@@ -6,7 +6,6 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     // création de l'objet troupeau sur la base du div #troupeau
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
-
 //######################################### FONCTIONS ##############################################################
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################

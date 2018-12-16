@@ -11,7 +11,7 @@ function Troupeau(espece, taille)
 Troupeau.prototype.sinfeste = function(nb_strongles){
 
 var jours = (pas_de_temps ? pas_de_temps : 1);
-console.log(jours);
+
   for($i = 1 ; $i <= nb_strongles*pas_de_temps; $i++)
   {
     strongle = new StrongleIn(1);

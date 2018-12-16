@@ -34,7 +34,7 @@
           crossorigin="anonymous"></script>
       <script src="{{asset('core/public/js/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
       <script src="{{asset('core/public/js/jQRangeSlider-5.7.2/jQDateRangeSlider-withRuler-min.js')}}"></script>
-      <script src="{{asset('core/public/js/moment.min.js')}}"></script>
+      <script src="{{asset('core/public/js/jquery.cookie.js')}}"></script>
       <script src="{{asset('core/public/js/constantes.js')}}"></script>
       <script src="{{asset('core/public/js/troupeau.js')}}"></script>
       <script src="{{asset('core/public/js/parcelle.js')}}"></script>

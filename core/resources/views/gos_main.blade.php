@@ -45,7 +45,7 @@
     </div>
     {{-- Grand panneau de droite avec time-line, troupeau et paturages --}}
     <div id="plateau" class="col-sm-10">
-      <div id="temps" class="time-line" paturage="{{$param_biologiques['DUREE_PATURAGE']}}">
+      <div id="temps" class="time-line" paturage="{{$dates['duree_paturage']}}">
         <div class="saison">
           @foreach ($liste_mois as $mois)
             <div id="month" class="mois" style="width:{{$mois['nb_jours']}}%">
@@ -63,7 +63,7 @@
                 espece="{{$troupeau->espece()}}"
                 taille="{{$troupeau->taille()}}"
                 infestation="{{$troupeau->infestation()->count()}}"
-                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$param_biologiques['TAUX_TROUPEAU_CONTAMINANT']}}"
+                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$param_modele['TAUX_TROUPEAU_CONTAMINANT']}}"
                 lieu="chevrerie">
                 {{-- <img src="{{config('fichiers.svg').$troupeau->espece().".svg"}}" alt="{{$troupeau->espece()}}"> --}}
             @foreach ($troupeau->infestation() as $strongle)
@@ -81,7 +81,7 @@
               style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
               superficie = {{$parcelle->parcelle()->superficie()}}
               infestation = {{$parcelle->parcelle()->infestation()->count()}}
-              contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_biologiques['TAUX_PARCELLE_CONTAMINANTE'])}}>
+              contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_modele['TAUX_PARCELLE_CONTAMINANTE'])}}>
               <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
               @foreach ($parcelle->parcelle()->infestation() as $strongle)
                 <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}}"
@@ -102,7 +102,7 @@
 
     @php
       foreach ($param_biologiques as $key => $parametre) {
-        echo '<li id="'.$key.'" class="parametres" data="'.$parametre.'"></li>';
+        echo '<li id="'.$key.'" class="parametres" data="'.$parametre['valeur'].'"></li>';
       }
     @endphp
 </ul>
