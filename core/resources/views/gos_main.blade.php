@@ -9,6 +9,8 @@
 @section('content')
   {{-- Panneau principal --}}
   <div id="main" class="row">
+    {{Form::open(['route' => 'getJson'])}}
+    {{Form::close()}}
     {{-- Panneau de gauche qui fait moniteur --}}
     <div id="moniteur" class="infos col-sm-2">
       <div id="resultats" class="bandeau alert rounded-0">
@@ -104,7 +106,12 @@
       foreach ($param_biologiques as $key => $parametre) {
         echo '<li id="'.$key.'" class="parametres" data="'.$parametre['valeur'].'"></li>';
       }
-    @endphp
+      foreach ($param_descriptif as $key => $parametre) {
+        echo '<li id="'.$key.'" class="parametres" data="'.$parametre.'"></li>';
+      }
+      foreach ($param_modele as $key => $parametre) {
+        echo '<li id="'.$key.'" class="parametres" data="'.$parametre.'"></li>';
+      }    @endphp
 </ul>
 
 @endsection

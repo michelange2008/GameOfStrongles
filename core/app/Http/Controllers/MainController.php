@@ -92,8 +92,4 @@ class MainController extends Controller
       return '{"ok": "ça va"}';
     }
 
-    public function getJson()
-    {
-      return $this->litJson("param.json");
-    }
 }

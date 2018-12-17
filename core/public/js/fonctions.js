@@ -117,31 +117,9 @@ $("#slider").bind("valuesChanged", function(e, data){
   $("#entre_bergerie").val(new Date(data.values.max).toISOString().split('T')[0]);
 });
 
-//############################## RECUPERE LES PARAMETRES #######################
-function recupParam() {
-  $.ajaxSetup({
-     headers: {
-         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-     }
- });
- $.ajax({
-   type: 'GET',
-   url: location+"/getJson",
-   dataType: 'json',
-   success: function(data){
-     console.log(data);
-   },
-   error: function(data) {
-     console.log(data);
-   }
- });
-}
-
-
 //################################ MODIF PARAM #################################
 
 $('.zone_saisie').on('change', function(){
-  console.log($.cookie());
 
   var id_input = $(this).attr('id'); // on récupère l'id de l'input qui a changé
   // c'est à dire la clef de la valeur qui a changé

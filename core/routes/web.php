@@ -17,5 +17,3 @@ Route::post('/action', ['uses' => 'MainController@action', 'as' => 'action']);
 Route::get('/parametres', ['uses' => 'MainController@param', 'as' => 'param']);
 
 Route::post('/parametres/modification', ['uses' => 'MainController@ecritParamBio', 'as' => 'ecritParamBio']);
-
-Route::get('/parametres/getJson', ['uses' => 'MainController@getJson', 'as' => 'getJson']);

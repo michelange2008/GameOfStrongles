@@ -1,5 +1,6 @@
 // modélisation sensibilité hôte
 // modélisation parasites repris du HTML (définition dans php class Constantes)
+
 $('.parametres').each(function(index, param) {
 
   window[param.id] = $("#"+param.id).attr('data');
