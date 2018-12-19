@@ -1,11 +1,19 @@
 // modélisation sensibilité hôte
-// modélisation parasites repris du HTML (définition dans php class Constantes)
-
-$('.parametres').each(function(index, param) {
-
-  window[param.id] = $("#"+param.id).attr('data');
+// Constantes reprises depuis le fichier param.json mis en cookie àl'ouverture de la page
+$.each(JSON.parse($.cookie("param")), function(key, groupe){
+  $.each(groupe, function(key, val){ // en fonction du type de donnée, on convertit les valeurs numériques
+    if(isNaN(val.valeur)){
+      window[key] = val.valeur;
+    }
+    else if (Number.isInteger(val.valeur)) {
+      window[key] = parseInt(val.valeur);
+    }
+    else {
+      window[key] = parseFloat(val.valeur);
+    }
+  });
 });
-pas_de_temps = parseInt($("#pas_de_temps").html());
+
 // variables d'affichage
 parcelle_sans_troupeau = 'lightgreen';
 var parcelle_avec_troupeau = "green";

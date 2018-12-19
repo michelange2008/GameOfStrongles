@@ -6,7 +6,9 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
 
-
+    $.getJSON("http://localhost/GameOfStrongles/core/resources/json/param.json", function(resultat){
+      $.cookie('param', JSON.stringify(resultat));
+    });
 //######################################### FONCTIONS ##############################################################
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
@@ -77,9 +79,9 @@ $('.parcellaire').masonry({
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
-      var saut_curseur = pas_de_temps * largeur_time_line / duree_paturage;
+      var saut_curseur = PAS_DE_TEMPS * largeur_time_line / duree_paturage;
       // avancée de la Date
-      date.setDate(date.getDate()+pas_de_temps);
+      date.setDate(date.getDate()+PAS_DE_TEMPS);
       $('#date').html(date.toLocaleDateString('fr-FR', options_date));
       // avancée du curseur
       var position_curseur = $('#curseur').css('left');
@@ -87,13 +89,13 @@ $('.parcellaire').masonry({
 
       // EVOLUTION TROUPEAU #####################################################
       // évolution interne des strongles
-      troupeau.evolutionStrongles(pas_de_temps);
+      troupeau.evolutionStrongles(PAS_DE_TEMPS);
       // transformation éventuelle du troupeau en excréteur
       troupeau_evolution_excretion(troupeau);
 
       if(troupeau.parcelle !== null) {
         // nouvelle infestation du troupeau à partir de la parcelle
-        troupeau.sinfeste(troupeau.parcelle.contaminant, pas_de_temps); // modification du troupeau
+        troupeau.sinfeste(troupeau.parcelle.contaminant, PAS_DE_TEMPS); // modification du troupeau
         $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
       }
       // modification de l'aspect du troupeau
@@ -104,7 +106,7 @@ $('.parcellaire').masonry({
       // EVOLUTION PATURE #######################################################
       // pature évolution des larves
       exploitation.forEach(function(parcelle) {
-        parcelle.evolutionStrongles(pas_de_temps); //evolution de la parcelle
+        parcelle.evolutionStrongles(PAS_DE_TEMPS); //evolution de la parcelle
 
         if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
         {

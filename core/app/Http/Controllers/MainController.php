@@ -59,6 +59,7 @@ class MainController extends Controller
       $param_biologiques = $this->litJsonTab("param_bio.json");
       $param_descriptif = $this->litJsonTab("param_descriptif.json");
       $param_modele = $this->litJsonTab("param_modele.json");
+
       return view('gos_main', [
         // TODO: qu'est ce qu'on fait du pas de temps?
         'param_biologiques' => $param_biologiques,
@@ -75,8 +76,10 @@ class MainController extends Controller
     public function param()
     {
       $param_bio= $this->litJson("param_bio.json"); // ouvre et décode le fichier json grâce au trait LitJson
+      $param_modele = $this->litJsonTab("param_modele.json");
       return view('param', [
         'param_bio' => $param_bio,
+        'param_modele' => $param_modele,
       ]);
     }
 

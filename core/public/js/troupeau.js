@@ -10,9 +10,9 @@ function Troupeau(espece, taille)
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
 
-var jours = (pas_de_temps ? pas_de_temps : 1);
+  var jours = (PAS_DE_TEMPS ? PAS_DE_TEMPS : 1);
 
-  for($i = 1 ; $i <= nb_strongles*pas_de_temps; $i++)
+  for(i = 1 ; i <= nb_strongles*PAS_DE_TEMPS; i++)
   {
     strongle = new StrongleIn(1);
     this.infestation.push(strongle);

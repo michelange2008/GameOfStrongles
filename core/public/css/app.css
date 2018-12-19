@@ -594,7 +594,6 @@ input::-o-inner-spin-button {
   height: 100%;
   cursor: pointer;
   z-index: 10000;
-  background-image: url("../svg/caprins.svg");
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -767,6 +766,34 @@ input::-o-inner-spin-button {
   text-align: right;
   background: palegreen;
   border: none;
+}
+
+.model-contenu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: lightgreen;
+  margin: 0.25rem;
+  padding: 0.25rem 1rem;
+}
+
+.model-contenu input {
+  width: 40px;
+  text-align: right;
+  background: palegreen;
+  border: none;
+}
+
+.model h5 {
+  margin: 0 0 1.5rem 0;
+  font-family: "GameOfThrones";
 }
 
 .helmet {

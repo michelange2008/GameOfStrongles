@@ -57,6 +57,27 @@
     border: none;
   }
 }
+.model-contenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: lightgreen;
+  margin: 0.25rem;
+  padding: 0.25rem 1rem;
+
+  input {
+    width: 40px;
+    text-align: right;
+    background: palegreen;
+    border: none;
+  }
+}
+.model {
+  h5 {
+    margin: 0 0 1.5rem 0;
+      font-family: "GameOfThrones";
+  }
+}
 .helmet {
   display: none;
   img {

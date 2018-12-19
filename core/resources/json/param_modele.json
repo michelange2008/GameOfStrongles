@@ -1,9 +1,30 @@
 {
-"RISQUE_MORTALITE_MOYEN" : "1000",
-"RISQUE_MORTALITE_ELEVE" : "2000",
-"TROUPEAU_MORT" : "3000",
-"DECROISSANCE" : "1000",
-"TAUX_TROUPEAU_CONTAMINANT" : "1",
-"TAUX_PARCELLE_CONTAMINANTE" : "0.5",
-"PAS_DE_TEMPS" : "5"
+	"RISQUE_MORTALITE_MOYEN": {
+		"nom": "risque de mortalité moyen",
+		"valeur": "1000"
+	},
+	"RISQUE_MORTALITE_ELEVE": {
+		"nom": "risque de mortalité élevé",
+		"valeur": "2000"
+	},
+	"TROUPEAU_MORT": {
+		"nom": "mortalité du troupeau",
+		"valeur": "3000"
+	},
+	"DECROISSANCE": {
+		"nom": "décr. rythme d'infestation",
+		"valeur": "1000"
+	},
+	"TAUX_TROUPEAU_CONTAMINANT": {
+		"nom": "tx contamination par le troupeau",
+		"valeur": "1"
+	},
+	"TAUX_PARCELLE_CONTAMINANTE": {
+		"nom": "tx contamination par la parcelle",
+		"valeur": "0.5"
+	},
+	"PAS_DE_TEMPS": {
+		"nom": "pas de temps (jours)",
+		"valeur": "5"
+	}
 }

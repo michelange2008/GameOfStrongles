@@ -119,6 +119,8 @@ $("#slider").bind("valuesChanged", function(e, data){
 
 //################################ MODIF PARAM #################################
 
+
+
 $('.zone_saisie').on('change', function(){
 
   var id_input = $(this).attr('id'); // on récupère l'id de l'input qui a changé

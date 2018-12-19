@@ -9,8 +9,6 @@
 @section('content')
   {{-- Panneau principal --}}
   <div id="main" class="row">
-    {{Form::open(['route' => 'getJson'])}}
-    {{Form::close()}}
     {{-- Panneau de gauche qui fait moniteur --}}
     <div id="moniteur" class="infos col-sm-2">
       <div id="resultats" class="bandeau alert rounded-0">
@@ -22,7 +20,7 @@
         </div>
         <p id="date" data="{{$dates['mise_a_l_herbe']->toAtomString()}}"
           style="text-align:center">{{$dates['mise_a_l_herbe']->day}} {{$dates['mise_a_l_herbe']->localeMonth}}</p>
-        <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">{{$pas_de_temps}}</span> jours)</p>
+        <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">{{$param_modele['PAS_DE_TEMPS']['valeur']}}</span> jours)</p>
       </div>
       <div class="cadran">
         <div class="titre">
@@ -65,9 +63,9 @@
                 espece="{{$troupeau->espece()}}"
                 taille="{{$troupeau->taille()}}"
                 infestation="{{$troupeau->infestation()->count()}}"
-                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$param_modele['TAUX_TROUPEAU_CONTAMINANT']}}"
+                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$param_modele["TAUX_TROUPEAU_CONTAMINANT"]["valeur"]}}"
                 lieu="chevrerie">
-                {{-- <img src="{{config('fichiers.svg').$troupeau->espece().".svg"}}" alt="{{$troupeau->espece()}}"> --}}
+                <img src="{{config('fichiers.svg').$troupeau->espece().".svg"}}" alt="{{$troupeau->espece()}}">
             @foreach ($troupeau->infestation() as $strongle)
               <div class="strongleIn" etat="{{$strongle->etat()}}">
 
@@ -83,7 +81,7 @@
               style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
               superficie = {{$parcelle->parcelle()->superficie()}}
               infestation = {{$parcelle->parcelle()->infestation()->count()}}
-              contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_modele['TAUX_PARCELLE_CONTAMINANTE'])}}>
+              contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_modele['TAUX_PARCELLE_CONTAMINANTE']['valeur'])}}>
               <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
               @foreach ($parcelle->parcelle()->infestation() as $strongle)
                 <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}}"
@@ -100,18 +98,6 @@
     </div>
   </div>
 </div>
-<ul id="constantes">
 
-    @php
-      foreach ($param_biologiques as $key => $parametre) {
-        echo '<li id="'.$key.'" class="parametres" data="'.$parametre['valeur'].'"></li>';
-      }
-      foreach ($param_descriptif as $key => $parametre) {
-        echo '<li id="'.$key.'" class="parametres" data="'.$parametre.'"></li>';
-      }
-      foreach ($param_modele as $key => $parametre) {
-        echo '<li id="'.$key.'" class="parametres" data="'.$parametre.'"></li>';
-      }    @endphp
-</ul>
 
 @endsection
