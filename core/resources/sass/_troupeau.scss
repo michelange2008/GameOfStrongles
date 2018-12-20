@@ -5,10 +5,11 @@
   background: lightblue;
 }
 .flock {
-  width: 150px;
+  width: 200px;
   height: 100%;
   cursor: pointer;
   z-index: 10000;
+  background-image: url("../svg/foin.svg");
   background-repeat: no-repeat;
   background-size: contain;
   img {

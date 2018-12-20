@@ -39,7 +39,7 @@ $('.parcellaire').masonry({
   $draggable.on( 'dragEnd', function( event, pointer ) {
     $('.pature').each(function() { // on passe en revue toutes les parcelles
       $(this).attr('troupeau', false); // on passe à false la variable troupeau de toutes les patures
-      $(this).css('border', 'none'); // attribution d'une couleur fond parcelle sans troupeau
+      $(this).css('border', 'none'); // suppression de la bordure des parcelles sans troupeau
     })
     $('#troupeau').css('visibility', 'collapse'); // on rend invisible le troupeau (pour pouvoir connaitre l'élément qui est en dessous)
     $('.lot').css('visibility', 'collapse'); // et aussi les lots de strongle qui sont sur les parcelles
@@ -53,6 +53,7 @@ $('.parcellaire').masonry({
     // Si le troupeau est dans une parcelle on attribue le troupeau à la parcelle et vice versa
     if(parcelle_avec_troupeau instanceof Parcelle) // le troupeau n'est pas dans une parcelle
     {
+      $("#troupeau").css('background-image', 'none');
       troupeau.entreDansParcelle(parcelle_avec_troupeau);
       parcelle_avec_troupeau.entreTroupeau(troupeau);
       // On traduit ça dans le html (est-utile ?)

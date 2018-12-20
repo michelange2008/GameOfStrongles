@@ -22,6 +22,7 @@ var options_date = { month: 'long', day: 'numeric' };
 // construit l'adresse des images
 var url_svg = "";
 var tab_url_bg = $('#troupeau').css('background-image').split("/");
+
 tab_url_bg.pop();
 tab_url_bg.shift();
 tab_url_bg.forEach(function(e){

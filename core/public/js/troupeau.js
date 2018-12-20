@@ -46,11 +46,11 @@ function risqueMortalite(nb_strongles_adultes){
 }
 
 function troupeau_infestant(nb_strongles_adultes, troupeau){ // aspect du troupeau quand il a des adultes qui pondent
-  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'.svg), url('+url_svg+'crottes.svg)');
+  $('#troupeau').css('background-image', 'url('+url_svg+'crottes.svg)');
   $('#troupeau').attr('contaminant', tauxTroupeauContaminant(nb_strongles_adultes, troupeau.taille));
 }
 function troupeau_non_infestant(){// aspect du troupeau quand il n'a plus d'adultes qui pondent
-  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'.svg)');
+  $('#troupeau').css('background-image', 'none');
   troupeau.contaminant = false;
   $('#troupeau').attr('contaminant', 0);
 }
@@ -111,11 +111,14 @@ function elimination_morts(troupeau)
 
 function troupeau_dehors()
 {
+  // $("#troupeau").css('background-image', 'none');
+  $("#troupeau").css('background-image', '');
+  $("#troupeau").css('background-image', +url_svg+'fleurs.svg');
   $.alert({
     escapeKey: 'Ok',
       buttons: {
           Ok: function(){
-            $("#troupeau").css('left', 0).css('top', 0);
+            // $("#troupeau").css('left', 0).css('top', 0);
           }
       },
     theme: 'dark',
@@ -128,10 +131,13 @@ function troupeau_dehors()
 
 function troupeau_chevrerie()
 {
+  $("#troupeau").css('background-image', '');
+  $("#troupeau").css('background-image', +url_svg+'foin.svg');
   $.alert({
     escapeKey: 'Ok',
       buttons: {
           Ok: function(){
+
           }
       },
     theme: 'dark',
