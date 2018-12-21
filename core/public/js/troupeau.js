@@ -55,10 +55,10 @@ function troupeau_non_infestant(){// aspect du troupeau quand il n'a plus d'adul
   $('#troupeau').attr('contaminant', 0);
 }
 function troupeau_malade() { // aspect du troupeau quand infesté au dessus d'un certain niveau
-  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'_malades.svg), url('+url_svg+'crottes.svg)');
+  $('#troupeau > img').attr('src', url_svg+troupeau.espece+'_malades.svg');
 }
 function troupeau_presque_mort() { // aspect du troupeau quand infesté au dessus d'un certain niveau
-  $('#troupeau').css('background-image', 'url('+url_svg+troupeau.espece+'_morts.svg)');
+  $('#troupeau > img').css('src', url_svg+troupeau.espece+'_morts.svg');
 }
 function troupeau_mort() {
   $('#troupeau').css('visibility', 'hidden');
@@ -111,9 +111,8 @@ function elimination_morts(troupeau)
 
 function troupeau_dehors()
 {
-  // $("#troupeau").css('background-image', 'none');
-  $("#troupeau").css('background-image', '');
-  $("#troupeau").css('background-image', +url_svg+'fleurs.svg');
+  $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
+  console.log($("#troupeau").css('background-image'));
   $.alert({
     escapeKey: 'Ok',
       buttons: {
@@ -131,8 +130,7 @@ function troupeau_dehors()
 
 function troupeau_chevrerie()
 {
-  $("#troupeau").css('background-image', '');
-  $("#troupeau").css('background-image', +url_svg+'foin.svg');
+  $("#troupeau").css('background-image', 'url('+url_svg+'foin.svg)');
   $.alert({
     escapeKey: 'Ok',
       buttons: {

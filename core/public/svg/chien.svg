@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   data-name="Layer 1"
+   viewBox="0 0 400 100"
+   x="0px"
+   y="0px"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="chien.svg"
+   width="400"
+   height="100"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>PetIcons</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="836"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="2.36"
+     inkscape:cx="208.69669"
+     inkscape:cy="50"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <title
+     id="title2">PetIcons</title>
+  <path
+     d="m 345.51852,57.072712 5.09,-2.31 c 0.18,-0.08 0.42,-0.18 0.49,-0.33 a 5,5 0 0 1 2.6,-2.67 c 0,-1.14 -0.57,-2.27 0.26,-3.38 l 3.39,2.38 a 12.19,12.19 0 0 1 0.82,-3.82 c 0.68,0.63 1.3,1.13 1.82,1.71 a 6.61,6.61 0 0 1 1.88,4 3.13,3.13 0 0 0 0.29,1 c 1.03,2.11 2.19,4.23 3.19,6.41 0.19,0.43 0.36,0.86 0.52,1.3 v 0 c 0,0 1.48,4.4 7.25,9.16 v 0 a 24.61,24.61 0 0 1 5,4.51 13.24,13.24 0 0 1 3.39,9 c 0,1.45 -0.11,4.44 -1.46,5.53 5,1.62 10.4,-0.51 14.69,-3.53 a 0.67,0.67 0 0 1 1,0.52 c 0.05,1 0.09,1.91 0.05,2.83 a 6.08,6.08 0 0 1 -5.52,6.11 22.61,22.61 0 0 1 -5.2,0 c -2.75,-0.29 -5.47,-0.81 -7.26,-3.29 l -1.23,1.17 a 5.65,5.65 0 0 1 -5.72,1.68 22.47,22.47 0 0 0 -11.93,0.07 c -1,0.29 -1.23,0.13 -1.4,-0.32 a 1.94,1.94 0 0 1 1,-2.59 12,12 0 0 1 2.49,-0.91 21.92,21.92 0 0 1 2.4,-0.37 c -1.15,-2.2 -2.11,-4.37 -1.63,-6.91 l -2,-0.33 c -0.1,0.22 -0.18,0.41 -0.26,0.6 -0.84,1.95 -1.62,3.94 -2.55,5.86 -0.72,1.48 -1.62,2.88 -2.49,4.29 a 1.24,1.24 0 0 1 -0.81,0.56 c -1.36,0.09 -2.73,0.1 -4.1,0.12 -0.5,0 -0.71,-0.27 -0.57,-0.76 a 1.64,1.64 0 0 1 0.33,-0.66 21.84,21.84 0 0 1 1.9,-1.94 7.11,7.11 0 0 0 2.41,-3.68 24.55,24.55 0 0 0 0.28,-11.21 39.85,39.85 0 0 1 -0.31,-11.94 c 0.13,-1.08 0.38,-2.14 0.57,-3.15 a 2.22,2.22 0 0 1 -0.47,0.2 11.17,11.17 0 0 1 -4.57,0 3.77,3.77 0 0 1 -2.22,-1.22 8.21,8.21 0 0 0 -1.64,-2 1.09,1.09 0 0 1 -0.28,-0.47 c -0.26,-0.61 -0.13,-0.93 0.51,-1.22 z"
+     id="path4"
+     inkscape:connector-curvature="0" />
+</svg>

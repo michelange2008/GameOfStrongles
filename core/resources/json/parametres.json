@@ -1,0 +1,107 @@
+{
+	"NON_INFESTANT": {
+		"type": "description",
+		"nom": "NON_INFESTANT",
+		"valeur": "non_infestant"
+	},
+	"INFESTANT": {
+		"type": "description",
+		"nom": "INFESTANT",
+		"valeur": "infestant"
+	},
+	"MORT": {
+		"type": "description",
+		"nom": "MORT",
+		"valeur": "mort"
+	},
+	"PREPATENT": {
+		"type": "description",
+		"nom": "PREPATENT",
+		"valeur": "prepatent"
+	},
+	"PONTE": {
+		"type": "description",
+		"nom": "PONTE",
+		"valeur": "ponte"
+	},
+
+	"L3_INFESTANTE": {
+		"type": "biologie",
+		"nom": "oeuf à L3 infestante",
+		"valeur": "25"
+	},
+	"L3_MORTE": {
+		"type": "biologie",
+		"nom": "longévite de L3",
+		"valeur": "61"
+	},
+	"PERIODE_PREPATENTE": {
+		"type": "biologie",
+		"nom": "période prépatente",
+		"valeur": "15"
+	},
+	"infestation_maximum": {
+		"type": "biologie",
+		"nom": "durée entre infestation et ponte maximum",
+		"valeur": 20
+	},
+	"ADULTE_MORT": {
+		"type": "biologie",
+		"nom": "longévité des strongles adultes",
+		"valeur": "124"
+	},
+	"PATHOGEN": {
+		"type": "biologie",
+		"nom": "pathogénicité",
+		"valeur": "1",
+		"option": {
+			"haemonchus_2": {
+				"intitule": "haemonchus +++",
+				"degre": 2
+			},
+			"haemonchus_1": {
+				"intitule": "haemonchus ++",
+				"degre": 1
+			},
+			"haemonchus_0": {
+				"intitule": "haemonchus -",
+				"degre": 0
+			}
+		}
+	},
+	"RISQUE_MORTALITE_MOYEN": {
+		"type": "modele",
+		"nom": "risque de mortalité moyen",
+		"valeur": "1000"
+	},
+	"RISQUE_MORTALITE_ELEVE": {
+		"type": "modele",
+		"nom": "risque de mortalité élevé",
+		"valeur": "2000"
+	},
+	"TROUPEAU_MORT": {
+		"type": "modele",
+		"nom": "mortalité du troupeau",
+		"valeur": "3000"
+	},
+	"DECROISSANCE": {
+		"type": "modele",
+		"nom": "décr. rythme d'infestation",
+		"valeur": "1000"
+	},
+	"TAUX_TROUPEAU_CONTAMINANT": {
+		"type": "modele",
+		"nom": "tx contamination par le troupeau",
+		"valeur": "1"
+	},
+	"TAUX_PARCELLE_CONTAMINANTE": {
+		"type": "modele",
+		"nom": "tx contamination par la parcelle",
+		"valeur": "0.5"
+	},
+	"PAS_DE_TEMPS": {
+		"type": "modele",
+		"nom": "pas de temps (jours)",
+		"valeur": "5"
+	}
+}

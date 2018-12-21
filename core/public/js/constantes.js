@@ -1,7 +1,10 @@
 // modélisation sensibilité hôte
 // Constantes reprises depuis le fichier param.json mis en cookie àl'ouverture de la page
-$.each(JSON.parse($.cookie("param")), function(key, groupe){
-  $.each(groupe, function(key, val){ // en fonction du type de donnée, on convertit les valeurs numériques
+$.getJSON("http://localhost/GameOfStrongles/core/resources/json/parametres.json", function(resultat){
+  $.cookie('parametres', JSON.stringify(resultat));
+});
+// console.log($.cookie("parametres").INFESTANT);
+$.each(JSON.parse($.cookie("parametres")), function(key, val){
     if(isNaN(val.valeur)){
       window[key] = val.valeur;
     }
@@ -11,7 +14,7 @@ $.each(JSON.parse($.cookie("param")), function(key, groupe){
     else {
       window[key] = parseFloat(val.valeur);
     }
-  });
+
 });
 
 // variables d'affichage

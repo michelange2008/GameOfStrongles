@@ -6,9 +6,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
 
-    $.getJSON("http://localhost/GameOfStrongles/core/resources/json/param.json", function(resultat){
-      $.cookie('param', JSON.stringify(resultat));
-    });
+
 //######################################### FONCTIONS ##############################################################
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################

@@ -792,6 +792,10 @@ input::-o-inner-spin-button {
   border: none;
 }
 
+.model-contenu label {
+  margin: 0.5rem 0;
+}
+
 .model h5 {
   margin: 0 0 1.5rem 0;
   font-family: "GameOfThrones";

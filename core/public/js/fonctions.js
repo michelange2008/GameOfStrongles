@@ -123,7 +123,7 @@ $("#slider").bind("valuesChanged", function(e, data){
 
 $('.zone_saisie').on('change', function(){
 
-  var id_input = $(this).attr('id'); // on récupère l'id de l'input qui a changé
+  var id_input = $(this).attr('name'); // on récupère l'id de l'input qui a changé
   // c'est à dire la clef de la valeur qui a changé
   var value = $(this).val(); // la valeur est le nouveau contenu du champ
   modifParam(id_input, value); // on applique la fonction modifParam
@@ -141,7 +141,7 @@ function modifParam(id_input, value) {
    "nom" : id_input,
    "valeur" : value
  };
-
+console.log(json);
   $.ajax({
      type:'POST',
      url:url,

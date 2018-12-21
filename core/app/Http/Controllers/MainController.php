@@ -85,6 +85,7 @@ class MainController extends Controller
 
     public function ecritParamBio(Request $request)
     {
+      
       $nom = $request->nom;
       $valeur = $request->valeur;
 
