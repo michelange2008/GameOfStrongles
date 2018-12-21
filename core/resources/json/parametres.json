@@ -40,11 +40,6 @@
 		"nom": "période prépatente",
 		"valeur": "15"
 	},
-	"infestation_maximum": {
-		"type": "biologie",
-		"nom": "durée entre infestation et ponte maximum",
-		"valeur": 20
-	},
 	"ADULTE_MORT": {
 		"type": "biologie",
 		"nom": "longévité des strongles adultes",

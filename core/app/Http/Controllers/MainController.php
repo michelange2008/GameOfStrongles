@@ -76,16 +76,16 @@ class MainController extends Controller
     public function param()
     {
       $param_bio= $this->litJson("param_bio.json"); // ouvre et décode le fichier json grâce au trait LitJson
-      $param_modele = $this->litJsonTab("param_modele.json");
+      $parametres = $this->litJson('parametres.json');
       return view('param', [
+        'parametres' => $parametres,
         'param_bio' => $param_bio,
-        'param_modele' => $param_modele,
       ]);
     }
 
     public function ecritParamBio(Request $request)
     {
-      
+
       $nom = $request->nom;
       $valeur = $request->valeur;
 
