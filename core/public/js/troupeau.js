@@ -112,7 +112,6 @@ function elimination_morts(troupeau)
 function troupeau_dehors()
 {
   $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
-  console.log($("#troupeau").css('background-image'));
   $.alert({
     escapeKey: 'Ok',
       buttons: {

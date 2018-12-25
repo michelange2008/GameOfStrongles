@@ -1,9 +1,8 @@
 //################################# CLASSES ET METHODES ##################################
-function Parcelle(id, nom, superficie)
+function Parcelle(id, proportion)
 {
   this.id = id;
-  this.nom = nom;
-  this.superficie = superficie;
+  this.proportion = proportion;
   this.troupeau = null;
   this.infestation = [];
   this.contaminant = 0;

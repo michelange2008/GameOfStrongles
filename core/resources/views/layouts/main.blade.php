@@ -42,6 +42,7 @@
       <script src="{{asset('core/public/js/jquery.cookie.js')}}"></script>
       <script src="{{asset('core/public/js/constantes.js')}}"></script>
       <script src="{{asset('core/public/js/troupeau.js')}}"></script>
+      <script src="{{asset('core/public/js/pature.js')}}"></script>
       <script src="{{asset('core/public/js/parcelle.js')}}"></script>
       <script src="{{asset('core/public/js/strongle.js')}}"></script>
       <script src="{{asset('core/public/js/fonctions.js')}}"></script>

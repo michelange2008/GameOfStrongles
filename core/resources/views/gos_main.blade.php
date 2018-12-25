@@ -75,23 +75,32 @@
         </div>
         <div id="ensemble-parcelles" class="parcellaire">
           @foreach ($liste_parcelles->listeDessinparcelles() as $parcelle)
-            <div id="pature_{{$parcelle->id()}}"
-              nom = "{{$parcelle->parcelle()->nom()}}"
-              class="pature"
-              style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
-              superficie = {{$parcelle->parcelle()->superficie()}}
-              infestation = {{$parcelle->parcelle()->infestation()->count()}}
-              contaminant = {{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_modele['TAUX_PARCELLE_CONTAMINANTE']['valeur'])}}>
-              <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
+          <div id="pature_{{$parcelle->id()}}"
+            class="pature"
+            style="width:{{$parcelle->longueurRelative()}}%; height:{{$parcelle->longueurRelative()}}vh"
+            superficie = "{{$parcelle->parcelle()->superficie()}}"
+            nom = "{{$parcelle->parcelle()->nom()}}"
+            >
+            <div id="parcelle_{{$parcelle->id()}}_0"
+              class="parcelle"
+              proportion = "100"
+              infestation = "{{$parcelle->parcelle()->infestation()->count()}}"
+              contaminant = "{{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_modele['TAUX_PARCELLE_CONTAMINANTE']['valeur'])}}"
+            >
               @foreach ($parcelle->parcelle()->infestation() as $strongle)
-                <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}}"
-                  age = "{{$strongle->age()}}"
-                  pathogen = "{{$strongle->pathogen()}}"
-                  etat = "{{$strongle->etat()}}"
-                  style="left:{{$strongle->localisation()['x']}}%;top:{{$strongle->localisation()['y']}}%">
-                </div>
+              <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}}"
+                age = "{{$strongle->age()}}"
+                pathogen = "{{$strongle->pathogen()}}"
+                etat = "{{$strongle->etat()}}"
+                style="left:{{$strongle->localisation()['x']}}%;top:{{$strongle->localisation()['y']}}%">
+              </div>
               @endforeach
             </div>
+            <div class="entete">
+              <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
+              <div class="divise"></div>
+            </div>
+          </div>
           @endforeach
         </div>
       </div>

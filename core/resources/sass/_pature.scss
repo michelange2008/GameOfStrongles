@@ -5,10 +5,7 @@
 }
 .pature {
   margin: 5px;
-  float: left;
   border: solid 1px darkgrey;
-
-  background: lightgreen;
   .pature-nom {
     display: inline-block;
     padding: 1px 4px;
@@ -16,4 +13,14 @@
     color: white;
     font-weight: bold;
   }
+  .entete {
+    position: absolute;
+    top: 0;
+  }
+}
+.parcelle {
+  float: top;
+  width: 100%;
+  height: 100%;
+  background: lightgreen;
 }

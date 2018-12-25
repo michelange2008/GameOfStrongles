@@ -12,18 +12,24 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
 var exploitation = [];
 $('.pature').each(function(index, pature) {
-  // création d'une nouvelle parcelle
-  var num_parcelle = $(pature).attr('id').split('_')[1]; //numéro de la parcelle
-  parcelle = new Parcelle(num_parcelle, $(pature).attr('nom'), $(pature).attr('superficie')); //création d'une nouvelle parcelle
-  parcelle.contaminant = parseInt($(pature).attr('contaminant'));
-  $('.strongleOut_'+num_parcelle).each(function(index, valeur) { // recherche des strongles présents sur cette parcelle
+  // création d'un objet pature
+  var num_pature = $(pature).attr('id').split('_')[1]; //numéro de la parcelle
+  pature = new Pature(num_pature, $(pature).attr('nom'), $(pature).attr('superficie')); //création d'une nouvelle parcelle
+  parcelle = new Parcelle(num_pature+"_0", 100); // au départ il y a qu'une seule parcelle par pature dont l'id est 1 et la proportion 100%
+
+  parcelle.contaminant = parseFloat($("#parcelle_"+pature.id).attr('contaminant'));
+
+  $("#parcelle_"+pature.id).children().each(function(index, valeur) { // recherche des strongles présents sur cette parcelle
     strongle = new StrongleOut($(valeur).attr('age'));
     strongle.etat = $(valeur).attr('etat');
     strongle.pathogen = parseInt($(valeur).attr('pathogen'));
     parcelle.infestation.push(strongle); // association de ces strongles à la parcelle
-  })
-  exploitation.push(parcelle); // association de cette parcelle à l'exploitation
-})
+  });
+  pature.addParcelle(parcelle); // on ajoute l'unique parcelle à la pâture
+
+  exploitation.push(pature); // association de cette parcelle à l'exploitation
+});
+
 $('.parcellaire').masonry({
   // options
   itemSelector: '.pature',
@@ -35,32 +41,41 @@ $('.parcellaire').masonry({
   });
 
   $draggable.on( 'dragEnd', function( event, pointer ) {
-    $('.pature').each(function() { // on passe en revue toutes les parcelles
+    $('.parcelle').each(function() { // on passe en revue toutes les parcelles
       $(this).attr('troupeau', false); // on passe à false la variable troupeau de toutes les patures
       $(this).css('border', 'none'); // suppression de la bordure des parcelles sans troupeau
     })
     $('#troupeau').css('visibility', 'collapse'); // on rend invisible le troupeau (pour pouvoir connaitre l'élément qui est en dessous)
     $('.lot').css('visibility', 'collapse'); // et aussi les lots de strongle qui sont sur les parcelles
-    var parcelle_avec_troupeau_id = document.elementFromPoint(pointer.clientX, pointer.clientY).id; // on identifie l'élément qui est en dessous par la position du pointer
-    var parcelle_avec_troupeau = exploitation[parcelle_avec_troupeau_id.split("_")[1]]; // on définit la parcelle qui a le troupeau
+    var element_avec_troupeau = document.elementFromPoint(pointer.clientX, pointer.clientY); // on identifie l'élément qui est en dessous par la position du pointer
+    // var parcelle_avec_troupeau_id = document.elementFromPoint(pointer.clientX, pointer.clientY).id; // on identifie l'élément qui est en dessous par la position du pointer
+    // var parcelle_avec_troupeau = exploitation[parcelle_avec_troupeau_id.split("_")[1]]; // on définit la parcelle qui a le troupeau
     // On enlève le troupeau de toutes les parcelles
-    exploitation.forEach(function(parcelle) {
-      troupeau.sortDeParcelle();
-      parcelle.sortTroupeau();
-    })
+    exploitation.forEach(function(pature) {
+      pature.parcelles.forEach(function(parcelle) {
+        if(parcelle.id == element_avec_troupeau.id.split("_")[1]+"_"+element_avec_troupeau.id.split("_")[1])
+        {
+          console.log(pature.id+" - "+parcelle.id+" - "+element_avec_troupeau.id);
+
+        }
+        troupeau.sortDeParcelle();
+        parcelle.sortTroupeau();
+      });
+    });
     // Si le troupeau est dans une parcelle on attribue le troupeau à la parcelle et vice versa
-    if(parcelle_avec_troupeau instanceof Parcelle) // le troupeau n'est pas dans une parcelle
+    // console.log(element_avec_troupeau.id);
+    if(element_avec_troupeau.id.split("_")[0] == "parcelle") // le troupeau n'est pas dans une parcelle
     {
       $("#troupeau").css('background-image', 'none');
-      troupeau.entreDansParcelle(parcelle_avec_troupeau);
-      parcelle_avec_troupeau.entreTroupeau(troupeau);
+      troupeau.entreDansParcelle(element_avec_troupeau);
+      element_avec_troupeau.entreTroupeau(troupeau);
       // On traduit ça dans le html (est-utile ?)
       $(this).attr('lieu', parcelle_avec_troupeau_id); // on attribue au troupeau le nom de la parcelle où il est
       $("#"+parcelle_avec_troupeau_id).attr('troupeau', true); // on passer à true la variable troupeau de la parcelle où est le pointer cad le troupeau
       $("#"+parcelle_avec_troupeau_id).css('border', 'dotted 2px black'); // attribution d'un couleur pour la parcelle avec troupeau
     }
     // Si le troupeau est dans la chevrerie il y a une alerte (et on attribue au troupeau la chevrerie ???)
-    else if (parcelle_avec_troupeau_id == "chevrerie") {
+    else if (element_avec_troupeau.id == "chevrerie") {
       troupeau_chevrerie();
     }
     // Si le troupeau n'est pas dans une parcelle, il y a une alerte
@@ -102,34 +117,38 @@ $('.parcellaire').masonry({
       // suppression des strongles morts du troupeau
       elimination_morts(troupeau);
 
-      // EVOLUTION PATURE #######################################################
-      // pature évolution des larves
-      exploitation.forEach(function(parcelle) {
-        parcelle.evolutionStrongles(PAS_DE_TEMPS); //evolution de la parcelle
+      // EVOLUTION parcelle #######################################################
+      // parcelle évolution des larves
+      exploitation.forEach(function(pature) {
+        pature.parcelles.forEach(function(parcelle) {
 
-        if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
-        {
-          var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau
-          parcelle.addStrongles(troupeau.infestation.length); // On additionne ces oeufs à l'objet parcelle
-            nouveau_lot_de_strongles(parcelle, decroissance(nb_oeufs));
+          parcelle.evolutionStrongles(PAS_DE_TEMPS); //evolution de la parcelle
 
-        }
+          if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
+          {
+            console.log(parcelle.id);
+            var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau
+            parcelle.addStrongles(troupeau.infestation.length); // On additionne ces oeufs à l'objet parcelle
+              nouveau_lot_de_strongles(parcelle, decroissance(nb_oeufs));
 
-        parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
+          }
 
-        evolution_strongles_parcelle(parcelle);
+          parcelle.contaminant = parcelle.getContaminant(); // mise à jour du statut contaminant
 
-        parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
+          evolution_strongles_parcelle(parcelle);
 
-          $("#parasite_"+index+"_"+parcelle.id).attr('etat', strongle.etat);
+          parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
 
-          $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
-        });
-        $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
-        $("#valeur_"+parcelle.id).html(Math.round(parcelle.contaminant)+" / "+parcelle.infestation.length);
+            $("#parasite_"+index+"_"+parcelle.id).attr('etat', strongle.etat);
 
-        elimination_morts_de_la_parcelle(parcelle)
-      })
+            $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
+          });
+          $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
+          $("#valeur_"+parcelle.id).html(Math.round(parcelle.contaminant)+" / "+parcelle.infestation.length);
+
+          elimination_morts_de_la_parcelle(parcelle)
+      });
+    });
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
