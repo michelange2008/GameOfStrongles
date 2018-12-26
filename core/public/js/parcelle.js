@@ -28,8 +28,9 @@ Parcelle.prototype.evolutionStrongles = function(jours)
 }
 
 // Méthode qui renvoie le nombre de strongles infestantes
-Parcelle.prototype.getContaminant = function ()
+Parcelle.prototype.getContaminant = function (pature)
 {
+  superficie_parcelle = pature.superficie * this.proportion / 100;
   var nb_L3 = 0;
   this.infestation.forEach(function(strongle) {
     if(strongle.etat == INFESTANT)
@@ -37,38 +38,68 @@ Parcelle.prototype.getContaminant = function ()
       nb_L3++;
     }
   });
-
-  return tauxInfestant(nb_L3, this.superficie);
+  return tauxInfestant(nb_L3, superficie_parcelle);
 }
 Parcelle.prototype.entreTroupeau = function (troupeau) {
   this.troupeau = troupeau;
+  return this;
 };
 
 Parcelle.prototype.sortTroupeau = function () {
   this.troupeau = null;
 };
 
+
 //####################################### FONCTION ##############################
+
+// CREER UN OBJET PARCELLE A PARTIR D'UN HTML Parcelle
+function creeParcelleAvecHtml(parcelle)
+{
+  parcelleObj= new Parcelle($(parcelle).attr('id'), $(parcelle_id).attr('proportion')); // on crée une nouvelle parcelle
+  parcelleObj.contaminant = parseFloat($(parcelle).attr('contaminant')); // on récupère son niveau de contamination
+  $(parcelle).children().each(function(index, valeur) { // recherche des strongles présents sur cette parcelle
+    strongle = new StrongleOut($(valeur).attr('id') ,$(valeur).attr('age'));
+    strongle.etat = $(valeur).attr('etat');
+    strongle.pathogen = parseInt($(valeur).attr('pathogen'));
+    parcelleObj.infestation.push(strongle); // association de ces strongles à la parcelle
+  });
+  return parcelleObj;
+}
+
+function creeHtmlAvecParcelle(patureObj, parcelleObj)
+{
+  var pature_num = patureObj.id.split("_")[1];
+  var parcelle_num = parcelleObj.id.split("_")[2];
+    parcelleHtml = '<div id="parcelle_'+pature_num+'_'+parcelle_num+'"'+
+    ' class="parcelle"'+
+    ' proportion = "'+parcelleObj.proportion+'"'+
+    ' infestation = "'+parcelleObj.infestation.length+'"'+
+    ' contaminant = "'+parcelleObj.contaminant/(patureObj.superficie * TAUX_PARCELLE_CONTAMINANTE)+'"'+
+  '>';
+  var parasite = "";
+  parcelleObj.infestation.forEach(function(strongle, key) {
+    parasite += '<div id="parasite_'+key+'_'+parcelle_num+'" class="'+strongle.etat+'"'+
+      ' age = "'+strongle.age+'"'+
+      ' pathogen = "'+strongle.pathogen+'"'+
+      ' etat = "'+strongle.etat+'"'+
+      ' style="left:'+strongle.localisation[0]+'%;top:'+strongle.localisation[1]+'%"></div>'
+
+  });
+  var fin = "</div>";
+  return parcelleHtml+parasite+fin;
+}
+
 // FACTEUR D'INFESTATION D'UNE PARCELLE EN FONCTION DU NOMBRE DE L3 ET DE LA SUPERFICIE
 function tauxInfestant(nb_L3, superficie) {
   return nb_L3 / (superficie * TAUX_PARCELLE_CONTAMINANTE);
 }
 //modifie le html en fonction de l'évolution du temps pour une parcelle donnée
 function evolution_strongles_parcelle(parcelle) {
-  $("#pature_"+parcelle.id+"> div").each(function(e, parasite) {
-    var age_parasite = parseInt($(parasite).attr('age'));
-    $(parasite).attr('age', age_parasite + pas_de_temps);
-    if(age_parasite + pas_de_temps < L3_INFESTANTE) {
-      $(parasite).attr('etat', NON_INFESTANT);
-      $(parasite).attr('class', NON_INFESTANT);
-    } else if (age_parasite + pas_de_temps > L3_MORTE) {
-      $(parasite).attr('etat', MORT);
-      $(parasite).attr('class', MORT);
-    } else {
-      $(parasite).attr('etat', INFESTANT);
-      $(parasite).attr('class', INFESTANT);
-    }
-  })
+  parcelle.infestation.forEach(function(strongle) {
+    $("#"+strongle.id).attr('age', strongle.age);
+    $("#"+strongle.id).attr('etat', strongle.etat);
+    $("#"+strongle.id).attr('class', strongle.etat);
+  });
 }
 
 function elimination_morts_de_la_parcelle(parcelle) {

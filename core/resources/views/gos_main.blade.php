@@ -73,7 +73,7 @@
             @endforeach
           </div>
         </div>
-        <div id="ensemble-parcelles" class="parcellaire">
+        <div id="foncier" class="parcellaire">
           @foreach ($liste_parcelles->listeDessinparcelles() as $parcelle)
           <div id="pature_{{$parcelle->id()}}"
             class="pature"
@@ -96,7 +96,7 @@
               </div>
               @endforeach
             </div>
-            <div class="entete">
+            <div id="entete_{{$parcelle->parcelle()->nom()}}" class="entete">
               <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
               <div class="divise"></div>
             </div>

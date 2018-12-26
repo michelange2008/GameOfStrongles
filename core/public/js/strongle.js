@@ -8,9 +8,10 @@ class Strongle
 }
 
 class StrongleOut extends Strongle {
-  constructor(age)
+  constructor(id, age)
   {
     super(age);
+    this.id = id;
     this.etat = NON_INFESTANT;
     this.localisation = [Math.round(Math.random()*98), Math.round(Math.random()*95)];
   }
