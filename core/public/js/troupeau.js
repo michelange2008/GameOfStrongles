@@ -10,9 +10,9 @@ function Troupeau(espece, taille)
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
 
-  var jours = (PAS_DE_TEMPS ? PAS_DE_TEMPS : 1);
+  var jours = (param.PAS_DE_TEMPS.valeur ? param.PAS_DE_TEMPS.valeur : 1);
 
-  for(i = 1 ; i <= nb_strongles*PAS_DE_TEMPS; i++)
+  for(i = 1 ; i <= nb_strongles*param.PAS_DE_TEMPS.valeur; i++)
   {
     strongle = new StrongleIn(1);
     this.infestation.push(strongle);
@@ -39,10 +39,10 @@ Troupeau.prototype.sortDeParcelle = function () {
 //###################################### FONCTIONS #################################
 // Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la taille et d'un parametre TTC
 function tauxTroupeauContaminant(nb_strongles_adultes, taille) {
-  return nb_strongles_adultes * taille * TAUX_TROUPEAU_CONTAMINANT / 100;
+  return nb_strongles_adultes * taille * param.TAUX_TROUPEAU_CONTAMINANT.valeur / 100;
 }
 function risqueMortalite(nb_strongles_adultes){
-  return nb_strongles_adultes * PATHOGEN;
+  return nb_strongles_adultes * param.PATHOGEN.valeur;
 }
 
 function troupeau_infestant(nb_strongles_adultes, troupeau){ // aspect du troupeau quand il a des adultes qui pondent
@@ -67,22 +67,22 @@ function troupeau_mort() {
 function troupeau_evolution_excretion(troupeau){ // change l'aspect du troupeau en fonction de sa situation et le compteur
   var nb_strongles_adultes = 0;
   troupeau.infestation.forEach(function(strongle){
-    if(strongle.etat == PONTE)
+    if(strongle.etat == param.PONTE.valeur)
     {
       nb_strongles_adultes++;
     }
   });
-  var nb_strongles_pathogenes = nb_strongles_adultes * PATHOGEN;
-  if(nb_strongles_pathogenes > 0 && nb_strongles_pathogenes < RISQUE_MORTALITE_MOYEN){
+  var nb_strongles_pathogenes = nb_strongles_adultes * param.PATHOGEN.valeur;
+  if(nb_strongles_pathogenes > 0 && nb_strongles_pathogenes < param.RISQUE_MORTALITE_MOYEN.valeur){
     troupeau_infestant(nb_strongles_pathogenes, troupeau);
   }
-  else if (nb_strongles_pathogenes > RISQUE_MORTALITE_MOYEN && nb_strongles_pathogenes < RISQUE_MORTALITE_ELEVE) {
+  else if (nb_strongles_pathogenes > param.RISQUE_MORTALITE_MOYEN.valeur && nb_strongles_pathogenes < param.RISQUE_MORTALITE_ELEVE.valeur) {
     troupeau_malade();
   }
-  else if (nb_strongles_pathogenes > RISQUE_MORTALITE_ELEVE && nb_strongles_pathogenes < TROUPEAU_MORT) {
+  else if (nb_strongles_pathogenes > param.RISQUE_MORTALITE_ELEVE.valeur && nb_strongles_pathogenes < param.TROUPEAU_MORT.valeur) {
     troupeau_presque_mort();
   }
-  else if (nb_strongles_pathogenes > TROUPEAU_MORT) {
+  else if (nb_strongles_pathogenes > param.TROUPEAU_MORT.valeur) {
     troupeau_mort();
   }
   else {
@@ -99,7 +99,7 @@ function elimination_morts(troupeau)
 {
   var nouvelle_situation = [];
   troupeau.infestation.forEach(function(strongle){
-    if(strongle.etat !== MORT)
+    if(strongle.etat !== param.MORT.valeur)
     {
       nouvelle_situation.push(strongle);
     }
@@ -146,8 +146,6 @@ function troupeau_chevrerie()
 
 function alerte_troupeau_mort()
 {
-
-
   $.confirm({
       title: 'Désolé !',
       content: 'Le troupeau est mort',

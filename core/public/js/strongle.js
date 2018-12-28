@@ -12,7 +12,7 @@ class StrongleOut extends Strongle {
   {
     super(age);
     this.id = id;
-    this.etat = NON_INFESTANT;
+    this.etat = param.NON_INFESTANT.valeur;
     this.localisation = [Math.round(Math.random()*98), Math.round(Math.random()*95)];
   }
 }
@@ -20,41 +20,38 @@ class StrongleOut extends Strongle {
 StrongleOut.prototype.evolution =  function(jours)
 {
   this.age = parseInt(this.age) + parseInt(jours);
-  if(this.age < L3_INFESTANTE)
+  if(this.age < param.L3_INFESTANTE.valeur)
   {
-    this.etat = NON_INFESTANT;
+    this.etat = param.NON_INFESTANT.valeur;
   }
-  else if (this.age > L3_MORTE)
+  else if (this.age > param.L3_MORTE.valeur)
   {
-    this.etat = MORT;
+    this.etat = param.MORT.valeur;
   }
   else {
-    this.etat = INFESTANT;
+    this.etat = param.INFESTANT.valeur;
   }
 }
-// StrongleOut.prototype.setLocalisation = function () {// méthode pour définir 1 point aléatoire = position du strongle dans la parcelle
-//   this.localisation = [Math.random()*98, Math.random()*95];
-// };
 
 class StrongleIn extends Strongle {
   constructor()
   {
     super();
-    this.etat = PREPATENT;
+    this.etat = param.PREPATENT.valeur;
   }
 }
 
 StrongleIn.prototype.evolution = function(jours)
 {
-  if(this.age < PERIODE_PREPATENTE)
+  if(this.age < param.PERIODE_PREPATENTE.valeur)
   {
-    this.etat = PREPATENT;
+    this.etat = param.PREPATENT.valeur;
   }
-  else if (this.age > ADULTE_MORT) {
-    this.etat = MORT;
+  else if (this.age > param.ADULTE_MORT.valeur) {
+    this.etat = param.MORT.valeur;
   }
   else
   {
-    this.etat = PONTE;
+    this.etat = param.PONTE.valeur;
   }
 }

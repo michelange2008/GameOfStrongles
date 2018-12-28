@@ -3,6 +3,8 @@ function Pature(id, nom, superficie)
   this.id = id;
   this.nom = nom;
   this.superficie = superficie;
+  this.X = 0;
+  this.longueur = 10;
   this.parcelles = [];
 }
 

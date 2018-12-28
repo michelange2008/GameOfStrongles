@@ -1,9 +1,27 @@
 // modélisation sensibilité hôte
 // Constantes reprises depuis le fichier param.json mis en cookie àl'ouverture de la page
-$.getJSON("http://localhost/GameOfStrongles/core/resources/json/parametres.json", function(resultat){
+var url = document.documentURI+"core/resources/json/";
+$.getJSON(url+"troupeau.json", function(resultat){
+  $.cookie('troupeau', JSON.stringify(resultat));
+});
+$.getJSON(url+"dates.json", function(resultat){
+  $.cookie('dates', JSON.stringify(resultat));
+});
+$.getJSON(url+"foncier.json", function(resultat){
+  $.cookie('foncier', JSON.stringify(resultat));
+});
+
+$.getJSON(url+"parametres.json", function(resultat){
   $.cookie('parametres', JSON.stringify(resultat));
 });
-// console.log($.cookie("parametres").INFESTANT);
+
+var troupeau = JSON.parse($.cookie("troupeau"));
+var dates = JSON.parse($.cookie("dates"));
+var foncier = JSON.parse($.cookie("foncier"));
+
+var param = JSON.parse($.cookie("parametres"));
+console.log(troupeau);
+
 $.each(JSON.parse($.cookie("parametres")), function(key, val){
     if(isNaN(val.valeur)){
       window[key] = val.valeur;

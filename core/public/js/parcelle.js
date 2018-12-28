@@ -33,7 +33,7 @@ Parcelle.prototype.getContaminant = function (pature)
   superficie_parcelle = pature.superficie * this.proportion / 100;
   var nb_L3 = 0;
   this.infestation.forEach(function(strongle) {
-    if(strongle.etat == INFESTANT)
+    if(strongle.etat == param.INFESTANT.valeur)
     {
       nb_L3++;
     }
@@ -74,7 +74,7 @@ function creeHtmlAvecParcelle(patureObj, parcelleObj)
     ' class="parcelle"'+
     ' proportion = "'+parcelleObj.proportion+'"'+
     ' infestation = "'+parcelleObj.infestation.length+'"'+
-    ' contaminant = "'+parcelleObj.contaminant/(patureObj.superficie * TAUX_PARCELLE_CONTAMINANTE)+'"'+
+    ' contaminant = "'+parcelleObj.contaminant/(patureObj.superficie * param.TAUX_PARCELLE_CONTAMINANTE.valeur)+'"'+
   '>';
   var parasite = "";
   parcelleObj.infestation.forEach(function(strongle, key) {
@@ -91,7 +91,7 @@ function creeHtmlAvecParcelle(patureObj, parcelleObj)
 
 // FACTEUR D'INFESTATION D'UNE PARCELLE EN FONCTION DU NOMBRE DE L3 ET DE LA SUPERFICIE
 function tauxInfestant(nb_L3, superficie) {
-  return nb_L3 / (superficie * TAUX_PARCELLE_CONTAMINANTE);
+  return nb_L3 / (superficie * param.TAUX_PARCELLE_CONTAMINANTE.valeur);
 }
 //modifie le html en fonction de l'évolution du temps pour une parcelle donnée
 function evolution_strongles_parcelle(parcelle) {
@@ -105,13 +105,13 @@ function evolution_strongles_parcelle(parcelle) {
 function elimination_morts_de_la_parcelle(parcelle) {
   // élimination des objets parasite morts de l'objet parcelle
   for(let parasite of parcelle.infestation) {
-    if(parasite.etat == MORT) {
+    if(parasite.etat == param.MORT.valeur) {
       parcelle.infestation.splice(parcelle.infestation.indexOf(parasite), 1);
     }
   }
   // élimination balises html correspondantes
   $("#pature_"+parcelle.id).children().each(function(index) {
-    if($(this).attr('etat') == MORT) {
+    if($(this).attr('etat') == param.MORT.valeur) {
       $(this).remove();
     }
   })
@@ -132,10 +132,10 @@ function nouveau_strongle(parcelle, j)
   return $("#pature_"+parcelle.id).append('<div id="parasite_'
     +parcelle.infestation.length
     +'_'+parcelle.id
-    +'" class="'+NON_INFESTANT+'" age = 1 etat = "'+NON_INFESTANT+'" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
+    +'" class="'+param.NON_INFESTANT.valeur+'" age = 1 etat = "'+param.NON_INFESTANT.valeur+'" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
     +'</div>');
 }
 // décroissance exponentielle
 function decroissance(nb_oeufs) {
-  return Math.round(nb_oeufs*(1 / Math.exp(Math.sqrt(nb_oeufs/DECROISSANCE))));
+  return Math.round(nb_oeufs*(1 / Math.exp(Math.sqrt(nb_oeufs/param.DECROISSANCE.valeur))));
 }

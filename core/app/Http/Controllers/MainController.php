@@ -9,6 +9,7 @@ use App\Factory\ExploitationFactory;
 use App\Factory\Demo;
 use App\Factory\ListeEspeces;
 use App\Factory\ParcellesTypes;
+use App\Traits\ExploitationTransform;
 
 use App\Traits\NbLignes;
 use App\Traits\ListeMois;
@@ -19,6 +20,7 @@ class MainController extends Controller
   use NbLignes;
   use ListeMois;
   use JsonManager;
+  use ExploitationTransform;
 
   protected $exploitation;
 
@@ -52,6 +54,12 @@ class MainController extends Controller
         default:
         dd('defaut');
       }
+      $json_expl = $this->transform($exploitation);
+
+      foreach ($json_expl as $key => $value) {
+        $this->ecritJson($key.".json", $value);
+      }
+      // $this->ecritJson("exploitation.json", $json_expl);
       // définit la ligne de temps en fonction des dates de mise à l'herbe et d'entre en bergerie
       $liste_mois = $this->listeMois($exploitation->dates()['mise_a_l_herbe'], $exploitation->dates()['duree_paturage']);
       // récupère les paramètres biologiques
