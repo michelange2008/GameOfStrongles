@@ -233,8 +233,29 @@
 }
 
 .pature .entete {
+  width: 100%;
   position: absolute;
   top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: solid 1px grey;
+}
+
+.pature .entete .divise {
+  width: 25px;
+  cursor: pointer;
+}
+
+.pature .entete .divise img {
+  width: 100%;
+}
+
+.pature .entete p {
+  margin: 0;
 }
 
 .parcelle {
@@ -702,7 +723,7 @@ input::-o-inner-spin-button {
 
 .categories-biologie {
   display: grid;
-  grid-template-columns: 18% 1fr 18% 25%;
+  grid-template-columns: 17% 1fr 17% 30%;
   grid-template-rows: 100px 1fr 100px;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -717,6 +738,11 @@ input::-o-inner-spin-button {
 .categories-biologie-cycle img {
   display: block;
   margin: auto;
+}
+
+#titre-param-modele h5 {
+  color: white;
+  text-shadow: 1px 1px 3px black;
 }
 
 .categories-biologie-cycle, #PATHOGEN {
@@ -750,10 +776,15 @@ input::-o-inner-spin-button {
 }
 
 #param_model {
-  grid-row: 1 /span 3;
+  grid-row: 1 /span 2;
   grid-column: 4;
   border-left: solid 5px black;
   padding: 0.5rem;
+}
+
+#boutons {
+  grid-row: 3;
+  grid-column: 4;
 }
 
 .champs {

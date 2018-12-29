@@ -15,12 +15,12 @@ $.getJSON(url+"parametres.json", function(resultat){
   $.cookie('parametres', JSON.stringify(resultat));
 });
 
-var troupeau = JSON.parse($.cookie("troupeau"));
-var dates = JSON.parse($.cookie("dates"));
+var troupeauJSON = JSON.parse($.cookie("troupeau"));
+console.log(troupeauJSON);
+var datesJSON = JSON.parse($.cookie("dates"));
 var foncier = JSON.parse($.cookie("foncier"));
 
 var param = JSON.parse($.cookie("parametres"));
-console.log(troupeau);
 
 $.each(JSON.parse($.cookie("parametres")), function(key, val){
     if(isNaN(val.valeur)){

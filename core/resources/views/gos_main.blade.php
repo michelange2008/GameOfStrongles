@@ -20,7 +20,7 @@
         </div>
         <p id="date" data="{{$dates['mise_a_l_herbe']->toAtomString()}}"
           style="text-align:center">{{$dates['mise_a_l_herbe']->day}} {{$dates['mise_a_l_herbe']->localeMonth}}</p>
-        <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">{{$param_modele['PAS_DE_TEMPS']['valeur']}}</span> jours)</p>
+        <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">{{$parametres['PAS_DE_TEMPS']['valeur']}}</span> jours)</p>
       </div>
       <div class="cadran">
         <div class="titre">
@@ -63,7 +63,7 @@
                 espece="{{$troupeau->espece()}}"
                 taille="{{$troupeau->taille()}}"
                 infestation="{{$troupeau->infestation()->count()}}"
-                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$param_modele["TAUX_TROUPEAU_CONTAMINANT"]["valeur"]}}"
+                contaminant = "{{$troupeau->contaminant()*$troupeau->taille()/$parametres["TAUX_TROUPEAU_CONTAMINANT"]["valeur"]}}"
                 lieu="chevrerie">
                 <img src="{{config('fichiers.svg').$troupeau->espece().".svg"}}" alt="{{$troupeau->espece()}}">
             @foreach ($troupeau->infestation() as $strongle)
@@ -85,7 +85,7 @@
               class="parcelle"
               proportion = "100"
               infestation = "{{$parcelle->parcelle()->infestation()->count()}}"
-              contaminant = "{{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $param_modele['TAUX_PARCELLE_CONTAMINANTE']['valeur'])}}"
+              contaminant = "{{$parcelle->parcelle()-> contaminant()/($parcelle->parcelle()->superficie() * $parametres['TAUX_PARCELLE_CONTAMINANTE']['valeur'])}}"
             >
               @foreach ($parcelle->parcelle()->infestation() as $strongle)
               <div id="parasite_{{$loop->index}}_{{$parcelle->id()}}" class="{{$strongle->etat()}}"
@@ -98,7 +98,10 @@
             </div>
             <div id="entete_{{$parcelle->parcelle()->nom()}}" class="entete">
               <p class="pature-nom">{{$parcelle->parcelle()->nom()}}</p>
-              <div class="divise"></div>
+              <p class="somme-des-jours"><span id="jours_{{$parcelle->id()}}" class="compte-jours">0</span><span class="jours"> j.</span></p>
+              <div id="divise_{{$parcelle->id()}}" class="divise">
+                <img src="{{config('fichiers.svg')}}divise.svg" alt="divise" title="diviser la parcelle">
+              </div>
             </div>
           </div>
           @endforeach
@@ -107,6 +110,4 @@
     </div>
   </div>
 </div>
-
-
 @endsection

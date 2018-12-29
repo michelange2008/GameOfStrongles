@@ -1,12 +1,17 @@
 //################################ CLASSE ET METHODES ####################################
-function Troupeau(espece, taille)
+function Troupeau(espece, taille, sensibilite)
 {
   this.espece = espece;
   this.taille = taille;
+  this.sensibilite = sensibilite
   this.parcelle = null;
   this.infestation = [];
   this.contaminant = false;
 }
+// Ajout de strongles à un troupeau (surtout au démarrage)
+Troupeau.prototype.addStrongles = function (strongleObj) {
+    var strongle = new StrongleIn(strongleObj.age, strongleObj.pathogen, strongleObj.etat);
+};
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
 

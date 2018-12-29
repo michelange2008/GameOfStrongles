@@ -1,9 +1,9 @@
 class Strongle
 {
-  constructor (age)
+  constructor (age, pathogen)
   {
     this.age = age;
-    this.pathogen = 1;
+    this.pathogen = pathogen;
   }
 }
 
@@ -34,10 +34,10 @@ StrongleOut.prototype.evolution =  function(jours)
 }
 
 class StrongleIn extends Strongle {
-  constructor()
+  constructor(age, pathogen, etat)
   {
-    super();
-    this.etat = param.PREPATENT.valeur;
+    super(age, pathogen);
+    this.etat = etat // param.PREPATENT.valeur;
   }
 }
 

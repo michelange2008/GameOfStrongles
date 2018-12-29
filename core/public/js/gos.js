@@ -3,6 +3,15 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 //################################# START ######################################
   $(function() {
     // création de l'objet troupeau sur la base du div #troupeau
+    var dates = new Dates(datesJSON.mise_a_l_herbe.date, datesJSON.entre_bergerie.date, datesJSON.duree_paturage, datesJSON.date_courante.date);
+    var troupeau = new Troupeau(troupeauJSON.espece, troupeauJSON.taille, troupeauJSON.sensibilite);
+    var inf = troupeauJSON.infestation;
+    $(inf).children().each(function(val, key){
+      console.log(val+" - "+key);
+    });
+
+    troupeau.addStrongles(troupeauJSON.infestation.strongle_1);
+    console.log(troupeauJSON.infestation.strongle_0);
     troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
     troupeau.sinfeste($('#troupeau').attr('infestation'));
 

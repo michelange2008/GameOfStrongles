@@ -8,16 +8,16 @@
 
 @section('content')
 <h2 style="color:white; margin-left: 1rem">modification des paramètres</h2>
-{!! Form::open(['route' => 'ecritParamBio']) !!}
+{!! Form::open(['route' => 'action', "id" => "form"]) !!}
 <div class="categories">
   <h5 class="categories-titres">Biologie des strongles</h5>
   <div class="categories-biologie">
     <div class="categories-biologie-cycle">
-      <img src="{{config('fichiers.svg')}}cycle.svg" alt="">
+      <img src="{{config('fichiers.svg')}}cycle.svg" alt=""> //<!-- affiche le cycle des strongles-->
     </div>
-    @foreach ($parametres as $key => $value)
-      @if ($value->type == "biologie")
-          @if ($key == "PATHOGEN")
+    @foreach ($parametres as $key => $value) <!-- on passe en revue les parametres-->
+      @if ($value->type == "biologie") <!-- si ce sont des parametres biologiques, on boucle-->
+          @if ($key == "PATHOGEN") <!-- sur la pathogénicité il faut un champs "option" particulier -->
             <div id="{{$key}}" class="champs">
               <label for="{{$key}}">{{ucfirst($value->nom)}}</label>
               <div class="">
@@ -28,8 +28,8 @@
                 </select>
               </div>
             </div>
-          @else
-          <div id="{{$key}}" class="champs">
+          @else <!-- Pour les autres parametres un champ input suffit-->
+          <div id="{{$key}}" class="champs" title="cliquer pour en savoir plus">
             <label for="{{$key}}">{{ucfirst($value->nom)}}</label>
             <div class="">
               <input id="{{$key}}" class="zone_saisie" type="number" name="{{$key}}" value="{{$value->valeur}}" size=3>
@@ -39,61 +39,32 @@
         @endif
       @endif
     @endforeach
-    {{-- <div id="L3_infestante" class="champs">
-      <label for="L3_infestante">{{ucfirst($parametres->L3_INFESTANTE->nom)}}</label>
-      <div class="">
-        <input id="L3_infestante" class="zone_saisie" type="number" name="L3_infestante" value="{{$parametres->L3_INFESTANTE->valeur}}" size=3>
-        <span>jours</span>
-      </div>
-    </div>
-    <div id="L3_morte" class="champs">
-      <label for="L3_morte">{{ucfirst($parametres->L3_MORTE->nom)}}</label>
-      <div class="">
-        <input id="L3_morte" class="zone_saisie" type="number" name="L3_morte" value="{{$parametres->L3_MORTE->valeur}}">
-        <span>jours</span>
-      </div>
-    </div>
-    <div id="periode_prepatente" class="champs">
-      <label for="periode_prepatente">{{ucfirst($parametres->PERIODE_PREPATENTE->nom)}}</label>
-      <div class="">
-        <input id="periode_prepatente" class="zone_saisie" type="number" name="periode_prepatente" value="{{$parametres->PERIODE_PREPATENTE->valeur}}">
-        <span>jours</span>
-      </div>
-    </div>
-    <div id="adulte_mort" class="champs">
-      <label for="adulte_mort">{{ucfirst($parametres->ADULTE_MORT->nom)}}</label>
-      <div class="">
-        <input id="adulte_mort" class="zone_saisie" type="number" name="adulte_mort" value="{{$parametres->ADULTE_MORT->valeur}}">
-        <span>jours</span>
-      </div>
-    </div>
-    <div id="pathogen" class="champs">
-      <label for="pathogen">{{ucfirst($parametres->PATHOGEN->nom)}}</label>
-      <div class="">
-        <select id="pathogen" class="zone_saisie" name="pathogen">
-          <option value="{{ucfirst($parametres->PATHOGEN->option->haemonchus_2->degre)}}">{{$parametres->PATHOGEN->option->haemonchus_2->intitule}}</option>
-          <option value="{{ucfirst($parametres->PATHOGEN->option->haemonchus_1->degre)}}" selected>{{$parametres->PATHOGEN->option->haemonchus_1->intitule}}</option>
-          <option value="{{ucfirst($parametres->PATHOGEN->option->haemonchus_0->degre)}}">{{$parametres->PATHOGEN->option->haemonchus_0->intitule}}</option>
-        </select>
-      </div>
-    </div> --}}
+
     <div id="casque" class="helmet">
       <img src="{{config('fichiers.svg')}}helmet.svg" alt="ok ">
       <p style="color:white; text-align:center">OK</p>
     </div>
     <div id="param_model" class="model">
-      <h5>Parametres du modele</h5>
+      <div id="titre-param-modele"><h5>Parametres du modele</h5></div>
       @foreach ($parametres as $key => $value)
         @if ($value->type == "modele")
           <div class="model-contenu">
             <label for="{{$key}}">{{ucfirst($value->nom)}}</label>
-            <input class="input-modele" type="number" name="{{$key}}" value="{{$value->valeur}}">
+            <input class="zone_saisie" type="number" name="{{$key}}" value="{{$value->valeur}}">
           </div>
         @endif
     @endforeach
     </div>
+    <div id="boutons" class="">
+      <input type="checkbox" name="action" value="demo" style="display:none">
+      <input type="submit" name="submit" value="Juste une démo" class="btn btn-warning rounded-0 btn-lg" style="display:none">
+      <div id="demo" class="btn btn-lg btn-warning rounded-0 demo">
+        <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
+        <p>Juste une démo</p>
+      </div>
+    </div>
   </div>
 </div>
 {!! Form::close() !!}
-</div>
+
 @endsection

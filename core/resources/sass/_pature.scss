@@ -14,8 +14,22 @@
     font-weight: bold;
   }
   .entete {
+    width: 100%;
     position: absolute;
     top: 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px grey;
+    .divise {
+      width: 25px;
+      cursor: pointer;
+      img {
+        width: 100%;
+      }
+    }
+    p {
+      margin: 0;
+    }
   }
 }
 .parcelle {

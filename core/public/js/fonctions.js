@@ -64,7 +64,7 @@ $('.feu').on('click', function() {
   $('input[name = "infestation_troupeau"]').prop('checked', true);
   $('input[name = "infestation_troupeau"]').attr('value', id_feu);
 });
-//################################ CLIQUE SUR DEMO #############################
+//################################ CLIQUE SUR BOUTONS #############################
 $("#demo").on('click', function(){
   $('input[name = "action"]').prop('checked', true);
   $('input[name = "action"]').attr('value', 'demo');
@@ -118,11 +118,7 @@ $("#slider").bind("valuesChanged", function(e, data){
 });
 
 //################################ MODIF PARAM #################################
-
-
-
 $('.zone_saisie').on('change', function(){
-
   var id_input = $(this).attr('name'); // on récupère l'id de l'input qui a changé
   // c'est à dire la clef de la valeur qui a changé
   var value = $(this).val(); // la valeur est le nouveau contenu du champ
@@ -153,7 +149,13 @@ console.log(json);
        $('.helmet').fadeOut(2000);
      },
      error: function (data) {
-    console.log(data);
+    console.log(data.responseText);
     }
   });
 }
+
+//########################### DIVISER LES PARCELLES ############################
+$(".divise").on('click', function(){
+  var parcelle = "parcelle_"+$(this).attr('id').split("_")[1]+"_0";
+  console.log(foncier.pature_0);
+})

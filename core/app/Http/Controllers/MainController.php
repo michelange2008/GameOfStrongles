@@ -59,21 +59,14 @@ class MainController extends Controller
       foreach ($json_expl as $key => $value) {
         $this->ecritJson($key.".json", $value);
       }
-      // $this->ecritJson("exploitation.json", $json_expl);
       // définit la ligne de temps en fonction des dates de mise à l'herbe et d'entre en bergerie
       $liste_mois = $this->listeMois($exploitation->dates()['mise_a_l_herbe'], $exploitation->dates()['duree_paturage']);
+
       // récupère les paramètres biologiques
-      // $param_biologiques = Constantes::param_bio();
-      $param_biologiques = $this->litJsonTab("param_bio.json");
-      $param_descriptif = $this->litJsonTab("param_descriptif.json");
-      $param_modele = $this->litJsonTab("param_modele.json");
+      $parametres = $this->litJsonTab("parametres.json");
 
       return view('gos_main', [
-        // TODO: qu'est ce qu'on fait du pas de temps?
-        'param_biologiques' => $param_biologiques,
-        'param_descriptif' => $param_descriptif,
-        'param_modele' => $param_modele,
-        'pas_de_temps' => Constantes::PAS_DE_TEMPS,
+        'parametres' => $parametres,
         'liste_mois' => $liste_mois,
         'troupeau' => $exploitation->troupeau(),
         'liste_parcelles' => $exploitation->dessinparcellaire(),
@@ -83,11 +76,9 @@ class MainController extends Controller
 
     public function param()
     {
-      $param_bio= $this->litJson("param_bio.json"); // ouvre et décode le fichier json grâce au trait LitJson
-      $parametres = $this->litJson('parametres.json');
+      $parametres = $this->litJson('parametres.json'); // ouvre et décode le fichier json grâce au trait LitJson
       return view('param', [
         'parametres' => $parametres,
-        'param_bio' => $param_bio,
       ]);
     }
 
@@ -96,11 +87,10 @@ class MainController extends Controller
 
       $nom = $request->nom;
       $valeur = $request->valeur;
+      $parametres= $this->litJson("parametres.json"); // ouvre et décode le fichier json grâce au trait LitJson
+      $parametres->$nom->valeur = $valeur;
 
-      $param_bio= $this->litJson("param_bio.json"); // ouvre et décode le fichier json grâce au trait LitJson
-      $param_bio->$nom->valeur = $valeur;
-
-      $this->ecritJson("param_bio.json", $param_bio); // on écrit les nouvelles valeurs grâce au trait EcritJson
+      $this->ecritJson("parametres.json", $parametres); // on écrit les nouvelles valeurs grâce au trait EcritJson
       return '{"ok": "ça va"}';
     }
 
