@@ -29,9 +29,12 @@ class MainController extends Controller
       $parcelles_type = new ParcellesTypes();
       $especes = new ListeEspeces();
 
-      return view('index', [
+      $parametres = $this->litJson('parametres.json'); // ouvre et décode le fichier json grâce au trait LitJson
+
+      return view('index_main', [
         'liste_espece' => $especes->especes(),
         'parcelles_type' => $parcelles_type->listeParcellesType(),
+        'parametres' => $parametres,
       ]);
     }
     // affiche soit le plateau de jeu, soit la démonstration soit la modif des param bio
@@ -62,7 +65,7 @@ class MainController extends Controller
       // définit la ligne de temps en fonction des dates de mise à l'herbe et d'entre en bergerie
       $liste_mois = $this->listeMois($exploitation->dates()['mise_a_l_herbe'], $exploitation->dates()['duree_paturage']);
 
-      // récupère les paramètres biologiques
+      // récupère les paramètres
       $parametres = $this->litJsonTab("parametres.json");
 
       return view('gos_main', [

@@ -393,6 +393,10 @@ input::-o-inner-spin-button {
   visibility: hidden;
 }
 
+.masque {
+  display: none;
+}
+
 #constantes {
   position: fixed;
   top: 0;
@@ -611,6 +615,10 @@ input::-o-inner-spin-button {
 .demo p {
   font-size: 1rem;
   margin: 0.25rem;
+}
+
+.sommaire {
+  font-size: 1rem;
 }
 
 .etable {
@@ -851,6 +859,20 @@ input::-o-inner-spin-button {
   -webkit-box-shadow: 1px 1px 1px lime;
           box-shadow: 1px 1px 1px lime;
   width: 50px;
+}
+
+.boutons-param {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.espace {
+  margin-top: 1rem;
 }
 
 /*!

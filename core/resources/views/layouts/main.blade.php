@@ -18,6 +18,7 @@
       @yield('entete')
       @yield('menu')
       @yield('content')
+      @yield('param')
       @yield('pied_de_page')
 
       <!-- <script

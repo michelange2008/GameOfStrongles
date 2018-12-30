@@ -1,6 +1,3 @@
-@extends('layouts.main')
-
-@section('content')
 {{ Form::open(['route' => 'action', "id" => "form"])}}
 <div class="container-fluid">
   <div class="main-titre titre">
@@ -75,4 +72,3 @@
   </div>
 </div>
 {{ Form::close()}}
-@endsection

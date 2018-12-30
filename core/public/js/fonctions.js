@@ -1,6 +1,8 @@
 // redémarrage en cliquant sur l'icone à droite
 $('#epee').on('click', function(){
-  location.reload();
+  // location.reload();
+  $("#page-index").toggleClass("masque");
+  $("#page-param").toggleClass("masque");
 });
 
 //############################MODIFICATION PAS DE TEMPS ########################
@@ -71,10 +73,17 @@ $("#demo").on('click', function(){
   $('input[type = "submit"]').click();
 });
 $("#param").on('click', function(){
-  $('input[name = "action"]').prop('checked', true);
-  $('input[name = "action"]').attr('value', 'param');
-  $('input[type = "submit"]').click();
+  $("#page-param").toggleClass("masque");
+  $("#page-index").toggleClass("masque");
+  // $('input[name = "action"]').prop('checked', true);
+  // $('input[name = "action"]').attr('value', 'param');
+  // $('input[type = "submit"]').click();
 });
+$("#sommaire").on('click', function(){
+  $("#page-param").toggleClass("masque");
+  $("#page-index").toggleClass("masque");
+});
+
 $('input[type = "submit"]').on('mouseover', function(){
   $('input[name = "action"]').prop('checked', true);
   $('input[name = "action"]').attr('value', 'action');

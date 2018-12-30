@@ -1,12 +1,3 @@
-@extends('layouts.main')
-
-@section('menu')
-
-@include('titre')
-
-@endsection
-
-@section('content')
 <h2 style="color:white; margin-left: 1rem">modification des paramètres</h2>
 {!! Form::open(['route' => 'action', "id" => "form"]) !!}
 <div class="categories">
@@ -55,16 +46,15 @@
         @endif
     @endforeach
     </div>
-    <div id="boutons" class="">
+    <div id="boutons" class="boutons-param">
       <input type="checkbox" name="action" value="demo" style="display:none">
       <input type="submit" name="submit" value="Juste une démo" class="btn btn-warning rounded-0 btn-lg" style="display:none">
       <div id="demo" class="btn btn-lg btn-warning rounded-0 demo">
         <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
         <p>Juste une démo</p>
       </div>
+      <div id="sommaire" class="btn btn-lg btn-success rounded-0 sommaire espace">Sommaire</div>
     </div>
   </div>
 </div>
 {!! Form::close() !!}
-
-@endsection
