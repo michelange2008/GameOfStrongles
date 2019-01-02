@@ -67,31 +67,52 @@ $('.feu').on('click', function() {
   $('input[name = "infestation_troupeau"]').attr('value', id_feu);
 });
 //################################ CLIQUE SUR BOUTONS #############################
-$("#demo").on('click', function(){
-  $('input[name = "action"]').prop('checked', true);
-  $('input[name = "action"]').attr('value', 'demo');
-  $('input[type = "submit"]').click();
-});
+// bascule entre le sommaire et les parametres
 $("#param").on('click', function(){
-  $("#page-param").toggleClass("masque");
-  $("#page-index").toggleClass("masque");
-  // $('input[name = "action"]').prop('checked', true);
-  // $('input[name = "action"]').attr('value', 'param');
-  // $('input[type = "submit"]').click();
-});
-$("#sommaire").on('click', function(){
   $("#page-param").toggleClass("masque");
   $("#page-index").toggleClass("masque");
 });
 
+$("#sommaire").on('click', function(){
+  $("#page-param").toggleClass("masque");
+  $("#page-index").toggleClass("masque");
+});
+//affichage d'une page
+$("#demo").on('click', function(){
+  $.getJSON(url+"demo_troupeau.json", function(resultat){
+    Cookies.set('troupeau', JSON.stringify(resultat));
+  });
+  $.getJSON(url+"demo_dates.json", function(resultat){
+    Cookies.set('dates', JSON.stringify(resultat));
+  });
+
+  $.getJSON(url+"demo_foncier.json", function(resultat){
+    Cookies.set('foncier', JSON.stringify(resultat));
+  });
+
+  $('input[name = "action"]').prop('checked', true);
+  $('input[name = "action"]').attr('value', 'demo');
+  $('input[type = "submit"]').click();
+});
+
 $('input[type = "submit"]').on('mouseover', function(){
+  $.getJSON(url+"troupeau.json", function(resultat){
+    Cookies.set('troupeau', JSON.stringify(resultat));
+  });
+  $.getJSON(url+"dates.json", function(resultat){
+    Cookies.set('dates', JSON.stringify(resultat));
+  });
+
+  $.getJSON(url+"foncier.json", function(resultat){
+    Cookies.set('foncier', JSON.stringify(resultat));
+  });
+
   $('input[name = "action"]').prop('checked', true);
   $('input[name = "action"]').attr('value', 'action');
 });
 //################################ AJOUT LIGNE PARCELLE ########################
 $("#ajout").on('click',function() {
   var nb_lignes = $(".categories-contenu-parcelles").children().length;
-  console.log($(".categories-contenu-parcelles").first().html());
   var premiere_ligne = "<div class='categories-contenu-ligne'>"
     +$(".categories-contenu-ligne").first().html()
     +"</div>";
@@ -131,10 +152,18 @@ $('.zone_saisie').on('change', function(){
   var id_input = $(this).attr('name'); // on récupère l'id de l'input qui a changé
   // c'est à dire la clef de la valeur qui a changé
   var value = $(this).val(); // la valeur est le nouveau contenu du champ
+  $.each(param, function(nom_parametre, parametre) {// mise à jour de l'objet param
+    if(nom_parametre == id_input)
+    {
+      console.log(parametre.valeur+" - "+value);
+      parametre.valeur = value;
+    }
+  })
   modifParam(id_input, value); // on applique la fonction modifParam
+  console.log(param);
 });
 function modifParam(id_input, value) {
-  url = location+"/modification"; // définition de l'url pour la requete AJAX
+  url = location+"modification"; // définition de l'url pour la requete AJAX
 
   $.ajaxSetup({
      headers: {
@@ -146,7 +175,35 @@ function modifParam(id_input, value) {
    "nom" : id_input,
    "valeur" : value
  };
-console.log(json);
+  $.ajax({
+     type:'POST',
+     url:url,
+     dataType: "json",
+     data: json,
+
+     success:function(data){
+       $('.helmet').fadeIn(0);
+       $('.helmet').fadeOut(2000);
+     },
+     error: function (data) {
+    console.log(data.responseText);
+    }
+  });
+}
+function modifTroupeau(id_input, value) {
+  url = location+"troupeau"; // définition de l'url pour la requete AJAX
+
+  $.ajaxSetup({
+     headers: {
+         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+     }
+ });
+ // fichier json à transmettre
+ var json = {
+   "nom" : id_input,
+   "valeur" : value
+ };
+
   $.ajax({
      type:'POST',
      url:url,
@@ -166,5 +223,51 @@ console.log(json);
 //########################### DIVISER LES PARCELLES ############################
 $(".divise").on('click', function(){
   var parcelle = "parcelle_"+$(this).attr('id').split("_")[1]+"_0";
-  console.log(foncier.pature_0);
+  // console.log(foncier.pature_0);
 })
+
+//############################### CHOIX DES ELEMENTS TROUPEAU ##################
+$(".image_troupeau").on('click', function(espece){
+  modifTroupeau("espece", espece.currentTarget.id);
+  troupeau.espece = espece.currentTarget.id;
+  console.log(troupeau);
+});
+$("input[name='effectif']").on('change', function(effectif){
+  modifTroupeau("taille", effectif.currentTarget.value);
+  troupeau.taille = effectif.currentTarget.value;
+  console.log(troupeau);
+});
+$(".feu").on('click', function(infestation){
+  var nb_strongles = 0;
+  switch (infestation.currentTarget.id) {
+	case 'rouge':
+		nb_strongles = 10;
+		break;
+	case 'orange':
+		nb_strongles = 5;
+		break;
+	case 'vert':
+		nb_strongles = 0;
+		break;
+	default:
+		alert('Problème');
+}
+  modifTroupeau("infestation",nb_strongles);
+  for (var i = 0; i < nb_strongles; i++) {
+    strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
+    troupeau.addStrongles(strongle);
+  }
+
+  troupeau.tauxContaminant();
+console.log(troupeau);
+});
+
+//################################## CHOIX DES DATES ###########################
+$("#slider").bind("valuesChanged", function(e, data){
+  dates.mise_a_l_herbe = data.values.min;
+  dates.entre_bergerie = data.values.max;
+  dates.duree_paturage = Math.round((data.values.max - data.values.min)/86400000);
+  dates.date_courante = data.values.min;
+  console.log(dates);
+
+});

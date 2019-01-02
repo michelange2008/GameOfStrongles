@@ -2,16 +2,26 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
 //################################# START ######################################
   $(function() {
-    // création de l'objet troupeau sur la base du div #troupeau
-    var dates = new Dates(datesJSON.mise_a_l_herbe.date, datesJSON.entre_bergerie.date, datesJSON.duree_paturage, datesJSON.date_courante.date);
-    var troupeau = new Troupeau(troupeauJSON.espece, troupeauJSON.taille, troupeauJSON.sensibilite);
-    var inf = troupeauJSON.infestation;
-    // TODO: comment parcourir un objet Javascript
-
-    troupeau.addStrongles(troupeauJSON.infestation.strongle_1);
-    console.log(troupeauJSON.infestation);
-    troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
-    troupeau.sinfeste($('#troupeau').attr('infestation'));
+    troupeau = new Troupeau();
+    dates = new Dates();
+    console.log(dates);
+    // var troupeauJSON = Cookies.getJSON("troupeau");
+    // var datesJSON = Cookies.getJSON("dates");
+    // var foncier = Cookies.getJSON("foncier");
+    // // création de l'objet troupeau sur la base du div #troupeau
+    //   dates = new Dates(datesJSON.mise_a_l_herbe.date, datesJSON.entre_bergerie.date, datesJSON.duree_paturage, datesJSON.date_courante.date);
+    //
+    //   troupeau = new Troupeau(troupeauJSON.espece, troupeauJSON.taille, troupeauJSON.sensibilite);
+    //
+    //   $.each(troupeauJSON.infestation, function(nom, strongle)
+    //   {
+    //     troupeau.addStrongles(nom, strongle)
+    //   })
+    //   troupeau.tauxContaminant();
+    //
+    // console.log(troupeau);
+    // troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
+    // troupeau.sinfeste($('#troupeau').attr('infestation'));
 
 
 //######################################### FONCTIONS ##############################################################

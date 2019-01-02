@@ -1,16 +1,25 @@
 //################################ CLASSE ET METHODES ####################################
-function Troupeau(espece, taille, sensibilite)
+function Troupeau()
 {
-  this.espece = espece;
-  this.taille = taille;
-  this.sensibilite = sensibilite
+  this.taille = 0;
   this.parcelle = null;
   this.infestation = [];
   this.contaminant = false;
 }
+Troupeau.prototype.setEspece = function (espece) {
+  this.espece = espece;
+};
+Troupeau.prototype.setTaille = function (taille) {
+  this.taille = taille;
+};
+Troupeau.prototype.setSensibilite = function (sensibilite) {
+  this.sensibilite = sensibilite;
+};
 // Ajout de strongles à un troupeau (surtout au démarrage)
 Troupeau.prototype.addStrongles = function (strongleObj) {
-    var strongle = new StrongleIn(strongleObj.age, strongleObj.pathogen, strongleObj.etat);
+  // console.log(strongleObj.id);
+    var strongle = new StrongleIn(strongleObj.id, strongleObj.age, strongleObj.pathogen);
+    this.infestation[strongleObj.id] = strongle;
 };
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
@@ -40,7 +49,21 @@ Troupeau.prototype.entreDansParcelle = function(parcelle) {
 Troupeau.prototype.sortDeParcelle = function () {
   this.parcelle = null;
 };
-
+// Calcule le nombre de strongle à l'état de ponte
+Troupeau.prototype.nbStrongleAdultes = function () {
+  var nb_strongles_adultes = 0;
+  this.infestation.forEach(function(strongle) {
+    if(strongle.etat == param.PONTE.valeur)
+    {
+      nb_strongles_adultes ++;
+    }
+  })
+    return nb_strongles_adultes;
+};
+// Donne un taux de contamination d'un troupeau
+Troupeau.prototype.tauxContaminant = function () {
+  return this.nbStrongleAdultes()*this.taille*param.TAUX_TROUPEAU_CONTAMINANT.valeur / 100;
+};
 //###################################### FONCTIONS #################################
 // Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la taille et d'un parametre TTC
 function tauxTroupeauContaminant(nb_strongles_adultes, taille) {

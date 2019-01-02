@@ -12,7 +12,7 @@
             <div id="{{$key}}" class="champs">
               <label for="{{$key}}">{{ucfirst($value->nom)}}</label>
               <div class="">
-                <select id="pathogen" class="zone_saisie" name="pathogen">
+                <select id="{{$key}}" class="zone_saisie" name="{{$key}}">
                   @foreach ($value->option as $clef => $pathogenicite)
                     <option value="{{ucfirst($pathogenicite->degre)}}">{{$pathogenicite->intitule}}</option>
                   @endforeach
