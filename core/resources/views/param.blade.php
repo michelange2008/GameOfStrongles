@@ -1,4 +1,3 @@
-<h2 style="color:white; margin-left: 1rem">modification des paramètres</h2>
 {!! Form::open(['route' => 'action', "id" => "form"]) !!}
 <div class="categories">
   <h5 class="categories-titres">Biologie des strongles</h5>
@@ -58,3 +57,4 @@
   </div>
 </div>
 {!! Form::close() !!}
+</div>

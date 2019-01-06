@@ -4,6 +4,10 @@ $('#epee').on('click', function(){
   $("#page-index").toggleClass("masque");
   $("#page-param").toggleClass("masque");
 });
+$("#retour").on('click', function() {
+  $("#page-index").toggleClass("masque");
+  $("#page-gos").toggleClass("masque");
+})
 
 //############################MODIFICATION PAS DE TEMPS ########################
 $("#pas_de_temps").on('click', function() {
@@ -46,81 +50,66 @@ $("#pas_de_temps").on('click', function() {
 });
 });
 
-//############################## CHOIX DU TROUPEAU #############################
-$(".image_troupeau").on('click', function() {
-  var troupeau = $(this).attr('id');
-  $('.image_troupeau').css('box-shadow', '2px 2px 6px black');
-  $('input[type = "radio"]').each(function() {
-    if($(this).attr('value') == troupeau)
-    {
-      $(this).prop('checked', true);
-      $("#"+troupeau).css('box-shadow', '6px 6px 6px green');
-    }
-  })
-});
-//################################### NIVEAU D'INFESTATON DU TROUPEAU ##########
-$('.feu').on('click', function() {
-  var id_feu = $(this).attr('id');
-  $('.feu').removeClass('feu-choisi');
-  $('#'+id_feu).addClass('feu-choisi');
-  $('input[name = "infestation_troupeau"]').prop('checked', true);
-  $('input[name = "infestation_troupeau"]').attr('value', id_feu);
-});
 //################################ CLIQUE SUR BOUTONS #############################
 // bascule entre le sommaire et les parametres
-$("#param").on('click', function(){
+$("#param").on('click', function() {
   $("#page-param").toggleClass("masque");
   $("#page-index").toggleClass("masque");
 });
 
-$("#sommaire").on('click', function(){
+$("#sommaire").on('click', function() {
   $("#page-param").toggleClass("masque");
   $("#page-index").toggleClass("masque");
 });
 //affichage d'une page
-$("#demo").on('click', function(){
-  $.getJSON(url+"demo_troupeau.json", function(resultat){
-    Cookies.set('troupeau', JSON.stringify(resultat));
-  });
-  $.getJSON(url+"demo_dates.json", function(resultat){
-    Cookies.set('dates', JSON.stringify(resultat));
-  });
-
-  $.getJSON(url+"demo_foncier.json", function(resultat){
-    Cookies.set('foncier', JSON.stringify(resultat));
-  });
-
-  $('input[name = "action"]').prop('checked', true);
-  $('input[name = "action"]').attr('value', 'demo');
-  $('input[type = "submit"]').click();
+$("#demo").on('click', function() {
+  effaceParcelles();
+  creerDemo();
+  // $("#page-gos").toggleClass("masque");
+  // $("#page-index").toggleClass("masque");
+  // calculPature();
+  // dessinePatures();
+  // dallage();
 });
-
-$('input[type = "submit"]').on('mouseover', function(){
-  $.getJSON(url+"troupeau.json", function(resultat){
-    Cookies.set('troupeau', JSON.stringify(resultat));
-  });
-  $.getJSON(url+"dates.json", function(resultat){
-    Cookies.set('dates', JSON.stringify(resultat));
-  });
-
-  $.getJSON(url+"foncier.json", function(resultat){
-    Cookies.set('foncier', JSON.stringify(resultat));
-  });
-
-  $('input[name = "action"]').prop('checked', true);
-  $('input[name = "action"]').attr('value', 'action');
+$("#calcul").on('click', function() {
+  calculPature();
 });
-//################################ AJOUT LIGNE PARCELLE ########################
-$("#ajout").on('click',function() {
-  var nb_lignes = $(".categories-contenu-parcelles").children().length;
-  var premiere_ligne = "<div class='categories-contenu-ligne'>"
-    +$(".categories-contenu-ligne").first().html()
-    +"</div>";
-
-  var nouvelle_ligne = premiere_ligne.replace(/_0/g, "_"+nb_lignes);
-  $(".categories-contenu-parcelles").append(nouvelle_ligne);
+$("#dessin").on('click', function() {
+  dessinePatures();
 })
-//############################# SAISON DE PATURAGE #############################
+$("#dallage").on('click', function() {
+  dallage();
+})
+
+$("#start").on('click', function() {
+  effaceParcelles();
+  // $("#page-gos").toggleClass("masque");
+  // $("#page-index").toggleClass("masque");
+  calculPature();
+  dessinePatures();
+  dallage();
+})
+
+$("#efface").on('click', function() {
+  effaceLigneParcelles();
+})
+
+//############# AJOUT LIGNE PARCELLE EN CLIQUANT SUR BOUTON PLUS ###############
+var premiere_ligne = "<div class='categories-contenu-ligne'>"
++$(".categories-contenu-ligne").first().html()
++"</div>";
+
+$("#ajout").on('click',function() {
+  var nb_lignes = $("#liste_patures").children().length;
+  var nouvelle_ligne = premiere_ligne.replace(/_0/g, "_"+nb_lignes);
+  $(nouvelle_ligne).appendTo($("#liste_patures"));
+  $.each(patures_types, function(clef, objet) {
+    var type = '<option value="'+clef+'">'+objet.nom+'</option>';
+    $("#pature_histoire_"+nb_lignes).append(type);
+  });
+  $("#liste_patures div:last-child").children().focus()[0].focus();
+})
+//############### SAISON DE PATURAGE CREATION DU SLIDER ########################
 var annee = new Date().getFullYear();
 var months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Août", "Sept", "Oct", "Nov", "Dec"];
 $("#slider").dateRangeSlider({
@@ -203,7 +192,7 @@ function modifTroupeau(id_input, value) {
    "nom" : id_input,
    "valeur" : value
  };
-
+console.log(value);
   $.ajax({
      type:'POST',
      url:url,
@@ -227,16 +216,18 @@ $(".divise").on('click', function(){
 })
 
 //############################### CHOIX DES ELEMENTS TROUPEAU ##################
-$(".image_troupeau").on('click', function(espece){
+$(".image_troupeau").on('click', function(espece){ // choix de l'espece
   modifTroupeau("espece", espece.currentTarget.id);
   troupeau.espece = espece.currentTarget.id;
-  console.log(troupeau);
+  $(".image_troupeau").removeClass('image_troupeau-choisi');
+  $("#"+espece.currentTarget.id).addClass('image_troupeau-choisi');
+  $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg");
 });
-$("input[name='effectif']").on('change', function(effectif){
-  modifTroupeau("taille", effectif.currentTarget.value);
-  troupeau.taille = effectif.currentTarget.value;
-  console.log(troupeau);
+$("input[name='effectif']").on('change', function(effectif){ // choix de l'effectif
+  modifTroupeau("effectif", effectif.currentTarget.value);
+  troupeau.effectif = effectif.currentTarget.value;
 });
+ // choix du niveau d'infestation
 $(".feu").on('click', function(infestation){
   var nb_strongles = 0;
   switch (infestation.currentTarget.id) {
@@ -251,23 +242,48 @@ $(".feu").on('click', function(infestation){
 		break;
 	default:
 		alert('Problème');
-}
-  modifTroupeau("infestation",nb_strongles);
-  for (var i = 0; i < nb_strongles; i++) {
-    strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
-    troupeau.addStrongles(strongle);
   }
+  $('.feu').removeClass('feu-choisi'); // annule les couleurs
+  $('#'+infestation.currentTarget.id).addClass('feu-choisi'); // applique la couleur
 
-  troupeau.tauxContaminant();
-console.log(troupeau);
+  modifTroupeau("infestation",nb_strongles);
+    for (var i = 0; i < nb_strongles; i++) {
+      strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
+      troupeau.addStrongles(strongle);
+    }
+    troupeau.tauxContaminant();
+  $("#troupeau_infestation").html(nb_strongles);
 });
-
+// fin choix du niveau d'infestation
 //################################## CHOIX DES DATES ###########################
 $("#slider").bind("valuesChanged", function(e, data){
   dates.mise_a_l_herbe = data.values.min;
   dates.entre_bergerie = data.values.max;
   dates.duree_paturage = Math.round((data.values.max - data.values.min)/86400000);
   dates.date_courante = data.values.min;
-  console.log(dates);
+  setTimeLine(dates);
+});
+//################################### AJOUT DES PATURES ########################
+// ajout du nom
+$(".categories-contenu-patures").on('change', '.pature-nom', function(pature) {
 
+  var id = pature.currentTarget.name.split("_")[2]; // id de la pature
+  setPatureNom(id, pature.currentTarget.value);
+  var pature_superficie = 'pature_superficie_'+id // creation d'une variable intermédiaire
+  $('input[name='+pature_superficie+']').attr('disabled', false).focus(); // activation du champs superficie et focus
+});
+// Ajout de la superficie
+$(".categories-contenu-patures").on('change', '.pature-superficie', function(superficie){
+  var id = superficie.currentTarget.name.split("_")[2];
+  console.log(foncier["pature_"+id]);
+  console.log(id);
+  foncier["pature_"+id].superficie = superficie.currentTarget.value;
+  var pature_histoire = '#pature_histoire_'+id;
+  $(pature_histoire).attr('disabled', false).focus();
+
+});
+// Ajout de l'histoire sous forme d'un objet patures_types
+$(".categories-contenu-patures").on('click', '.pature-histoire', function(histoire){
+  var id = histoire.currentTarget.name.split("_")[2];
+  setPatureParcelles(id, foncier, histoire.currentTarget.value);
 });

@@ -3,6 +3,7 @@
   padding: 1rem;
   background-image: linear-gradient(to right, black, darkgrey);
 }
+
 .categories-titres {
   padding: 40px;
   margin-left: 0.5rem 0;
@@ -39,8 +40,8 @@
     height: 100%;
   }
 }
-.image_troupeau:hover {
-  box-shadow: 6px 6px 6px black;
+.image_troupeau-choisi {
+  box-shadow: 6px 6px 6px green !important;
 }
 .categories-infestation {
   display: flex;
@@ -77,12 +78,26 @@
     box-shadow: 1px 1px 5px slategrey
   }
 }
-.categories-contenu-parcelles {
+.categories-contenu-patures {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-column-gap: 1rem;
+
+}
+.droite {
+  grid-column: 2;
+  padding: 1rem;
+  padding-top: 0;
+
+}
+.gauche {
+  grid-column: 1;
   display: flex;
   flex-direction: columns;
   flex-wrap: wrap;
   .categories-contenu-ligne {
     margin: 0.5rem 1rem;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -117,6 +132,9 @@
   justify-content: space-between;
 }
 .demo {
+  width: 230px;
+  margin: 1rem;
+  margin-top: 0;
   display: flex !important;
   flex-direction: row;
   align-items: center;

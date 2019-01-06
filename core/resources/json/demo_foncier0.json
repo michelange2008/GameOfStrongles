@@ -1,0 +1,198 @@
+{
+  "pature_0": {
+    "id": "pature_0",
+    "nom": "petit champ",
+    "superficie": "4",
+    "parcelles": {
+      "parcelle_0_0": {
+        "id": "parcelle_0_0",
+        "proportion": 100,
+        "contaminant": 2,
+        "infestation": {
+          "strongle_0": {
+            "id": "strongle_0",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 29,
+              "y": 10
+            }
+          },
+          "strongle_1": {
+            "id": "strongle_0",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 41,
+              "y": 87
+            }
+          },
+          "strongle_2": {
+            "id": "strongle_0",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 36,
+              "y": 48
+            }
+          },
+          "strongle_3": {
+            "id": "strongle_0",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 30,
+              "y": 69
+            }
+          }
+        }
+      }
+    }
+  },
+  "pature_1": {
+    "id": "pature_1",
+    "nom": "grand pré",
+    "superficie": "8",
+    "parcelles": {
+      "parcelle_1_0": {
+        "id": "parcelle_1_0",
+        "proportion": 100,
+        "contaminant": 1,
+        "infestation": {
+          "strongle_0": {
+            "id": "strongle_1",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 82,
+              "y": 72
+            }
+          },
+          "strongle_1": {
+            "id": "strongle_1",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 43,
+              "y": 87
+            }
+          }
+        }
+      }
+    }
+  },
+  "pature_2": {
+    "id": "pature_2",
+    "nom": "chez Marcel",
+    "superficie": "1",
+    "parcelles": {
+      "parcelle_2_0": {
+        "id": "parcelle_2_0",
+        "proportion": 100,
+        "contaminant": 2,
+        "infestation": {
+          "strongle_0": {
+            "id": "strongle_2",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 41,
+              "y": 0
+            }
+          },
+          "strongle_1": {
+            "id": "strongle_2",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 25,
+              "y": 89
+            }
+          },
+          "strongle_2": {
+            "id": "strongle_2",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 94,
+              "y": 5
+            }
+          },
+          "strongle_3": {
+            "id": "strongle_2",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 56,
+              "y": 19
+            }
+          }
+        }
+      }
+    }
+  },
+  "pature_3": {
+    "id": "pature_3",
+    "nom": "en-bas",
+    "superficie": "3",
+    "parcelles": {
+      "parcelle_3_0": {
+        "id": "parcelle_3_0",
+        "proportion": 100,
+        "contaminant": 1,
+        "infestation": {
+          "strongle_0": {
+            "id": "strongle_3",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 0,
+              "y": 42
+            }
+          },
+          "strongle_1": {
+            "id": "strongle_3",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 85,
+              "y": 50
+            }
+          }
+        }
+      }
+    }
+  },
+  "pature_4": {
+    "id": "pature_4",
+    "nom": "en-haut",
+    "superficie": "10",
+    "parcelles": {
+      "parcelle_4_0": {
+        "id": "parcelle_4_0",
+        "proportion": 100,
+        "contaminant": 0,
+        "infestation": {
+          "strongle_0": {
+            "id": "strongle_3",
+            "age": 1,
+            "pathogen": 1,
+            "localisation": {
+              "x": 0,
+              "y": 42
+            }
+          },
+          "strongle_1": {
+            "id": "strongle_3",
+            "age": 30,
+            "pathogen": 1,
+            "localisation": {
+              "x": 85,
+              "y": 50
+            }
+          }
+        }
+      }
+    }
+  }
+}

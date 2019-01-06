@@ -42,11 +42,13 @@
       <script src="{{asset('core/public/js/jquery-3.3.1.min.js')}}"></script>
       <script src="{{asset('core/public/js/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
       <script src="{{asset('core/public/js/jQRangeSlider-5.7.2/jQDateRangeSlider-withRuler-min.js')}}"></script>
+      <script src="{{asset('core/public/js/fonctions_base.js')}}"></script>
       <script src="{{asset('core/public/js/gos.js')}}"></script>
       {{-- <script src="{{asset('core/public/js/jquery.cookie.js')}}"></script> --}}
       <script src="{{asset('core/public/js/constantes.js')}}"></script>
       <script src="{{asset('core/public/js/troupeau.js')}}"></script>
       <script src="{{asset('core/public/js/dates.js')}}"></script>
+      <script src="{{asset('core/public/js/foncier.js')}}"></script>
       <script src="{{asset('core/public/js/pature.js')}}"></script>
       <script src="{{asset('core/public/js/parcelle.js')}}"></script>
       <script src="{{asset('core/public/js/strongle.js')}}"></script>
