@@ -48,6 +48,7 @@
           <input class="pature-superficie" type="number" name="pature_superficie_0" value="" placeholder="superficie" disabled=true>
           <select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0" disabled=true>
           </select>
+          <img id="efface_0" class="efface-ligne" src="public/svg/efface.svg">
         </div>
       </div>
       <div class="sous-categories droite">
@@ -58,18 +59,6 @@
         <div id="demo" class="btn btn-lg btn-warning rounded-0 demo">
           <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
           <p>Ou plutôt une démo</p>
-        </div>
-        <div id="calcul" class="btn btn-lg btn-success rounded-0 demo">
-          <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
-          <p>calcul</p>
-        </div>
-        <div id="dessin" class="btn btn-lg btn-secondary rounded-0 demo">
-          <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
-          <p>dessin</p>
-        </div>
-        <div id="dallage" class="btn btn-lg btn-primary rounded-0 demo">
-          <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
-          <p>dallage</p>
         </div>
       </div>
     </div>

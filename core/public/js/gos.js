@@ -17,6 +17,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     foncier = new Foncier();
     liste_mois = [];
     setTimeLine(dates);
+    dallage();
     //------------------------------------------------------------------------------
       $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
       $("#"+troupeau.espece).addClass('image_troupeau-choisi');

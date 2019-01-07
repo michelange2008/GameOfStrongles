@@ -150,3 +150,10 @@
 .sommaire {
   font-size: 1rem;
 }
+.efface-ligne {
+  width: 50px;
+  cursor: pointer;
+  &:hover {
+    filter: invert(100%);
+  }
+}

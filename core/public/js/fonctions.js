@@ -63,6 +63,7 @@ $("#sommaire").on('click', function() {
 });
 //affichage d'une page
 $("#demo").on('click', function() {
+  effaceLigneParcelles();
   effaceParcelles();
   creerDemo();
   // $("#page-gos").toggleClass("masque");
@@ -71,15 +72,6 @@ $("#demo").on('click', function() {
   // dessinePatures();
   // dallage();
 });
-$("#calcul").on('click', function() {
-  calculPature();
-});
-$("#dessin").on('click', function() {
-  dessinePatures();
-})
-$("#dallage").on('click', function() {
-  dallage();
-})
 
 $("#start").on('click', function() {
   effaceParcelles();
@@ -109,6 +101,13 @@ $("#ajout").on('click',function() {
   });
   $("#liste_patures div:last-child").children().focus()[0].focus();
 })
+//################## SUPPRESSION D'UNE LIGNE PARCELLE EN CLIQUANT SUR EFFACE ###
+$(".categories-contenu-patures").on('click', '.efface-ligne', function(ligne) {
+  var id = ligne.currentTarget.id.split("_")[1];
+  console.log(id);
+  effaceUneLigne(id);
+})
+
 //############### SAISON DE PATURAGE CREATION DU SLIDER ########################
 var annee = new Date().getFullYear();
 var months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Août", "Sept", "Oct", "Nov", "Dec"];
@@ -275,9 +274,9 @@ $(".categories-contenu-patures").on('change', '.pature-nom', function(pature) {
 // Ajout de la superficie
 $(".categories-contenu-patures").on('change', '.pature-superficie', function(superficie){
   var id = superficie.currentTarget.name.split("_")[2];
-  console.log(foncier["pature_"+id]);
-  console.log(id);
-  foncier["pature_"+id].superficie = superficie.currentTarget.value;
+  console.log(foncier.patures);
+  
+  foncier.patures[parseInt(id)].superficie = superficie.currentTarget.value;
   var pature_histoire = '#pature_histoire_'+id;
   $(pature_histoire).attr('disabled', false).focus();
 

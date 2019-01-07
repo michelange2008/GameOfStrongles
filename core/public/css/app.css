@@ -643,6 +643,16 @@ input::-o-inner-spin-button {
   font-size: 1rem;
 }
 
+.efface-ligne {
+  width: 50px;
+  cursor: pointer;
+}
+
+.efface-ligne:hover {
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+}
+
 .etable {
   margin: 2px 0;
   height: 50px;
