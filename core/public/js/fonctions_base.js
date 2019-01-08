@@ -44,7 +44,7 @@ function ajoutPaturesTypes(id_pature, type_pature){
 
 // Crée une nouvelle pature après que l'on ait rempli le champs nom
 function setPatureNom(id, nom) {
-  if(id >= foncier.nb_patures)
+  if(id >= foncier.patures.length)
   {
     pature = new Pature(id, nom); // creation
     foncier.addPature(pature); // ajout au foncier
@@ -75,7 +75,7 @@ function lignesParcelles() {
   $("#parcelles-chiffres").html('');
   for (var i = 0; i < foncier.patures.length; i++) {
     var pature = foncier.patures[i];
-    var chiffres = '<p class="soustitre">'+pature.nom+'</p><p id="'+pature.id+'" class="valeur">'+pature.parcelles[0].infestation.length+'</div>';
+    var chiffres = '<p class="soustitre">'+pature.nom+'</p><p id="pature_valeur_'+i+'" class="valeur">'+pature.parcelles[0].infestation.length+'</div>';
     $("#parcelles-chiffres").append(chiffres);
   }
 }
@@ -108,13 +108,15 @@ function creerDemo() {
 
 function creeLignesParcelles(foncier) {
   $("#liste_patures").html('');
-  for(var i = 0; i < foncier.nb_patures; i++){
+  for(var i = 0; i < foncier.patures.length; i++){
     pature = foncier.patures[i];
     var ligne = '<div class="categories-contenu-ligne">'+
       '<input class="pature-nom" type="text" name="pature_nom_'+i+'" value="'+pature.nom+'" placeholder="nom de la pature">'+
       '<input class="pature-superficie" type="number" name="pature_superficie_'+i+'" value="'+pature.superficie+'" placeholder="superficie">'+
       '<select id="pature_histoire_'+i+'" class="pature-histoire" name="pature_histoire_'+i+'">'+
-      '</select></div>';
+      '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>'+
+      '</select>'+
+      '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>';
       $("#liste_patures").append(ligne);
       ajoutPaturesTypes(i, pature.histoire.id);
   }
@@ -129,24 +131,15 @@ function effaceLigneParcelles() {
     '<input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">'+
     '<input class="pature-superficie" type="number" name="pature_superficie_0 " value="" placeholder="superficie">'+
     '<select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0">'+
-    '</select></div>';
+    '</select>'+
+    '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>';
     $("#liste_patures").append(ligne);
     ajoutPaturesTypes(0, 0);
 }
 
 function effaceUneLigne(id_ligne) {
-  var nouveauFoncier = foncier;
-  if(foncier.nb_patures > 0) {
-    for (var i = 0; i < foncier.nb_pature; i++) {
-      if(i >= id_ligne && i < foncier.nb_pature-1) {
-        var j = i + 1;
-        foncier.patures[i] = nouveauFoncier["pature_"+j];
-      } else if(i = foncier.nb_pature-1) {
-        var dernier = foncier.pop();
-        console.log(dernier);
-      }
-    }
-  }
+  console.log(id_ligne);
+  foncier.patures.splice(id_ligne, 1);
   console.log(foncier);
 }
 
@@ -163,7 +156,7 @@ function effaceMoniteurParcelles() {
 // Calcul les valeurs de X et longueur pour chaque pature en fonction de la superficie et du nombre de patures
 function calculPature()
 {
-  var nb_lignes = Math.ceil(foncier.nb_patures/param.NB_PARCELLES_PAR_LIGNE.valeur); // nombre de lignes de parcelles à afficher
+  var nb_lignes = Math.ceil(foncier.patures.length/param.NB_PARCELLES_PAR_LIGNE.valeur); // nombre de lignes de parcelles à afficher
   // calcul de la longueur totale soit la somme des racines carrées des superficies
   var longueur_totale = 0;
   for (var i = 0; i < foncier.patures.length; i++) {
