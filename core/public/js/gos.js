@@ -2,41 +2,50 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
 //################################# START ######################################
   $(function() {
-    // création de l'objet troupeau sur la base du div #troupeau
-    var dates = new Dates(datesJSON.mise_a_l_herbe.date, datesJSON.entre_bergerie.date, datesJSON.duree_paturage, datesJSON.date_courante.date);
-    var troupeau = new Troupeau(troupeauJSON.espece, troupeauJSON.taille, troupeauJSON.sensibilite);
-    var inf = troupeauJSON.infestation;
-    // TODO: comment parcourir un objet Javascript
+    // mise à zéro du contenu des champs de patures et remplissage de la liste déroulante
+    $('.pature-nom').val('');
+    $('.pature-superficie').val('');
+    $.each(patures_types, function(clef, objet) {
+      var type = '<option value="'+clef+'">'+objet.nom+'</option>';
+      $("#pature_histoire_0").append(type);
+    });
+    $("#pas_de_temps").html(param.PAS_DE_TEMPS.valeur);
 
-    troupeau.addStrongles(troupeauJSON.infestation.strongle_1);
-    console.log(troupeauJSON.infestation);
-    troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
-    troupeau.sinfeste($('#troupeau').attr('infestation'));
-
-
-//######################################### FONCTIONS ##############################################################
+    //---------------------------------------------------------------------------------
+    troupeau = new Troupeau();
+    dates = new Dates();
+    foncier = new Foncier();
+    liste_mois = [];
+    setTimeLine(dates);
+    dallage();
+    //------------------------------------------------------------------------------
+      $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
+      $("#"+troupeau.espece).addClass('image_troupeau-choisi');
+      $('input[name=effectif]').val(troupeau.effectif);
+      $("#orange").addClass("feu-choisi");
+      $("#troupeau_infestation").html(troupeau.infestation.length);
 
 //############################ DEFINITION DES OBJETS PARCELLE ######################################################
-var foncier = [];
-$('.pature').each(function(index, pature) {
-  // création d'un objet pature
-  var id_pature = $(pature).attr('id'); //id de la pature
-  patureObj = new Pature($(pature).attr('id'), $(pature).attr('nom'), $(pature).attr('superficie')); //création d'une nouvelle parcelle
-  for(var i = 0 ; i <pature.childElementCount; i++){ // on passe en revue tous les enfants de pature
-    parcelle_id = "#"+pature.children.item(i).id;
-    if($(parcelle_id).attr('class') == "parcelle") // si cet enfant à la classe parcelle
-    {
-      patureObj.addParcelle(creeParcelleAvecHtml(parcelle_id));
-    }
-  };
-  foncier.push(patureObj); // ajout de cette pature au foncier
-});
-
-$('.parcellaire').masonry({
-  // options
-  itemSelector: '.pature',
-  columnWidth: 1
-});
+// var foncier = [];
+// $('.pature').each(function(index, pature) {
+//   // création d'un objet pature
+//   var id_pature = $(pature).attr('id'); //id de la pature
+//   patureObj = new Pature($(pature).attr('id'), $(pature).attr('nom'), $(pature).attr('superficie')); //création d'une nouvelle parcelle
+//   for(var i = 0 ; i <pature.childElementCount; i++){ // on passe en revue tous les enfants de pature
+//     parcelle_id = "#"+pature.children.item(i).id;
+//     if($(parcelle_id).attr('class') == "parcelle") // si cet enfant à la classe parcelle
+//     {
+//       patureObj.addParcelle(creeParcelleAvecHtml(parcelle_id));
+//     }
+//   };
+//   foncier.push(patureObj); // ajout de cette pature au foncier
+// });
+//
+// $('.parcellaire').masonry({
+//   // options
+//   itemSelector: '.pature',
+//   columnWidth: 1
+// });
 
 //############################ GESTION DU DEPLACEMENT DU TROUPEAU ##################################################
   var $draggable = $('#troupeau').draggabilly({

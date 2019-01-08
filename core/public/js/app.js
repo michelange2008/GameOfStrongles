@@ -953,9 +953,9 @@ Parcelle.prototype.contaminant = function () {
 };
 
 //################################ TROUPEAU ####################################
-function Troupeau(espece, taille) {
+function Troupeau(espece, effectif) {
   this.espece = espece;
-  this.taille = taille;
+  this.effectif = effectif;
   this.infestation = [];
 }
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
@@ -981,7 +981,7 @@ $(function () {
     location.reload();
   });
   // création de l'objet troupeau sur la base du div #troupeau
-  troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('taille'));
+  troupeau = new Troupeau($('#troupeau').attr('espece'), $('#troupeau').attr('effectif'));
   troupeau.sinfeste($('#troupeau').attr('infestation'));
 
   //######################################### FONCTIONS ##############################################################

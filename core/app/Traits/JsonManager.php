@@ -25,10 +25,11 @@ trait JsonManager
     $json_nouveau = json_encode($json, JSON_UNESCAPED_UNICODE);
 
     // Ouverture du fichier
-    $fichier = fopen('core/resources/json/'.$fichier, 'w+');
+    $file = fopen('core/resources/json/'.$fichier, 'w');
     // Ecriture dans le fichier
-    fwrite($fichier, $json_nouveau);
+
+    fwrite($file, $json_nouveau);
     // Fermeture du fichier
-    fclose($fichier);
+    fclose($file);
   }
 }

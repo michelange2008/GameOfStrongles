@@ -1,8 +1,8 @@
 //################################# CLASSES ET METHODES ##################################
-function Parcelle(id, proportion)
+function Parcelle(id_pature, id)
 {
-  this.id = id;
-  this.proportion = proportion;
+  this.id = "parcelle_"+id_pature+"_"+id;
+  this.proportion = 100;
   this.troupeau = null;
   this.infestation = [];
   this.contaminant = 0;
@@ -12,7 +12,7 @@ Parcelle.prototype.addStrongles = function(nb_strongles)
 {
   for($i = 1 ; $i <= nb_strongles; $i++)
   {
-    strongle = new StrongleOut(1);
+    strongle = new StrongleOut($i,1);
     this.infestation.push(strongle);
   }
 }

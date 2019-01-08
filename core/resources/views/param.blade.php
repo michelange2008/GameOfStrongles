@@ -1,4 +1,3 @@
-<h2 style="color:white; margin-left: 1rem">modification des paramètres</h2>
 {!! Form::open(['route' => 'action', "id" => "form"]) !!}
 <div class="categories">
   <h5 class="categories-titres">Biologie des strongles</h5>
@@ -12,7 +11,7 @@
             <div id="{{$key}}" class="champs">
               <label for="{{$key}}">{{ucfirst($value->nom)}}</label>
               <div class="">
-                <select id="pathogen" class="zone_saisie" name="pathogen">
+                <select id="{{$key}}" class="zone_saisie" name="{{$key}}">
                   @foreach ($value->option as $clef => $pathogenicite)
                     <option value="{{ucfirst($pathogenicite->degre)}}">{{$pathogenicite->intitule}}</option>
                   @endforeach
@@ -58,3 +57,4 @@
   </div>
 </div>
 {!! Form::close() !!}
+</div>

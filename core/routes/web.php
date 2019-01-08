@@ -16,4 +16,6 @@ Route::post('/action', ['uses' => 'MainController@action', 'as' => 'action']);
 
 Route::get('/parametres', ['uses' => 'MainController@param', 'as' => 'param']);
 
-Route::post('/parametres/modification', ['uses' => 'MainController@ecritParamBio', 'as' => 'ecritParamBio']);
+Route::post('/modification', ['uses' => 'MainController@ecritParamBio', 'as' => 'ecritParamBio']);
+
+Route::post('/troupeau', ['uses' => 'MainController@ecritTroupeau', 'as' => 'ecritTroupeau']);

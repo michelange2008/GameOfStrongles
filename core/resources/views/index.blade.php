@@ -16,18 +16,16 @@
         <div class="categories-troupeau">
           @foreach ($liste_espece as $espece)
             <img id={{$espece->nom_court()}} class='image_troupeau' src="public/svg/{{$espece->icone()}}" alt="{{$espece->nom()}}" title="{{$espece->nom_court()}}">
-            {{ Form::radio('troupeau', $espece->nom_court(), '', ['class' => 'invisible'])}}
           @endforeach
         </div>
         <div class="categories-effectif">
-          {{Form::number('effectif', '', ['placeholder' => "effectif"])}}
+          <input placeholder="effectif" name="effectif" type="number" value="">
         </div>
         <div class="categories-infestation">
-          <input type="checkbox" name="infestation_troupeau" value="orange" checked>
           <p>Niveau d'infestation</p>
-          <div id="vert" class="feu vert"></div>
-          <div id="orange" class="feu orange feu-choisi"></div>
-          <div id="rouge" class="feu rouge"></div>
+          <div id="vert" class="feu vert" title="troupeau non infesté"></div>
+          <div id="orange" class="feu orange" title="troupeau avec une infestation modérée"></div>
+          <div id="rouge" class="feu rouge" title="troupeau infesté"></div>
         </div>
     </div>
   </div>
@@ -42,16 +40,26 @@
     </div>
   </div>
   <div class="categories">
-    <h5 class=" categories-titres" >Parcelles</h5>
-    <div class="categories-contenu-parcelles" parcelle = true>
-      <div class="categories-contenu-ligne">
-        <input type="text" name="parcelle_nom_0" value="" placeholder="nom de la parcelle">
-        <input type="number" name="parcelle_superficie_0" value="" placeholder="superficie">
-        <select name="parcelle_histoire_0">
-          @foreach ($parcelles_type as $parcelle_type)
-            <option value="{{$parcelle_type->nom()}}">{{$parcelle_type->nom()}}</option>
-          @endforeach
-        </select>
+    <h5 class=" categories-titres" >Patures</h5>
+    <div class="categories-contenu-patures">
+      <div id="liste_patures" class="sous-categories gauche">
+        <div class="categories-contenu-ligne">
+          <input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">
+          <input class="pature-superficie" type="number" name="pature_superficie_0" value="" placeholder="superficie" disabled=true>
+          <select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0" disabled=true>
+          </select>
+          <img id="efface_0" class="efface-ligne" src="public/svg/efface.svg">
+        </div>
+      </div>
+      <div class="sous-categories droite">
+        <div id="efface" class="btn btn-lg btn-danger rounded-0 demo">
+          <img id="demo-img" src="public/svg/efface.svg" alt="démo" title="cliquez ici pour une démonstration">
+          <p>Tout effacer</p>
+        </div>
+        <div id="demo" class="btn btn-lg btn-warning rounded-0 demo">
+          <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
+          <p>Ou plutôt une démo</p>
+        </div>
       </div>
     </div>
     <div id = "ajout" class="plus">
@@ -59,13 +67,12 @@
     </div>
   </div>
   <div id="boutons" class="categories">
-    <input type="checkbox" name="action" value="aucune" style="display:none">
-    <input type="submit" name="submit" value="C'est parti !" class="btn btn-success rounded-0 btn-lg">
-    <div id="demo" class="btn btn-lg btn-warning rounded-0 demo">
-      <img id="demo-img" src="public/svg/demo.svg" alt="démo" title="cliquez ici pour une démonstration">
-      <p>Ou plutôt une démo</p>
+    <div id="start" class="btn btn-lg btn-success rounded-0 demo">
+      <img id="start-img" src="public/svg/start.svg" alt="paramètres" title="cliquez ici pour modifier les paramètres biologiques">
+      <p>C'est parti !</p>
     </div>
-    <div id="param" class="btn btn-lg btn-danger rounded-0 demo">
+
+    <div id="param" class="btn btn-lg btn-secondary rounded-0 demo">
       <img id="param-img" src="public/svg/param.svg" alt="paramètres" title="cliquez ici pour modifier les paramètres biologiques">
       <p>Modifier les paramètres</p>
     </div>

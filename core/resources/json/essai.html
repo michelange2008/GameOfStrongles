@@ -1,0 +1,101 @@
+<div id="page-gos">
+    <!-- Panneau principal -->
+<div id="main" class="row">
+  <!-- Panneau de gauche qui fait moniteur -->
+  <div id="moniteur" class="infos col-sm-2">
+    <div id="resultats" class="bandeau alert rounded-0">
+      <h5 class="titre">Situation</h5>
+    </div>
+    <div class="cadran">
+      <div class="titre">
+        <h6 class="">date</h6>
+      </div>
+      <p id="date" style="text-align:center">18/03/2019</p>
+      <p class="moyen">(pas de temps : <span id="pas_de_temps" title="modifier le pas de temps (jours)">5</span> jours)</p>
+    </div>
+    <div class="cadran">
+      <div class="titre">
+          <h6>Troupeau</h6>
+      </div>
+      <div class="chiffres">
+        <p class="soustitre">Infestation: </p><p id="troupeau_infestation" class="valeur">5</p>
+        <p class="soustitre">Excretion: </p><p id="troupeau_contaminant" class="valeur">0</p>
+      </div>
+    </div>
+    <div class="cadran">
+      <div class="titre">
+        <h6>Parcelles</h6>
+      </div>
+      <div id="parcelles-chiffres" class="chiffres"><p class="soustitre">petit champ</p><p id="0" class="valeur">2</p><p class="soustitre">grand pré</p><p id="1" class="valeur">0</p><p class="soustitre">chez Marcel</p><p id="2" class="valeur">2</p><p class="soustitre">en-bas</p><p id="3" class="valeur">0</p><p class="soustitre">en-haut</p><p id="4" class="valeur">1</p></div>
+    </div>
+  </div>
+  <!-- Grand panneau de droite avec time-line, troupeau et paturages -->
+  <div id="plateau" class="col-sm-10">
+    <div id="temps" class="time-line">
+      <div id="temps-mois" class="saison"><div id="month" class="mois" style="width:6%">mars</div><div id="month" class="mois" style="width:15%">avril</div><div id="month" class="mois" style="width:15%">mai</div><div id="month" class="mois" style="width:15%">juin</div><div id="month" class="mois" style="width:15%">juillet</div><div id="month" class="mois" style="width:15%">août</div><div id="month" class="mois" style="width:15%">septembre</div><div id="month" class="mois" style="width:9%">octobre</div></div>
+      <div id="curseur" class="cursor">
+      </div>
+    </div>
+
+    <div id="exploitation">
+      <div id="chevrerie" class="etable">
+        <div id="troupeau" class="flock" style="position: relative; touch-action: none;">
+              <img id="troupeau-image" src="http://localhost/GameOfStrongles/public/svg/caprins.svg" alt="troupeau">
+        </div>
+      </div>
+      <div id="foncier" class="parcellaire" style="position: relative; height: 0px;">
+      <div id="pature_0" style="width:30%; height:30vh" class="pature">
+        <div id="parcelle_0_0" class="parcelle"></div>
+        <div id="entete_parcelle_0_0" class="entete">
+          <p class="pature-nom">petit champ</p>
+          <p class="somme-des-jours"><span id="jours_parcelle_0_0" class="compte-jours">0</span><span class="jours"> j.</span></p>
+          <div id="divise_parcelle_0_0" class="divise">
+            <img src="divise.svg" alt="divise" title="diviser la parcelle">
+          </div>
+        </div>
+      </div>
+      <div id="pature_1" style="width:42%; height:42vh" class="pature">
+        <div id="parcelle_1_0" class="parcelle"></div>
+        <div id="entete_parcelle_1_0" class="entete">
+          <p class="pature-nom">grand pré</p>
+          <p class="somme-des-jours"><span id="jours_parcelle_1_0" class="compte-jours">0</span><span class="jours"> j.</span></p>
+          <div id="divise_parcelle_1_0" class="divise">
+            <img src="divise.svg" alt="divise" title="diviser la parcelle">
+          </div>
+        </div>
+      </div>
+      <div id="pature_2" style="width:15%; height:15vh" class="pature">
+        <div id="parcelle_2_0" class="parcelle"></div>
+        <div id="entete_parcelle_2_0" class="entete">
+          <p class="pature-nom">chez Marcel</p>
+          <p class="somme-des-jours"><span id="jours_parcelle_2_0" class="compte-jours">0</span><span class="jours"> j.</span></p>
+          <div id="divise_parcelle_2_0" class="divise">
+            <img src="divise.svg" alt="divise" title="diviser la parcelle">
+          </div>
+        </div>
+      </div>
+      <div id="pature_3" style="width:26%; height:26vh" class="pature">
+        <div id="parcelle_3_0" class="parcelle"></div>
+        <div id="entete_parcelle_3_0" class="entete">
+          <p class="pature-nom">en-bas</p>
+          <p class="somme-des-jours"><span id="jours_parcelle_3_0" class="compte-jours">0</span><span class="jours"> j.</span></p>
+          <div id="divise_parcelle_3_0" class="divise">
+            <img src="divise.svg" alt="divise" title="diviser la parcelle">
+          </div>
+        </div>
+      </div>
+      <div id="pature_4" style="width:47%; height:47vh" class="pature">
+        <div id="parcelle_4_0" class="parcelle"></div>
+        <div id="entete_parcelle_4_0" class="entete">
+          <p class="pature-nom">en-haut</p>
+          <p class="somme-des-jours"><span id="jours_parcelle_4_0" class="compte-jours">0</span><span class="jours"> j.</span></p>
+          <div id="divise_parcelle_4_0" class="divise">
+            <img src="divise.svg" alt="divise" title="diviser la parcelle">
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>

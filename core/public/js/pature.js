@@ -3,9 +3,14 @@ function Pature(id, nom, superficie)
   this.id = id;
   this.nom = nom;
   this.superficie = superficie;
-  this.X = 0;
-  this.longueur = 10;
+  this.geometrie = new Geometrie();
   this.parcelles = [];
+  this.histoire;
+}
+function Geometrie()
+{
+  this.X = 0
+  this.longueur = 10;
 }
 
 Pature.prototype.addParcelle = function(parcelle)

@@ -1,0 +1,26 @@
+{
+  "pat": {
+    "id": "pat",
+    "nom": "paturage",
+    "infestation_initiale": 2,
+    "taux_parcelle_contaminante": 2
+  },
+  "fauche": {
+    "id": "fauche",
+    "nom": "pré de fauche",
+    "infestation_initiale": 0,
+    "taux_parcelle_contaminante": 2
+  },
+  "nouvelle": {
+    "id": "nouvelle",
+    "nom": "nouvelle prairie",
+    "infestation_initiale": 0,
+    "taux_parcelle_contaminante": 2
+  },
+  "sousbois": {
+    "id": "sousbois",
+    "nom": "parcours sous bois",
+    "infestation_initiale": 1,
+    "taux_parcelle_contaminante": 1
+  }
+}

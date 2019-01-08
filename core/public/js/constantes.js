@@ -1,39 +1,17 @@
 // modélisation sensibilité hôte
 // Constantes reprises depuis le fichier param.json mis en cookie àl'ouverture de la page
 var url = document.documentURI+"core/resources/json/";
-$.getJSON(url+"troupeau.json", function(resultat){
-  $.cookie('troupeau', JSON.stringify(resultat));
+
+$.getJSON(url+"patures_types.json", function(resultat){
+  Cookies.set('patures_types', JSON.stringify(resultat));
 });
-$.getJSON(url+"dates.json", function(resultat){
-  $.cookie('dates', JSON.stringify(resultat));
-});
-$.getJSON(url+"foncier.json", function(resultat){
-  $.cookie('foncier', JSON.stringify(resultat));
-});
+var patures_types = Cookies.getJSON("patures_types");
 
 $.getJSON(url+"parametres.json", function(resultat){
-  $.cookie('parametres', JSON.stringify(resultat));
+  Cookies.set('parametres', JSON.stringify(resultat));
 });
+var param = Cookies.getJSON("parametres");
 
-var troupeauJSON = JSON.parse($.cookie("troupeau"));
-console.log(troupeauJSON);
-var datesJSON = JSON.parse($.cookie("dates"));
-var foncier = JSON.parse($.cookie("foncier"));
-
-var param = JSON.parse($.cookie("parametres"));
-
-$.each(JSON.parse($.cookie("parametres")), function(key, val){
-    if(isNaN(val.valeur)){
-      window[key] = val.valeur;
-    }
-    else if (Number.isInteger(val.valeur)) {
-      window[key] = parseInt(val.valeur);
-    }
-    else {
-      window[key] = parseFloat(val.valeur);
-    }
-
-});
 
 // variables d'affichage
 parcelle_sans_troupeau = 'lightgreen';
@@ -50,3 +28,18 @@ tab_url_bg.forEach(function(e){
     url_svg += e+"/";
 });
 url_svg = "http:/"+url_svg;
+
+var durees_des_mois =[
+  [31, "janvier"],
+  [28, "février"],
+  [31,"mars"],
+  [30, "avril"],
+  [31,"mai"],
+  [30,"juin"],
+  [31,"juillet"],
+  [31,"août"],
+  [30,"septembre"],
+  [31,"octobre"],
+  [30,"novembre"],
+  [31, "décembre"]
+];

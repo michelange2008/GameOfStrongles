@@ -1,0 +1,53 @@
+{
+  "pature_0": {
+    "id": "pature_0",
+    "nom": "petit champ",
+    "superficie": "4",
+    "histoire": "pat",
+    "parcelles": ""
+  },
+  "pature_1": {
+    "id": "pature_1",
+    "nom": "grand pré",
+    "superficie": "8",
+    "histoire": "fauche",
+    "parcelles": {
+      "parcelle_0_0": {
+        "id": "parcelle_0_0",
+        "proportion": 100
+      }
+  },
+  "pature_2": {
+    "id": "pature_2",
+    "nom": "chez Marcel",
+    "superficie": "1",
+    "histoire": "pat",
+    "parcelles": {
+      "parcelle_0_0": {
+        "id": "parcelle_0_0",
+        "proportion": 100
+      }
+  },
+  "pature_3": {
+    "id": "pature_3",
+    "nom": "en-bas",
+    "superficie": "3",
+    "histoire": "nouvelle",
+    "parcelles": {
+      "parcelle_0_0": {
+        "id": "parcelle_0_0",
+        "proportion": 100
+      }
+  },
+  "pature_4": {
+    "id": "pature_4",
+    "nom": "en-haut",
+    "superficie": "10",
+    "histoire": "sousbois",
+    "parcelles": {
+      "parcelle_0_0": {
+        "id": "parcelle_0_0",
+        "proportion": 100
+      }
+  }
+}

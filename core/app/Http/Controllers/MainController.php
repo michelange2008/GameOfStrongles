@@ -58,7 +58,6 @@ class MainController extends Controller
         dd('defaut');
       }
       $json_expl = $this->transform($exploitation);
-
       foreach ($json_expl as $key => $value) {
         $this->ecritJson($key.".json", $value);
       }
@@ -96,5 +95,30 @@ class MainController extends Controller
       $this->ecritJson("parametres.json", $parametres); // on écrit les nouvelles valeurs grâce au trait EcritJson
       return '{"ok": "ça va"}';
     }
+    public function ecritTroupeau(Request $request)
+    {
 
+      $nom = $request->nom;
+      $valeur = $request->valeur;
+      $parametres= $this->litJson("troupeau.json"); // ouvre et décode le fichier json grâce au trait LitJson
+      if($nom == "infestation")
+      {
+        $parametres->$nom = "";
+        $strongles = [];
+        for ($i=0; $i < $valeur ; $i++) {
+          $strongle["id"] = "strongle_".$i;
+          $strongle["age"] = 1;
+          $strongle["pathogen"] = 1;
+          $strongles["strongle_".$i] = $strongle;
+        }
+        $parametres->$nom = $strongles;
+      }
+      else
+      {
+        $parametres->$nom = $valeur;
+      }
+
+      $this->ecritJson("troupeau.json", $parametres); // on écrit les nouvelles valeurs grâce au trait EcritJson
+      return '{"ok": "ça va"}';
+    }
 }

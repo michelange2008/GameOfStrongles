@@ -1,28 +1,51 @@
 //################################ CLASSE ET METHODES ####################################
-function Troupeau(espece, taille, sensibilite)
+function Troupeau()
 {
-  this.espece = espece;
-  this.taille = taille;
-  this.sensibilite = sensibilite
-  this.parcelle = null;
+  this.espece = "caprins";
+  this.effectif = 45;
+  this.parcelle = "chevrerie";
   this.infestation = [];
-  this.contaminant = false;
+  this.sinfeste(5);
+  this.contaminant = 0;
 }
+Troupeau.prototype.setEspece = function (espece) {
+  this.espece = espece;
+};
+Troupeau.prototype.seteffectif = function (effectif) {
+  this.effectif = effectif;
+};
+Troupeau.prototype.setSensibilite = function (sensibilite) {
+  this.sensibilite = sensibilite;
+};
 // Ajout de strongles à un troupeau (surtout au démarrage)
 Troupeau.prototype.addStrongles = function (strongleObj) {
-    var strongle = new StrongleIn(strongleObj.age, strongleObj.pathogen, strongleObj.etat);
+  // console.log(strongleObj.id);
+    var strongle = new StrongleIn(strongleObj.id, strongleObj.age, strongleObj.pathogen);
+    this.infestation[strongleObj.id] = strongle;
 };
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
 
   var jours = (param.PAS_DE_TEMPS.valeur ? param.PAS_DE_TEMPS.valeur : 1);
 
-  for(i = 1 ; i <= nb_strongles*param.PAS_DE_TEMPS.valeur; i++)
+  for(i = 1 ; i <= nb_strongles; i++)
   {
     strongle = new StrongleIn(1);
     this.infestation.push(strongle);
   }
 }
+// AJout de strongles par contamination au paturage en fonction d'un nombre de jours
+Troupeau.prototype.sinfestePaturage = function (nb_strongles) {
+
+    var jours = (param.PAS_DE_TEMPS.valeur ? param.PAS_DE_TEMPS.valeur : 1);
+
+    for(i = 1 ; i <= nb_strongles*param.PAS_DE_TEMPS.valeur; i++)
+    {
+      strongle = new StrongleIn(1);
+      this.infestation.push(strongle);
+    }
+};
+
 Troupeau.prototype.evolutionStrongles = function(jours) {
 
   if(this.infestation.length > 0)
@@ -40,11 +63,25 @@ Troupeau.prototype.entreDansParcelle = function(parcelle) {
 Troupeau.prototype.sortDeParcelle = function () {
   this.parcelle = null;
 };
-
+// Calcule le nombre de strongle à l'état de ponte
+Troupeau.prototype.nbStrongleAdultes = function () {
+  var nb_strongles_adultes = 0;
+  this.infestation.forEach(function(strongle) {
+    if(strongle.etat == param.PONTE.valeur)
+    {
+      nb_strongles_adultes ++;
+    }
+  })
+    return nb_strongles_adultes;
+};
+// Donne un taux de contamination d'un troupeau
+Troupeau.prototype.tauxContaminant = function () {
+  return this.nbStrongleAdultes()*this.effectif*param.TAUX_TROUPEAU_CONTAMINANT.valeur / 100;
+};
 //###################################### FONCTIONS #################################
-// Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la taille et d'un parametre TTC
-function tauxTroupeauContaminant(nb_strongles_adultes, taille) {
-  return nb_strongles_adultes * taille * param.TAUX_TROUPEAU_CONTAMINANT.valeur / 100;
+// Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la effectif et d'un parametre TTC
+function tauxTroupeauContaminant(nb_strongles_adultes, effectif) {
+  return nb_strongles_adultes * effectif * param.TAUX_TROUPEAU_CONTAMINANT.valeur / 100;
 }
 function risqueMortalite(nb_strongles_adultes){
   return nb_strongles_adultes * param.PATHOGEN.valeur;
@@ -52,7 +89,7 @@ function risqueMortalite(nb_strongles_adultes){
 
 function troupeau_infestant(nb_strongles_adultes, troupeau){ // aspect du troupeau quand il a des adultes qui pondent
   $('#troupeau').css('background-image', 'url('+url_svg+'crottes.svg)');
-  $('#troupeau').attr('contaminant', tauxTroupeauContaminant(nb_strongles_adultes, troupeau.taille));
+  $('#troupeau').attr('contaminant', tauxTroupeauContaminant(nb_strongles_adultes, troupeau.effectif));
 }
 function troupeau_non_infestant(){// aspect du troupeau quand il n'a plus d'adultes qui pondent
   $('#troupeau').css('background-image', 'none');
@@ -93,7 +130,7 @@ function troupeau_evolution_excretion(troupeau){ // change l'aspect du troupeau 
   else {
     troupeau_non_infestant();
   }
-  var indice_contaminant = tauxTroupeauContaminant(decroissance(nb_strongles_adultes), troupeau.taille);
+  var indice_contaminant = tauxTroupeauContaminant(decroissance(nb_strongles_adultes), troupeau.effectif);
   $('#troupeau_contaminant').html(indice_contaminant);
   $('#troupeau').attr('contaminant', indice_contaminant);
   troupeau.contaminant = indice_contaminant;

@@ -9,9 +9,15 @@
 @endsection
 @section('param')
 <div id="page-param" class="masque">
-  @include('titre')
+  @include('titreParam')
   @include('param', [
     'parametres' => $parametres,
   ])
 </div>
+@endsection
+@section('gos')
+  <div id="page-gos" class="">
+    @include('titre')
+    @include('newgos')
+  </div>
 @endsection
