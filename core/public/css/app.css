@@ -266,8 +266,19 @@
 }
 
 .sousbois {
-  background: url("../svg/sousbois.svg") repeat;
+  background: url("../svg/sousbois.svg") lightgreen repeat;
 }
+.pat {
+  background: url("../svg/pat.svg") lightgreen repeat;
+}
+.fauche {
+  background: url("../svg/fauche.svg") lightgreen repeat;
+}
+.nouvelle {
+  background: url("../svg/nouvelle.svg") lightgreen repeat;
+}
+
+
 
 .infestant {
   position: absolute;
