@@ -67,11 +67,10 @@ function setPatureParcelles(id, foncier, historique) {
     }
   })
   foncier.patures[id].parcelles[0].addStrongles(foncier.patures[id].histoire.infestation_initiale); // on y ajoute des strongles en fonction de l'histoire
-  lignesParcelles();
 }
 
   // Ajout des donnees sur la patures dans le panneau de contrôle
-function lignesParcelles() {
+function ecritPaturesDansMoniteur() {
   $("#parcelles-chiffres").html('');
   for (var i = 0; i < foncier.patures.length; i++) {
     var pature = foncier.patures[i];
@@ -101,12 +100,12 @@ function creerDemo() {
     }
     pature.addParcelle(parcelle);
     foncier.addPature(pature);
-    lignesParcelles();
   }
-  creeLignesParcelles(foncier);
+  creeLignesPatures(foncier);
 }
 
-function creeLignesParcelles(foncier) {
+// affiche les lignes de saisie des patures en fonction de l'objet foncier (surtout pour démo ou toute configuration préexistante)
+function creeLignesPatures(foncier) {
   $("#liste_patures").html('');
   for(var i = 0; i < foncier.patures.length; i++){
     pature = foncier.patures[i];
@@ -114,19 +113,24 @@ function creeLignesParcelles(foncier) {
       '<input class="pature-nom" type="text" name="pature_nom_'+i+'" value="'+pature.nom+'" placeholder="nom de la pature">'+
       '<input class="pature-superficie" type="number" name="pature_superficie_'+i+'" value="'+pature.superficie+'" placeholder="superficie">'+
       '<select id="pature_histoire_'+i+'" class="pature-histoire" name="pature_histoire_'+i+'">'+
-      '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>'+
       '</select>'+
-      '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>';
+      '<img id="efface_'+i+'" class="efface-ligne" src="public/svg/efface.svg"></div>';
       $("#liste_patures").append(ligne);
       ajoutPaturesTypes(i, pature.histoire.id);
   }
 }
+
 // efface toutes les lignes de parcelles pour ne laisser qu'une ligne vide
 function effaceLigneParcelles() {
   effaceParcelles();
   effaceMoniteurParcelles();
   $("#liste_patures").html('');
   foncier = new Foncier();
+  ligneZero();
+}
+
+// construit une ligne vide de saisie de pature (à utiliser avec d'autres fonctions)
+function ligneZero() {
   var ligne = '<div class="categories-contenu-ligne">'+
     '<input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">'+
     '<input class="pature-superficie" type="number" name="pature_superficie_0 " value="" placeholder="superficie">'+
@@ -137,25 +141,29 @@ function effaceLigneParcelles() {
     ajoutPaturesTypes(0, 0);
 }
 
+// Efface une ligne de saisie de pature aussi bien dans l'objet foncier que à l'affichage
 function effaceUneLigne(id_ligne) {
-  console.log(id_ligne);
   foncier.patures.splice(id_ligne, 1);
-  console.log(foncier);
+  creeLignesPatures(foncier);
 }
 
+//############################ FONCTIONS POUR L'AFFICHAGE FINAL ###############
+// Vide l'affichage des patures: dessin et moniteur
 function effaceParcelles() {
   $("#foncier").html('');
-  $("#foncier").masonry("destroy");
+  if(typeof $("#foncier").data('masonry') !== "undefined"){
+    $("#foncier").masonry("destroy");
+  }
   effaceMoniteurParcelles();
 }
 
+// Supprime l'affiche des patures dans le moniteur (utiliser avec d'autres fonctions)
 function effaceMoniteurParcelles() {
   $("#parcelles-chiffres").html('');
 }
 
 // Calcul les valeurs de X et longueur pour chaque pature en fonction de la superficie et du nombre de patures
-function calculPature()
-{
+function calculPature(){
   var nb_lignes = Math.ceil(foncier.patures.length/param.NB_PARCELLES_PAR_LIGNE.valeur); // nombre de lignes de parcelles à afficher
   // calcul de la longueur totale soit la somme des racines carrées des superficies
   var longueur_totale = 0;
@@ -184,15 +192,16 @@ function calculPature()
 function dessinePatures() {
   for (var i = 0; i < foncier.patures.length; i++) {
     var pature = foncier.patures[i];
-    var parcelle_id = pature.parcelles[0].id;
+    var parcelle = pature.parcelles[0];
     var dessinParcelle = '<div id="pature_'
       +i+'" style="width:'+pature.geometrie.longueur
       +'%; height:'+pature.geometrie.longueur+'vh" class="pature">'
-      +'<div id="'+parcelle_id+'" class="parcelle"></div>'
-      +'<div id="entete_'+parcelle_id+'" class="entete">'
+      +'<div id="'+parcelle.id+'" class="parcelle '+pature.histoire.id+'">'
+      +installeStrongles(parcelle)+'</div>'
+      +'<div id="entete_'+parcelle.id+'" class="entete">'
         +'<p class="pature-nom">'+pature.nom+'</p>'
-        +'<p class="somme-des-jours"><span id="jours_'+parcelle_id+'" class="compte-jours">0</span><span class="jours"> j.</span></p>'
-        +'<div id="divise_'+parcelle_id+'" class="divise">'
+        +'<p class="somme-des-jours"><span id="jours_'+parcelle.id+'" class="compte-jours">0</span><span class="jours"> j.</span></p>'
+        +'<div id="divise_'+parcelle.id+'" class="divise">'
           +'<img src="public/svg/divise.svg" alt="divise" title="diviser la parcelle">'
         +'</div>'
       +'</div>';
@@ -200,6 +209,17 @@ function dessinePatures() {
   }
 }
 
+// Met les strongles dans les Parcelles
+function installeStrongles(parcelle) {
+  var strongles = '';
+  for (var i = 0; i < parcelle.infestation.length; i++) {
+    strongles = '<div id="parasite_'+i+'_'+parcelle.id+'" class="'+parcelle.infestation[i].etat
+    +'"style="left:'+parcelle.infestation[i].localisation[0]+'%;top:'+parcelle.infestation[i].localisation[1]+'%"></div>';
+  }
+  return strongles;
+}
+
+// Fait le dallage avec le plug-in jqurey Masonry
 function dallage() {
   $('#foncier').masonry({
     // options

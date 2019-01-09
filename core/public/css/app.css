@@ -265,6 +265,10 @@
   background: lightgreen;
 }
 
+.sousbois {
+  background: url("../svg/sousbois.svg") repeat;
+}
+
 .infestant {
   position: absolute;
   height: 5px;

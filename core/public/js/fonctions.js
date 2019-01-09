@@ -79,6 +79,7 @@ $("#start").on('click', function() {
   // $("#page-index").toggleClass("masque");
   calculPature();
   dessinePatures();
+  ecritPaturesDansMoniteur();
   dallage();
 })
 
@@ -103,8 +104,8 @@ $("#ajout").on('click',function() {
 })
 //################## SUPPRESSION D'UNE LIGNE PARCELLE EN CLIQUANT SUR EFFACE ###
 $(".categories-contenu-patures").on('click', '.efface-ligne', function(ligne) {
+  console.log(ligne.currentTarget.id);
   var id = ligne.currentTarget.id.split("_")[1];
-  console.log(id);
   effaceUneLigne(id);
 })
 
@@ -275,7 +276,7 @@ $(".categories-contenu-patures").on('change', '.pature-nom', function(pature) {
 $(".categories-contenu-patures").on('change', '.pature-superficie', function(superficie){
   var id = superficie.currentTarget.name.split("_")[2];
   console.log(foncier.patures);
-  
+
   foncier.patures[parseInt(id)].superficie = superficie.currentTarget.value;
   var pature_histoire = '#pature_histoire_'+id;
   $(pature_histoire).attr('disabled', false).focus();
