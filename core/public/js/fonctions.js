@@ -247,10 +247,8 @@ $(".feu").on('click', function(infestation){
   $('#'+infestation.currentTarget.id).addClass('feu-choisi'); // applique la couleur
 
   modifTroupeau("infestation",nb_strongles);
-    for (var i = 0; i < nb_strongles; i++) {
-      strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
-      troupeau.addStrongles(strongle);
-    }
+  troupeau.setStrongles(nb_strongles);
+    console.log(troupeau);
     troupeau.tauxContaminant();
   $("#troupeau_infestation").html(nb_strongles);
 });

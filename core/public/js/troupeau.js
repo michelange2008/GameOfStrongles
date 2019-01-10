@@ -17,6 +17,13 @@ Troupeau.prototype.seteffectif = function (effectif) {
 Troupeau.prototype.setSensibilite = function (sensibilite) {
   this.sensibilite = sensibilite;
 };
+Troupeau.prototype.setStrongles = function (nb_strongles) {
+  troupeau.infestation = [];
+  for (var i = 0; i < nb_strongles; i++) {
+    strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
+    troupeau.addStrongles(strongle);
+  }
+};
 // Ajout de strongles à un troupeau (surtout au démarrage)
 Troupeau.prototype.addStrongles = function (strongleObj) {
   // console.log(strongleObj.id);

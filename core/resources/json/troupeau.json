@@ -1,1 +1,1 @@
-{"espece":"ovins","taille":"45","sensibilite":3,"infestation":[]}
+{"espece":"ovins","taille":"45","sensibilite":3,"infestation":{"strongle_0":{"id":"strongle_0","age":1,"pathogen":1},"strongle_1":{"id":"strongle_1","age":1,"pathogen":1},"strongle_2":{"id":"strongle_2","age":1,"pathogen":1},"strongle_3":{"id":"strongle_3","age":1,"pathogen":1},"strongle_4":{"id":"strongle_4","age":1,"pathogen":1}}}

@@ -13,6 +13,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
     //---------------------------------------------------------------------------------
     troupeau = new Troupeau();
+    troupeau.setStrongles(5);
     dates = new Dates();
     foncier = new Foncier();
     liste_mois = [];
@@ -24,28 +25,6 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
       $('input[name=effectif]').val(troupeau.effectif);
       $("#orange").addClass("feu-choisi");
       $("#troupeau_infestation").html(troupeau.infestation.length);
-
-//############################ DEFINITION DES OBJETS PARCELLE ######################################################
-// var foncier = [];
-// $('.pature').each(function(index, pature) {
-//   // création d'un objet pature
-//   var id_pature = $(pature).attr('id'); //id de la pature
-//   patureObj = new Pature($(pature).attr('id'), $(pature).attr('nom'), $(pature).attr('superficie')); //création d'une nouvelle parcelle
-//   for(var i = 0 ; i <pature.childElementCount; i++){ // on passe en revue tous les enfants de pature
-//     parcelle_id = "#"+pature.children.item(i).id;
-//     if($(parcelle_id).attr('class') == "parcelle") // si cet enfant à la classe parcelle
-//     {
-//       patureObj.addParcelle(creeParcelleAvecHtml(parcelle_id));
-//     }
-//   };
-//   foncier.push(patureObj); // ajout de cette pature au foncier
-// });
-//
-// $('.parcellaire').masonry({
-//   // options
-//   itemSelector: '.pature',
-//   columnWidth: 1
-// });
 
 //############################ GESTION DU DEPLACEMENT DU TROUPEAU ##################################################
   var $draggable = $('#troupeau').draggabilly({
@@ -59,26 +38,23 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     $('#troupeau').css('visibility', 'collapse'); // on rend invisible le troupeau (pour pouvoir connaitre l'élément qui est en dessous)
     $('.lot').css('visibility', 'collapse'); // et aussi les lots de strongle qui sont sur les parcelles
     var element_avec_troupeau = document.elementFromPoint(pointer.clientX, pointer.clientY); // on identifie l'élément qui est en dessous par la position du pointer
-
     // On enlève le troupeau de toutes les parcelles
-    foncier.forEach(function(pature) {
-      pature.parcelles.forEach(function(parcelle) {
+    for(pature in foncier.patures) {
+      for(parcelle in pature.parcelles) {
         troupeau.sortDeParcelle();
         parcelle.sortTroupeau();
-      });
-    });
+      };
+    };
     // Si le troupeau est dans une parcelle on attribue le troupeau à la parcelle et vice versa
-    if(element_avec_troupeau.id.split("_")[0] == "parcelle") // le troupeau n'est pas dans une parcelle
+    if(element_avec_troupeau.id.split("_")[0] == "parcelle") // le troupeau est dans une parcelle
     {
       var pature_num = element_avec_troupeau.id.split("_")[1];
       var parcelle_num = element_avec_troupeau.id.split("_")[2];
-      parcelle_avec_troupeau = foncier[pature_num].parcelles[parcelle_num];
+      parcelle_avec_troupeau = foncier.patures[pature_num].parcelles[parcelle_num];
       $("#troupeau").css('background-image', 'none');
       troupeau.entreDansParcelle(parcelle_avec_troupeau);
       parcelle_avec_troupeau.entreTroupeau(troupeau);
       // On traduit ça dans le html (est-utile ?)
-      $(this).attr('lieu', parcelle_avec_troupeau.id); // on attribue au troupeau le nom de la parcelle où il est
-      $("#"+parcelle_avec_troupeau.id).attr('troupeau', true); // on passer à true la variable troupeau de la parcelle où est le pointer cad le troupeau
       $("#"+parcelle_avec_troupeau.id).css('border', 'dotted 2px black'); // attribution d'un couleur pour la parcelle avec troupeau
     }
     // Si le troupeau est dans la chevrerie il y a une alerte (et on attribue au troupeau la chevrerie ???)
@@ -93,30 +69,29 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     $('#troupeau').css('visibility', 'visible'); // on remet le troupeau visible
   });
 
-//################################ AVANCEE D'UN PAS DE TEMPS DONNEE################################################
-  var duree_paturage = $('#temps').attr('paturage');
+//################################ AVANCEE D'UN PAS DE TEMPS DONNE ################################################
   var largeur_time_line = $('#temps').innerWidth() ; //largeur en pixel de la time-line
-  var date = new Date($('#date').attr('data'));
   $(document).on('keydown', function(e) {
     if(e.which == 39 && $('#curseur').position().left < $('.time-line').width()-$('.cursor').width())
     {
-      var saut_curseur = PAS_DE_TEMPS * largeur_time_line / duree_paturage;
+      var saut_curseur = param.PAS_DE_TEMPS.valeur * largeur_time_line / dates.duree_paturage;
       // avancée de la Date
-      date.setDate(date.getDate()+PAS_DE_TEMPS);
-      $('#date').html(date.toLocaleDateString('fr-FR', options_date));
+      dates.avance(param.PAS_DE_TEMPS.valeur);
+      $('#date').html(dates.date_courante.toLocaleDateString('fr-FR', options_date));
       // avancée du curseur
       var position_curseur = $('#curseur').css('left');
       var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
 
       // EVOLUTION TROUPEAU #####################################################
       // évolution interne des strongles
-      troupeau.evolutionStrongles(PAS_DE_TEMPS);
+      console.log(troupeau);
+      troupeau.evolutionStrongles(param.PAS_DE_TEMPS.valeur);
       // transformation éventuelle du troupeau en excréteur
       troupeau_evolution_excretion(troupeau);
-
+      console.log(troupeau);
       if(troupeau.parcelle !== null) {
         // nouvelle infestation du troupeau à partir de la parcelle
-        troupeau.sinfeste(troupeau.parcelle.contaminant, PAS_DE_TEMPS); // modification du troupeau
+        troupeau.sinfeste(troupeau.parcelle.contaminant, param.PAS_DE_TEMPS.valeur); // modification du troupeau
         $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
       }
       // modification de l'aspect du troupeau
@@ -129,7 +104,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
       foncier.forEach(function(pature) {
         pature.parcelles.forEach(function(parcelle) {
           // modification de l'objet parcelle
-          parcelle.evolutionStrongles(PAS_DE_TEMPS); //evolution spontanée des strongles de la parcelle
+          parcelle.evolutionStrongles(param.PAS_DE_TEMPS.valeur); //evolution spontanée des strongles de la parcelle
           if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
           {
             var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau
