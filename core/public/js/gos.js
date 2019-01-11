@@ -84,11 +84,9 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
       // EVOLUTION TROUPEAU #####################################################
       // évolution interne des strongles
-      console.log(troupeau);
       troupeau.evolutionStrongles(param.PAS_DE_TEMPS.valeur);
       // transformation éventuelle du troupeau en excréteur
       troupeau_evolution_excretion(troupeau);
-      console.log(troupeau);
       if(troupeau.parcelle !== null) {
         // nouvelle infestation du troupeau à partir de la parcelle
         troupeau.sinfeste(troupeau.parcelle.contaminant, param.PAS_DE_TEMPS.valeur); // modification du troupeau
@@ -101,10 +99,11 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
       // EVOLUTION parcelle #######################################################
       // parcelle évolution des larves
-      foncier.forEach(function(pature) {
+      foncier.patures.forEach(function(pature) {
         pature.parcelles.forEach(function(parcelle) {
           // modification de l'objet parcelle
           parcelle.evolutionStrongles(param.PAS_DE_TEMPS.valeur); //evolution spontanée des strongles de la parcelle
+
           if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
           {
             var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau

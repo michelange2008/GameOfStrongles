@@ -18,17 +18,17 @@ Troupeau.prototype.setSensibilite = function (sensibilite) {
   this.sensibilite = sensibilite;
 };
 Troupeau.prototype.setStrongles = function (nb_strongles) {
-  troupeau.infestation = [];
+  this.infestation = [];
   for (var i = 0; i < nb_strongles; i++) {
     strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
-    troupeau.addStrongles(strongle);
+    this.addStrongles(strongle);
   }
 };
 // Ajout de strongles à un troupeau (surtout au démarrage)
 Troupeau.prototype.addStrongles = function (strongleObj) {
   // console.log(strongleObj.id);
     var strongle = new StrongleIn(strongleObj.id, strongleObj.age, strongleObj.pathogen);
-    this.infestation[strongleObj.id] = strongle;
+    this.infestation.push(strongle);
 };
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
@@ -57,9 +57,9 @@ Troupeau.prototype.evolutionStrongles = function(jours) {
 
   if(this.infestation.length > 0)
   {
-    this.infestation.forEach(function(strongle) {
-      strongle.evolution(jours);
-    });
+      for (var i = 0; i < this.infestation.length; i++) {
+        this.infestation[i].evolution(jours);
+      }
   }
 }
 

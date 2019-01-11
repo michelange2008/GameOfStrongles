@@ -20,7 +20,8 @@ class StrongleOut extends Strongle {
 
 StrongleOut.prototype.evolution =  function(jours)
 {
-  this.age = parseInt(this.age) + parseInt(jours);
+  this.age += jours;
+
   if(this.age < param.L3_INFESTANTE.valeur)
   {
     this.etat = param.NON_INFESTANT.valeur;
@@ -43,6 +44,7 @@ class StrongleIn extends Strongle {
 
 StrongleIn.prototype.evolution = function(jours)
 {
+  this.age += jours;
   if(this.age < param.PERIODE_PREPATENTE.valeur)
   {
     this.etat = param.PREPATENT.valeur;

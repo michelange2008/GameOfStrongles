@@ -27,22 +27,22 @@
   "L3_INFESTANTE": {
     "type": "biologie",
     "nom": "oeuf à L3 infestante",
-    "valeur": "26"
+    "valeur": 26
   },
   "L3_MORTE": {
     "type": "biologie",
     "nom": "longévite de L3",
-    "valeur": "61"
+    "valeur": 61
   },
   "PERIODE_PREPATENTE": {
     "type": "biologie",
     "nom": "période prépatente",
-    "valeur": "15"
+    "valeur": 15
   },
   "ADULTE_MORT": {
     "type": "biologie",
     "nom": "longévité des strongles adultes",
-    "valeur": "124"
+    "valeur": 124
   },
   "PATHOGEN": {
     "type": "biologie",
@@ -66,37 +66,37 @@
   "RISQUE_MORTALITE_MOYEN": {
     "type": "modele",
     "nom": "risque de mortalité moyen",
-    "valeur": "1000"
+    "valeur": 1000
   },
   "RISQUE_MORTALITE_ELEVE": {
     "type": "modele",
     "nom": "risque de mortalité élevé",
-    "valeur": "2000"
+    "valeur": 2000
   },
   "TROUPEAU_MORT": {
     "type": "modele",
     "nom": "mortalité du troupeau",
-    "valeur": "3000"
+    "valeur": 3000
   },
   "DECROISSANCE": {
     "type": "modele",
     "nom": "décr. rythme d'infestation",
-    "valeur": "1000"
+    "valeur": 1000
   },
   "TAUX_TROUPEAU_CONTAMINANT": {
     "type": "modele",
     "nom": "tx contamination par le troupeau",
-    "valeur": "1"
+    "valeur": 1
   },
   "TAUX_PARCELLE_CONTAMINANTE": {
     "type": "modele",
     "nom": "tx contamination par la parcelle",
-    "valeur": "0.5"
+    "valeur": 0.5
   },
   "PAS_DE_TEMPS": {
     "type": "modele",
     "nom": "pas de temps (jours)",
-    "valeur": "5"
+    "valeur": 5
   },
   "NB_PARCELLES_PAR_LIGNE": {
     "type": "description",
