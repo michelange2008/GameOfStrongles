@@ -104,18 +104,19 @@ Troupeau.prototype.maj_aspect_troupeau = function () {
   else if (troupeau.infestation.length > param.RISQUE_MORTALITE_MOYEN.valeur && troupeau.infestation.length < param.RISQUE_MORTALITE_ELEVE.valeur) {
     image_troupeau = troupeau.espece+"_malade.svg";
   }
+  else if (troupeau.infestation.length == 0) {
+    image_troupeau = troupeau.espece+'_infestation_'+indice_infestation+'_contaminant_0.svg';
+  }
   else {
     var nombre_niveau_infestation = 5
     var intervalle_aspect = param.RISQUE_MORTALITE_MOYEN.valeur / nombre_niveau_infestation;
     var indice_infestation =Math.round(troupeau.infestation.length/intervalle_aspect)+1;
-    console.log(troupeau.infestation.length+" - "+indice_infestation);
     var estContaminant = (this.contaminant > 0) ? 1 : 0;
     image_troupeau = troupeau.espece+'_infestation_'+indice_infestation+'_contaminant_'+estContaminant+'.svg';
   }
-  console.log(url_svg+image_troupeau);
     $('#troupeau-image').attr('src', url_svg+image_troupeau);
 };
-
+// TODO: question de l'évolution du troupeau en fonction de la pathogénéicité et de l'effectif 
 
 //###################################### FONCTIONS #################################
 // Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la effectif et d'un parametre TTC

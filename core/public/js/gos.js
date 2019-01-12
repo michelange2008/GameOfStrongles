@@ -133,6 +133,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
           elimination_morts_de_la_parcelle(parcelle)
       });
     });
+    console.log(troupeau.infestation);
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {
