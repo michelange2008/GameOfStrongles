@@ -19,6 +19,12 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     liste_mois = [];
     setTimeLine(dates);
     dallage();
+    creerDemo();
+    effaceParcelles();
+    calculPature();
+    dessinePatures();
+    ecritPaturesDansMoniteur();
+    dallage();
     //------------------------------------------------------------------------------
       $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
       $("#"+troupeau.espece).addClass('image_troupeau-choisi');
@@ -99,27 +105,25 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
       // EVOLUTION parcelle #######################################################
       // parcelle évolution des larves
-      foncier.patures.forEach(function(pature) {
+      foncier.patures.forEach(function(pature, clef) {
         pature.parcelles.forEach(function(parcelle) {
           // modification de l'objet parcelle
           parcelle.evolutionStrongles(param.PAS_DE_TEMPS.valeur); //evolution spontanée des strongles de la parcelle
 
           if(parcelle.troupeau instanceof Troupeau) //Si la parcelle possède un troupeau
           {
-            var nb_oeufs = troupeau.infestation.length; // Nombre d'oeufs produits par le troupeau
+            var nb_oeufs = troupeau.infestation.length * param.PAS_DE_TEMPS.valeur; // Nombre d'oeufs produits par le troupeau
             parcelle.addStrongles(troupeau.infestation.length); // On additionne ces oeufs à l'objet parcelle
-            nouveau_lot_de_strongles(parcelle, decroissance(nb_oeufs));
-
+            console.log(parcelle);
+            $("#"+parcelle.id).html('');
+            // nouveau_lot_de_strongles(parcelle, decroissance(nb_oeufs));
           }
           parcelle.contaminant = parcelle.getContaminant(pature); // mise à jour du statut contaminant
           // modification de l'html sur la base de l'objet parcelle
           evolution_strongles_parcelle(parcelle);
 
           parcelle.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
-
-            $("#parasite_"+index+"_"+parcelle.id).attr('etat', strongle.etat);
-
-            $("#parasite_"+index+"_"+parcelle.id).children().attr('class', strongle.etat);
+            $("#parasite_"+index+"_"+parcelle.id).attr('class', strongle.etat);
           });
           $("#pature_"+parcelle.id).attr('contaminant', parcelle.contaminant);
           $("#valeur_"+parcelle.id).html(Math.round(parcelle.contaminant)+" / "+parcelle.infestation.length);
@@ -127,6 +131,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
           elimination_morts_de_la_parcelle(parcelle)
       });
     });
+    // console.log(troupeau);
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {

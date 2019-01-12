@@ -121,9 +121,11 @@ function nouveau_lot_de_strongles(parcelle, nb_oeufs)
 {
   // manip destinée à diminuer le nb de strongles quand parcelle très infestée pour ne pas planter le navigateur
   var nb_oeufs_corrige = decroissance(nb_oeufs);
+  console.log(nb_oeufs+" - "+parcelle.infestation.length);
     for(var j = (parcelle.infestation.length-nb_oeufs_corrige); j < parcelle.infestation.length; j++) // on compte à partir des nouveau parasites
       {
-        nouveau_strongle(parcelle, j);
+        // console.log(j);
+        // nouveau_strongle(parcelle, j);
       }
 
 }
@@ -132,7 +134,7 @@ function nouveau_strongle(parcelle, j)
   return $("#pature_"+parcelle.id).append('<div id="parasite_'
     +parcelle.infestation.length
     +'_'+parcelle.id
-    +'" class="'+param.NON_INFESTANT.valeur+'" age = 1 etat = "'+param.NON_INFESTANT.valeur+'" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
+    +'" class="'+param.NON_INFESTANT.valeur+'" style="left:'+parcelle.infestation[j].localisation["0"]+'%; top: '+parcelle.infestation[j].localisation["1"]+'%">'
     +'</div>');
 }
 // décroissance exponentielle
