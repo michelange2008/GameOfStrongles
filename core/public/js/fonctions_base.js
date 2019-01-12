@@ -74,7 +74,7 @@ function ecritPaturesDansMoniteur() {
   $("#parcelles-chiffres").html('');
   for (var i = 0; i < foncier.patures.length; i++) {
     var pature = foncier.patures[i];
-    var chiffres = '<p class="soustitre">'+pature.nom+'</p><p id="pature_valeur_'+i+'" class="valeur">'+pature.parcelles[0].infestation.length+'</div>';
+    var chiffres = '<p class="soustitre">'+pature.nom+'</p><p id="monit-pat-'+i+'" class="valeur">'+pature.parcelles[0].infestation.length+'</div>';
     $("#parcelles-chiffres").append(chiffres);
   }
 }

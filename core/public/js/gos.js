@@ -26,11 +26,12 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     ecritPaturesDansMoniteur();
     dallage();
     //------------------------------------------------------------------------------
-      $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
+      // $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
       $("#"+troupeau.espece).addClass('image_troupeau-choisi');
       $('input[name=effectif]').val(troupeau.effectif);
       $("#orange").addClass("feu-choisi");
-      $("#troupeau_infestation").html(troupeau.infestation.length);
+      troupeau.maj_aspect_troupeau();
+      troupeau.maj_moniteur();
 
 //############################ GESTION DU DEPLACEMENT DU TROUPEAU ##################################################
   var $draggable = $('#troupeau').draggabilly({
@@ -95,14 +96,15 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
       troupeau_evolution_excretion(troupeau);
       if(troupeau.parcelle !== null) {
         // nouvelle infestation du troupeau à partir de la parcelle
-        troupeau.sinfeste(troupeau.parcelle.contaminant, param.PAS_DE_TEMPS.valeur); // modification du troupeau
-        $('#troupeau_infestation').html(troupeau.infestation.length); // inscription au compteur
+        troupeau.sinfestePaturage(troupeau.parcelle.contaminant, param.PAS_DE_TEMPS.valeur); // modification du troupeau
+        troupeau.maj_moniteur() // inscription au compteur
       }
       // modification de l'aspect du troupeau
-      troupeau_evolution_aspect(troupeau);
+      troupeau.maj_aspect_troupeau();
       // suppression des strongles morts du troupeau
-      elimination_morts(troupeau);
+      troupeau.elimination_morts();
 
+      // console.log(troupeau);
       // EVOLUTION parcelle #######################################################
       // parcelle évolution des larves
       foncier.patures.forEach(function(pature, clef) {
@@ -114,7 +116,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
           {
             var nb_oeufs = troupeau.infestation.length * param.PAS_DE_TEMPS.valeur; // Nombre d'oeufs produits par le troupeau
             parcelle.addStrongles(troupeau.infestation.length); // On additionne ces oeufs à l'objet parcelle
-            console.log(parcelle);
+            // console.log(parcelle);
             $("#"+parcelle.id).html('');
             // nouveau_lot_de_strongles(parcelle, decroissance(nb_oeufs));
           }
@@ -131,7 +133,6 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
           elimination_morts_de_la_parcelle(parcelle)
       });
     });
-    // console.log(troupeau);
   }
   if(e.which == 37 && $('#curseur').position().left > 0)
   {

@@ -17,8 +17,8 @@
           <h6>Troupeau</h6>
       </div>
       <div class="chiffres">
-        <p class="soustitre" >Infestation: </p><p id="troupeau_infestation" class="valeur">0</p>
-        <p class="soustitre">Excretion: </p><p id="troupeau_contaminant" class="valeur">0</p>
+        <p class="soustitre" >Infestation: </p><p id="monit-tp-infestation" class="valeur">0</p>
+        <p class="soustitre">Excretion: </p><p id="monit-tp-contaminant" class="valeur">0</p>
       </div>
     </div>
     <div class="cadran">

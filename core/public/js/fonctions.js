@@ -248,9 +248,9 @@ $(".feu").on('click', function(infestation){
 
   modifTroupeau("infestation",nb_strongles);
   troupeau.setStrongles(nb_strongles);
-    console.log(troupeau);
-    troupeau.tauxContaminant();
-  $("#troupeau_infestation").html(nb_strongles);
+  console.log(troupeau);
+  troupeau.tauxContaminant();
+  troupeau.maj_moniteur();
 });
 // fin choix du niveau d'infestation
 //################################## CHOIX DES DATES ###########################
@@ -273,8 +273,6 @@ $(".categories-contenu-patures").on('change', '.pature-nom', function(pature) {
 // Ajout de la superficie
 $(".categories-contenu-patures").on('change', '.pature-superficie', function(superficie){
   var id = superficie.currentTarget.name.split("_")[2];
-  console.log(foncier.patures);
-
   foncier.patures[parseInt(id)].superficie = superficie.currentTarget.value;
   var pature_histoire = '#pature_histoire_'+id;
   $(pature_histoire).attr('disabled', false).focus();

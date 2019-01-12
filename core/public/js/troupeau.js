@@ -24,17 +24,13 @@ Troupeau.prototype.setStrongles = function (nb_strongles) {
     this.addStrongles(strongle);
   }
 };
-// Ajout de strongles à un troupeau (surtout au démarrage)
+// Ajout de strongles à un troupeau: lors d'une creation de troupeau
 Troupeau.prototype.addStrongles = function (strongleObj) {
-  // console.log(strongleObj.id);
     var strongle = new StrongleIn(strongleObj.id, strongleObj.age, strongleObj.pathogen);
     this.infestation.push(strongle);
 };
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
-
-  var jours = (param.PAS_DE_TEMPS.valeur ? param.PAS_DE_TEMPS.valeur : 1);
-
   for(i = 1 ; i <= nb_strongles; i++)
   {
     strongle = new StrongleIn(1);
@@ -42,17 +38,14 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
   }
 }
 // AJout de strongles par contamination au paturage en fonction d'un nombre de jours
-Troupeau.prototype.sinfestePaturage = function (nb_strongles) {
-
-    var jours = (param.PAS_DE_TEMPS.valeur ? param.PAS_DE_TEMPS.valeur : 1);
-
-    for(i = 1 ; i <= nb_strongles*param.PAS_DE_TEMPS.valeur; i++)
+Troupeau.prototype.sinfestePaturage = function (nb_strongles, jours) {
+    for(i = 1 ; i <= nb_strongles*jours; i++)
     {
       strongle = new StrongleIn(1);
       this.infestation.push(strongle);
     }
 };
-
+// Evolution des strongles au sein d'un troupeau
 Troupeau.prototype.evolutionStrongles = function(jours) {
 
   if(this.infestation.length > 0)
@@ -85,6 +78,45 @@ Troupeau.prototype.nbStrongleAdultes = function () {
 Troupeau.prototype.tauxContaminant = function () {
   return this.nbStrongleAdultes()*this.effectif*param.TAUX_TROUPEAU_CONTAMINANT.valeur / 100;
 };
+
+Troupeau.prototype.elimination_morts = function() {
+  var nouvelle_situation = [];
+  troupeau.infestation.forEach(function(strongle){
+    if(strongle.etat !== param.MORT.valeur)
+    {
+      nouvelle_situation.push(strongle);
+    }
+  });
+  troupeau.infestation = nouvelle_situation;
+  troupeau.maj_moniteur();
+}
+
+Troupeau.prototype.maj_moniteur = function () {
+  $('#monit-tp-infestation').html(troupeau.infestation.length);
+  $('#monit-tp-contaminant').html(troupeau.contaminant);
+};
+
+Troupeau.prototype.maj_aspect_troupeau = function () {
+
+  if(troupeau.infestation.length > param.RISQUE_MORTALITE_ELEVE.valeur && troupeau.infestation.length < param.TROUPEAU_MORT.valeur) {
+    image_troupeau = troupeau.espece+'_tres_malade.svg';
+  }
+  else if (troupeau.infestation.length > param.RISQUE_MORTALITE_MOYEN.valeur && troupeau.infestation.length < param.RISQUE_MORTALITE_ELEVE.valeur) {
+    image_troupeau = troupeau.espece+"_malade.svg";
+  }
+  else {
+    var nombre_niveau_infestation = 5
+    var intervalle_aspect = param.RISQUE_MORTALITE_MOYEN.valeur / nombre_niveau_infestation;
+    var indice_infestation =Math.round(troupeau.infestation.length/intervalle_aspect)+1;
+    console.log(troupeau.infestation.length+" - "+indice_infestation);
+    var estContaminant = (this.contaminant > 0) ? 1 : 0;
+    image_troupeau = troupeau.espece+'_infestation_'+indice_infestation+'_contaminant_'+estContaminant+'.svg';
+  }
+  console.log(url_svg+image_troupeau);
+    $('#troupeau-image').attr('src', url_svg+image_troupeau);
+};
+
+
 //###################################### FONCTIONS #################################
 // Donne un taux de contamination d'un troupeau en fonction du nb de strongles adultes, de la effectif et d'un parametre TTC
 function tauxTroupeauContaminant(nb_strongles_adultes, effectif) {
@@ -95,19 +127,19 @@ function risqueMortalite(nb_strongles_adultes){
 }
 
 function troupeau_infestant(nb_strongles_adultes, troupeau){ // aspect du troupeau quand il a des adultes qui pondent
-  $('#troupeau').css('background-image', 'url('+url_svg+'crottes.svg)');
+  // $('#troupeau').css('background-image', 'url('+url_svg+'crottes.svg)');
   $('#troupeau').attr('contaminant', tauxTroupeauContaminant(nb_strongles_adultes, troupeau.effectif));
 }
 function troupeau_non_infestant(){// aspect du troupeau quand il n'a plus d'adultes qui pondent
-  $('#troupeau').css('background-image', 'none');
+  // $('#troupeau').css('background-image', 'none');
   troupeau.contaminant = false;
   $('#troupeau').attr('contaminant', 0);
 }
 function troupeau_malade() { // aspect du troupeau quand infesté au dessus d'un certain niveau
-  $('#troupeau > img').attr('src', url_svg+troupeau.espece+'_malades.svg');
+  // $('#troupeau > img').attr('src', url_svg+troupeau.espece+'_malades.svg');
 }
 function troupeau_presque_mort() { // aspect du troupeau quand infesté au dessus d'un certain niveau
-  $('#troupeau > img').css('src', url_svg+troupeau.espece+'_morts.svg');
+  // $('#troupeau > img').css('src', url_svg+troupeau.espece+'_morts.svg');
 }
 function troupeau_mort() {
   $('#troupeau').css('visibility', 'hidden');
@@ -143,20 +175,6 @@ function troupeau_evolution_excretion(troupeau){ // change l'aspect du troupeau 
   troupeau.contaminant = indice_contaminant;
 }
 
-
-function elimination_morts(troupeau)
-{
-  var nouvelle_situation = [];
-  troupeau.infestation.forEach(function(strongle){
-    if(strongle.etat !== param.MORT.valeur)
-    {
-      nouvelle_situation.push(strongle);
-    }
-  });
-  troupeau.infestation = nouvelle_situation;
-  $('#infestation').html(troupeau.infestation.length);
-  $('#troupeau').attr('infestation',troupeau.infestation.length);
-}
 
 function troupeau_dehors()
 {
@@ -206,11 +224,4 @@ function alerte_troupeau_mort()
           }
       }
   });
-}
-
-function troupeau_evolution_aspect(troupeau) {
-  var couleur_troupeau_infestation = troupeau.infestation.length* (-5);
-  couleur_troupeau_infestation = (troupeau.infestation.length < 25) ? troupeau.infestation.length* (-5) : -90;
-  $("#troupeau").css('filter', 'hue-rotate('+couleur_troupeau_infestation+'deg)')
-
 }
