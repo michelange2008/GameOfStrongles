@@ -197,7 +197,7 @@ function dessinePatures() {
       +i+'" style="width:'+pature.geometrie.longueur
       +'%; height:'+pature.geometrie.longueur+'vh" class="pature">'
       +'<div id="'+parcelle.id+'" class="parcelle '+pature.histoire.id+'">'
-      +installeStrongles(parcelle)+'</div>'
+      +parcelle.dessineStronglesOut()+'</div>'
       +'<div id="entete_'+parcelle.id+'" class="entete">'
         +'<p class="pature-nom">'+pature.nom+'</p>'
         +'<p class="somme-des-jours"><span id="jours_'+parcelle.id+'" class="compte-jours">0</span><span class="jours"> j.</span></p>'
@@ -207,16 +207,6 @@ function dessinePatures() {
       +'</div>';
     $("#foncier").append(dessinParcelle);
   }
-}
-
-// Met les strongles dans les Parcelles
-function installeStrongles(parcelle) {
-  var strongles = '';
-  for (var i = 0; i < parcelle.infestation.length; i++) {
-    strongles = '<div id="parasite_'+i+'_'+parcelle.id+'" class="'+parcelle.infestation[i].etat
-    +'"style="left:'+parcelle.infestation[i].localisation[0]+'%;top:'+parcelle.infestation[i].localisation[1]+'%"></div>';
-  }
-  return strongles;
 }
 
 // Fait le dallage avec le plug-in jqurey Masonry

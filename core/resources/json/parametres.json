@@ -47,21 +47,26 @@
   "PATHOGEN": {
     "type": "biologie",
     "nom": "pathogénicité",
-    "valeur": "2",
+    "valeur": "1",
     "option": {
       "haemonchus_2": {
         "intitule": "haemonchus +++",
-        "degre": 2
+        "degre": 5
       },
       "haemonchus_1": {
         "intitule": "haemonchus ++",
-        "degre": 1
+        "degre": 2
       },
       "haemonchus_0": {
         "intitule": "haemonchus -",
-        "degre": 0
+        "degre": 1
       }
     }
+  },
+  "RISQUE_MORTALITE_FAIBLE": {
+    "type": "modele",
+    "nom": "risque de mortalité faible",
+    "valeur": "667"
   },
   "RISQUE_MORTALITE_MOYEN": {
     "type": "modele",

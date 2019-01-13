@@ -144,12 +144,10 @@ $('.zone_saisie').on('change', function(){
   $.each(param, function(nom_parametre, parametre) {// mise à jour de l'objet param
     if(nom_parametre == id_input)
     {
-      console.log(parametre.valeur+" - "+value);
       parametre.valeur = value;
     }
   })
   modifParam(id_input, value); // on applique la fonction modifParam
-  console.log(param);
 });
 function modifParam(id_input, value) {
   url = location+"modification"; // définition de l'url pour la requete AJAX
@@ -173,6 +171,7 @@ function modifParam(id_input, value) {
      success:function(data){
        $('.helmet').fadeIn(0);
        $('.helmet').fadeOut(2000);
+       Cookies.set('parametres', '');
      },
      error: function (data) {
     console.log(data.responseText);
@@ -249,7 +248,7 @@ $(".feu").on('click', function(infestation){
   modifTroupeau("infestation",nb_strongles);
   troupeau.setStrongles(nb_strongles);
   console.log(troupeau);
-  troupeau.tauxContaminant();
+  troupeau.setContaminant();
   troupeau.maj_moniteur();
 });
 // fin choix du niveau d'infestation
