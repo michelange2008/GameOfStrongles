@@ -17,10 +17,14 @@ Parcelle.prototype.addStrongles = function(nb_strongles) {
 }
 // Méthode d'évolution de l'infestation par les strongle d'une parcelle
 Parcelle.prototype.evolutionStrongles = function(jours) {
-  if(this.infestation.length > 0)
+  var infestation = this.infestation;
+  if(infestation.length > 0)
   {
-    this.infestation.forEach(function(strongle) {
+    infestation.forEach(function(strongle, clef) {
       strongle.evolution(jours);
+      if(strongle.etat == param.MORT.valeur) {
+        infestation.splice(clef, 1);
+      }
     });
   }
 }
@@ -64,10 +68,8 @@ function tauxInfestante(nb_L3, superficie) {
 function nouveau_lot_de_strongles(parcelle, nb_oeufs) {
   // manip destinée à diminuer le nb de strongles quand parcelle très infestée pour ne pas planter le navigateur
   var nb_oeufs_corrige = decroissance(nb_oeufs);
-  console.log(nb_oeufs+" - "+parcelle.infestation.length);
     for(var j = (parcelle.infestation.length-nb_oeufs_corrige); j < parcelle.infestation.length; j++) // on compte à partir des nouveau parasites
       {
-        // console.log(j);
         // nouveau_strongle(parcelle, j);
       }
 
@@ -92,9 +94,10 @@ Parcelle.prototype.majEvolutionStronglesOut = function () {
   var parcelle_id = this.id;
   this.infestation.forEach(function(strongle, index) { // transcription dans l'état de chaque strongle
   if(strongle.etat == param.MORT.valeur) {
-    $("#parasite_"+index+"_"+parcelle_id).remove();
+
+    $("#parasite_"+strongle.id+"_"+parcelle_id).remove();
   }
-  $("#parasite_"+index+"_"+parcelle_id).attr('class', strongle.etat);
+  $("#parasite_"+strongle.id+"_"+parcelle_id).attr('class', strongle.etat);
 
 });
 $("#monit-pat-"+parcelle_id).html(Math.round(this.contaminant)+" / "+this.infestation.length);
@@ -102,11 +105,12 @@ $("#monit-pat-"+parcelle_id).html(Math.round(this.contaminant)+" / "+this.infest
 
 // élimination des objets parasite morts de l'objet parcelle
 Parcelle.prototype.elimination_morts_dans_parcelle = function () {
-  for(let parasite of parcelle.infestation) {
+  var infestation = this.infestation;
+  infestation.forEach( function(parasite, clef) {
     if(parasite.etat == param.MORT.valeur) {
-      parcelle.infestation.splice(parcelle.infestation.indexOf(parasite), 1);
+      infestation.splice(infestation[clef], 1);
     }
-  }
+  })
 };
 
 // mise à jour de l'affichage des strongles après infestation par le troupeau
@@ -117,9 +121,11 @@ Parcelle.prototype.majParcelleApresInfestationParTroupeau = function() {
 // dessines les strongles de la parcelle
 Parcelle.prototype.dessineStronglesOut = function () {
   var strongles = '';
-  for (var i = 0; i < this.infestation.length; i++) {
-    strongles += '<div id="parasite_'+i+'_'+this.id+'" class="'+this.infestation[i].etat
-    +'"style="left:'+this.infestation[i].localisation[0]+'%;top:'+this.infestation[i].localisation[1]+'%"></div>';
+  if(this.infestation.length > 0) {
+    for (var i = 0; i < this.infestation.length; i++) {
+      strongles += '<div id="parasite_'+this.infestation[i].id+'_'+this.id+'" class="'+this.infestation[i].etat
+      +'"style="left:'+this.infestation[i].localisation[0]+'%;top:'+this.infestation[i].localisation[1]+'%"></div>';
+    }
   }
   return strongles;
 };

@@ -91,6 +91,8 @@ Troupeau.prototype.evolutionSante = function () {
   troupeau.sante *= (-0.03 * severiteInfestation +100)/100 ;
   // Pour éviter des indices négatifs
   troupeau.sante = (troupeau.sante > 0) ? troupeau.sante : 0;
+  // Pour remonter à 100 si pas de nb_strongles
+  troupeau.sante =(troupeau.infestation.length == 0) ? 100 : troupeau.sante;
 };
 // Enlève les strongles morts de l'objet troupeau
 Troupeau.prototype.elimination_morts = function() {
@@ -128,52 +130,6 @@ function troupeau_mort() {
   alerte_troupeau_mort();
 }
 
-function alerte_troupeau_dehors(){
-  $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
-  $.alert({
-    escapeKey: 'Ok',
-      buttons: {
-          Ok: function(){
-            // $("#troupeau").css('left', 0).css('top', 0);
-          }
-      },
-    theme: 'dark',
-    title: 'Attention !',
-    content: 'Le troupeau est sorti du pré !</br> Mais que fait le chien ?',
-    type: 'red',
-  });
-
-}
-
-function alerte_troupeau_chevrerie(){
-  $("#troupeau").css('background-image', 'url('+url_svg+'foin.svg)');
-  $.alert({
-    escapeKey: 'Ok',
-      buttons: {
-          Ok: function(){
-
-          }
-      },
-    theme: 'dark',
-    title: 'Et voilà...',
-    content: 'Le troupeau est rentré dans la chevrerie !',
-    type: 'green',
-  });
-}
-
-function alerte_troupeau_mort(){
-  $.confirm({
-      title: 'Désolé !',
-      content: 'Le troupeau est mort',
-      type: 'red',
-      typeAnimated: true,
-      buttons: {
-          close: function () {
-              location.reload();
-          }
-      }
-  });
-}
 
 //############################## MOUVEMENTS DU TROUPEAU ########################
 

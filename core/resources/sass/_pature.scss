@@ -14,6 +14,8 @@
     font-weight: bold;
   }
   .entete {
+    background: lightgreen;
+    height: 25px;
     width: 100%;
     position: absolute;
     top: 0;
@@ -29,14 +31,20 @@
     }
     p {
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
-.parcelle {
-  float: top;
-  width: 100%;
+.parcelles {
   height: 100%;
-  background: lightgreen;
+  display: flex;
+  flex-direction: row;
+}
+.parcelle {
+  position: relative;
+  border: solid 1px grey;
 }
 
 .pat {

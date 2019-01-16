@@ -44,7 +44,7 @@
       <script src="{{asset('core/public/js/jQRangeSlider-5.7.2/jQDateRangeSlider-withRuler-min.js')}}"></script>
       <script src="{{asset('core/public/js/fonctions_base.js')}}"></script>
       <script src="{{asset('core/public/js/gos.js')}}"></script>
-      {{-- <script src="{{asset('core/public/js/jquery.cookie.js')}}"></script> --}}
+      <!-- <script src="{{asset('core/public/js/jquery.cookie.js')}}"></script> -->
       <script src="{{asset('core/public/js/constantes.js')}}"></script>
       <script src="{{asset('core/public/js/troupeau.js')}}"></script>
       <script src="{{asset('core/public/js/dates.js')}}"></script>
@@ -52,7 +52,8 @@
       <script src="{{asset('core/public/js/pature.js')}}"></script>
       <script src="{{asset('core/public/js/parcelle.js')}}"></script>
       <script src="{{asset('core/public/js/strongle.js')}}"></script>
-      <script src="{{asset('core/public/js/fonctions.js')}}"></script>
+      <script src="{{asset('core/public/js/dialogues.js')}}"></script>
+      <script src="{{asset('core/public/js/mise-en-place.js')}}"></script>
       <script src="{{asset('core/public/js/jquery-confirm.min.js')}}"></script>
       <script src="{{asset('core/public/js/draggabilly.pkgd.min.js')}}"></script>
       <script src="{{asset('core/public/js/masonry.pkgd.min.js')}}"></script>
