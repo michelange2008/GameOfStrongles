@@ -21,8 +21,8 @@ Troupeau.prototype.setSensibilite = function (sensibilite) {
 Troupeau.prototype.setStrongles = function (nb_strongles) {
   this.infestation = [];
   for (var i = 0; i < nb_strongles; i++) {
-    strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
-    this.addStrongles(strongle);
+    strongle = new StrongleIn(1);
+    this.infestation.push(strongle);
   }
 };
 // Définit si un troupeau est contaminant
@@ -33,11 +33,6 @@ Troupeau.prototype.setContaminant = function(){
 
 //########################### PROCESSUS D'INFESTATION ##########################
 
-// Ajout de strongles à un troupeau: lors d'une creation de troupeau
-Troupeau.prototype.addStrongles = function (strongleObj) {
-    var strongle = new StrongleIn(strongleObj.id, strongleObj.age, strongleObj.pathogen);
-    this.infestation.push(strongle);
-};
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
   for(i = 1 ; i <= nb_strongles; i++)
@@ -46,14 +41,6 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
     this.infestation.push(strongle);
   }
 }
-// AJout de strongles par contamination au paturage en fonction d'un nombre de jours
-Troupeau.prototype.sinfestePaturage = function (nb_strongles, jours) {
-    for(i = 1 ; i <= nb_strongles*jours; i++)
-    {
-      strongle = new StrongleIn(1);
-      this.infestation.push(strongle);
-    }
-};
 
 //########################## EVOLUTION INTERNE DU TROUPEAU #####################
 
@@ -91,6 +78,8 @@ Troupeau.prototype.evolutionSante = function () {
   troupeau.sante *= (-0.03 * severiteInfestation +100)/100 ;
   // Pour éviter des indices négatifs
   troupeau.sante = (troupeau.sante > 0) ? troupeau.sante : 0;
+  // Pour remonter à 100 si pas de nb_strongles
+  troupeau.sante =(troupeau.infestation.length == 0) ? 100 : troupeau.sante;
 };
 // Enlève les strongles morts de l'objet troupeau
 Troupeau.prototype.elimination_morts = function() {
@@ -120,60 +109,9 @@ Troupeau.prototype.maj_aspect_troupeau = function () {
   var image_troupeau = troupeau.espece+'_sante_'+indiceSante+'_contaminant_'+estContaminant+'.svg';
   $('#troupeau-image').attr('src', url_svg+image_troupeau);
   if(troupeau.sante == 0) {
-    troupeau_mort();
+    alerte_troupeau_mort();
   }
 };
-
-function troupeau_mort() {
-  alerte_troupeau_mort();
-}
-
-function alerte_troupeau_dehors(){
-  $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
-  $.alert({
-    escapeKey: 'Ok',
-      buttons: {
-          Ok: function(){
-            // $("#troupeau").css('left', 0).css('top', 0);
-          }
-      },
-    theme: 'dark',
-    title: 'Attention !',
-    content: 'Le troupeau est sorti du pré !</br> Mais que fait le chien ?',
-    type: 'red',
-  });
-
-}
-
-function alerte_troupeau_chevrerie(){
-  $("#troupeau").css('background-image', 'url('+url_svg+'foin.svg)');
-  $.alert({
-    escapeKey: 'Ok',
-      buttons: {
-          Ok: function(){
-
-          }
-      },
-    theme: 'dark',
-    title: 'Et voilà...',
-    content: 'Le troupeau est rentré dans la chevrerie !',
-    type: 'green',
-  });
-}
-
-function alerte_troupeau_mort(){
-  $.confirm({
-      title: 'Désolé !',
-      content: 'Le troupeau est mort',
-      type: 'red',
-      typeAnimated: true,
-      buttons: {
-          close: function () {
-              location.reload();
-          }
-      }
-  });
-}
 
 //############################## MOUVEMENTS DU TROUPEAU ########################
 

@@ -148,7 +148,7 @@ function effaceUneLigne(id_ligne) {
 }
 
 //############################ FONCTIONS POUR L'AFFICHAGE FINAL ###############
-// Vide l'affichage des patures: dessin et moniteur
+// Vide l'affichage de toutes les patures: dessin et moniteur
 function effaceParcelles() {
   $("#foncier").html('');
   if(typeof $("#foncier").data('masonry') !== "undefined"){
@@ -160,6 +160,18 @@ function effaceParcelles() {
 // Supprime l'affiche des patures dans le moniteur (utiliser avec d'autres fonctions)
 function effaceMoniteurParcelles() {
   $("#parcelles-chiffres").html('');
+}
+
+// Mise à jour de l'affichage du moniteur des pâtures
+function majMoniteurPatures() {
+
+  foncier.patures.forEach( function(pature, clef) {
+    nb_strongles = 0;
+    pature.parcelles.forEach(function(parcelle, index) {
+      nb_strongles += parcelle.infestation.length;
+    });
+    $("#monit-pat-"+pature.id).html(nb_strongles);
+  })
 }
 
 // Calcul les valeurs de X et longueur pour chaque pature en fonction de la superficie et du nombre de patures
@@ -192,23 +204,10 @@ function calculPature(){
 function dessinePatures() {
   for (var i = 0; i < foncier.patures.length; i++) {
     var pature = foncier.patures[i];
-    var parcelle = pature.parcelles[0];
-    var dessinParcelle = '<div id="pature_'
-      +i+'" style="width:'+pature.geometrie.longueur
-      +'%; height:'+pature.geometrie.longueur+'vh" class="pature">'
-      +'<div id="'+parcelle.id+'" class="parcelle '+pature.histoire.id+'">'
-      +parcelle.dessineStronglesOut()+'</div>'
-      +'<div id="entete_'+parcelle.id+'" class="entete">'
-        +'<p class="pature-nom">'+pature.nom+'</p>'
-        +'<p class="somme-des-jours"><span id="jours_'+parcelle.id+'" class="compte-jours">0</span><span class="jours"> j.</span></p>'
-        +'<div id="divise_'+parcelle.id+'" class="divise">'
-          +'<img src="public/svg/divise.svg" alt="divise" title="diviser la parcelle">'
-        +'</div>'
-      +'</div>';
-    $("#foncier").append(dessinParcelle);
+    var dessinPature = pature.dessineUnePature();
+    $("#foncier").append(dessinPature);
   }
 }
-
 // Fait le dallage avec le plug-in jqurey Masonry
 function dallage() {
   $('#foncier').masonry({
@@ -217,3 +216,5 @@ function dallage() {
     columnWidth: 1
   });
 }
+
+// Obtient le numéro de la semaine

@@ -23,7 +23,7 @@
             <label for="{{$key}}">{{ucfirst($value->nom)}}</label>
             <div class="">
               <input id="{{$key}}" class="zone_saisie" type="number" name="{{$key}}" value="{{$value->valeur}}" size=3>
-              <span>jours</span>
+              <span>{{$value->unite}}</span>
             </div>
           </div>
         @endif

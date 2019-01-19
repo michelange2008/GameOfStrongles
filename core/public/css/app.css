@@ -233,6 +233,8 @@
 }
 
 .pature .entete {
+  background: lightgreen;
+  height: 25px;
   width: 100%;
   position: absolute;
   top: 0;
@@ -256,13 +258,25 @@
 
 .pature .entete p {
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.parcelles {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 .parcelle {
-  float: top;
-  width: 100%;
-  height: 100%;
-  background: lightgreen;
+  position: relative;
+  border: solid 1px grey;
 }
 
 .pat {
@@ -283,9 +297,9 @@
 
 .infestant {
   position: absolute;
-  height: 5px;
-  width: 5px;
-  border-radius: 100%;
+  height: 8px;
+  width: 0.5px;
+  border-radius: 50%;
   border: solid 2px red;
   background: red;
 }
@@ -829,6 +843,11 @@ input::-o-inner-spin-button {
 #ADULTE_MORT {
   grid-row: 1;
   grid-column: 2;
+}
+
+#TAUX_SURVIE_HIVER_L3 {
+  grid-row: 3;
+  grid-column: 1;
 }
 
 #param_model {
