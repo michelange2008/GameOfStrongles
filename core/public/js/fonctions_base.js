@@ -204,38 +204,10 @@ function calculPature(){
 function dessinePatures() {
   for (var i = 0; i < foncier.patures.length; i++) {
     var pature = foncier.patures[i];
-    var dessinPature = dessineUnePature(pature);
+    var dessinPature = pature.dessineUnePature();
     $("#foncier").append(dessinPature);
   }
 }
-// écrit le html pour insérer dans un div pature : parcelles et strongles
-function dessineUnePature(pature) {
-  var dessinPature = "";
-  pature.parcelles.forEach( function(parcelle, clef) {
-    dessinPature += '<div id="pature_'
-      +pature.id+'" style="width:'+pature.geometrie.longueur
-      +'%; height:'+pature.geometrie.longueur+'vh" class="pature">'
-        +dessineParcelles(pature)
-      +'<div id="entete_'+parcelle.id+'" class="entete">'
-        +'<p class="pature-nom">'+pature.nom+'</p>'
-        +'<p class="somme-des-jours"><span id="jours_'+parcelle.id+'" class="compte-jours">0</span><span class="jours"> j.</span></p>'
-        +'<div id="divise_'+parcelle.id+'" class="divise">'
-          +'<img src="public/svg/divise.svg" class="image-divise" alt="divise" title="diviser la parcelle">'
-        +'</div>'
-      +'</div>';
-  })
-    return dessinPature;
-}
- function dessineParcelles(pature) {
-   var dessinParcelles = '<div id="parcelles_'+pature.id+'" class="parcelles">';
-   pature.parcelles.forEach( function(parcelle, clef) {
-     dessinParcelles += '<div id="'+parcelle.id+'" class="parcelle '+pature.histoire.id+'" style="width:'+parcelle.proportion+'%; height:100%">'
-       +parcelle.dessineStronglesOut()+'</div>';
-   })
-   dessinParcelles += '</div>';
-     return dessinParcelles;
- }
-
 // Fait le dallage avec le plug-in jqurey Masonry
 function dallage() {
   $('#foncier').masonry({
@@ -244,3 +216,5 @@ function dallage() {
     columnWidth: 1
   });
 }
+
+// Obtient le numéro de la semaine

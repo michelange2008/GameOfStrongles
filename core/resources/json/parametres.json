@@ -27,22 +27,32 @@
   "L3_INFESTANTE": {
     "type": "biologie",
     "nom": "oeuf à L3 infestante",
-    "valeur": 26
+    "valeur": 26,
+    "unite": "jours"
   },
   "L3_MORTE": {
     "type": "biologie",
     "nom": "longévite de L3",
-    "valeur": 61
+    "valeur": 61,
+    "unite": "jours"
   },
   "PERIODE_PREPATENTE": {
     "type": "biologie",
     "nom": "période prépatente",
-    "valeur": 15
+    "valeur": 15,
+    "unite": "jours"
   },
   "ADULTE_MORT": {
     "type": "biologie",
     "nom": "longévité des strongles adultes",
-    "valeur": 124
+    "valeur": 124,
+    "unite": "jours"
+  },
+  "TAUX_SURVIE_HIVER_L3": {
+    "type": "biologie",
+    "nom": "taux de survie de L3 dans les pâtures l'hiver",
+    "valeur": 10,
+    "unite": "%"
   },
   "PATHOGEN": {
     "type": "biologie",

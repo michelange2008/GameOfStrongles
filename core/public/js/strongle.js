@@ -1,18 +1,16 @@
 class Strongle
 {
-  constructor (id, age, pathogen)
+  constructor (age)
   {
-    this.id = id
     this.age = age;
-    this.pathogen = pathogen;
+    this.pathogen = param.PATHOGEN.valeur;
   }
 }
 
 class StrongleOut extends Strongle {
-  constructor(id, age)
+  constructor(age)
   {
-    super(id, age);
-    this.id = id;
+    super(age);
     this.etat = param.NON_INFESTANT.valeur;
     this.localisation = [Math.round(Math.random()*98), Math.round(Math.random()*98)];
   }
@@ -36,9 +34,9 @@ StrongleOut.prototype.evolution =  function(jours)
 }
 
 class StrongleIn extends Strongle {
-  constructor(id, age, pathogen)
+  constructor(age)
   {
-    super(id, age, pathogen);
+    super(age);
   }
 }
 

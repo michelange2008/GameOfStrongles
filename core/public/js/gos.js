@@ -82,7 +82,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
       // avancée de la Date
       dates.avance(param.PAS_DE_TEMPS.valeur);
       // maj du moniteur
-      $('#date').html(dates.date_courante.toLocaleDateString('fr-FR', options_date));
+      $('#date').html(dates.date_courante.toLocaleDateString('fr-FR', options_date)+'('+dates.date_courante.getWeek()+')');
       // avancée du curseur
       var position_curseur = $('#curseur').css('left');
       var curseur = $('#curseur').css('left',parseInt(position_curseur)+parseInt(saut_curseur));
@@ -95,7 +95,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
       if(troupeau.parcelle != null) {
         // nouvelle infestation du troupeau à partir de la parcelle
-        troupeau.sinfestePaturage(troupeau.parcelle.contaminant, param.PAS_DE_TEMPS.valeur);
+        troupeau.sinfeste(troupeau.parcelle.contaminant * param.PAS_DE_TEMPS.valeur);
       }
       // Evolution de l'indice de sante du troupeau
       troupeau.evolutionSante();
@@ -107,17 +107,16 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
       // EVOLUTION parcelle #######################################################
       // parcelle évolution des larves
-      console.log(foncier);
       foncier.patures.forEach(function(pature, clef) {
         pature.parcelles.forEach(function(parcelle) {
-          // modification de l'objet parcelle
+          // OBJET: modification de l'objet parcelle
           parcelle.evolutionStrongles(param.PAS_DE_TEMPS.valeur); //evolution spontanée des strongles de la parcelle
 
           parcelle.infestationParTroupeau(troupeau); // la parcelle se contamine avec le troupeau
           parcelle.contaminant = parcelle.getContaminant(pature); // mise à jour du statut contaminant
-          // parcelle.elimination_morts_dans_parcelle(); // on enlève les strongles morts de l'objet parcelle
-          // mise à jour de l'html sur la base de l'objet parcelle
-          parcelle.majEvolutionStronglesOut();
+
+          // HTML: mise à jour de l'html sur la base de l'objet parcelle
+          parcelle.majParcelle();
           // mise à jour de l'affichage du moniteur
           majMoniteurPatures();
       });

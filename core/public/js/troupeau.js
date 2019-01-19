@@ -21,8 +21,8 @@ Troupeau.prototype.setSensibilite = function (sensibilite) {
 Troupeau.prototype.setStrongles = function (nb_strongles) {
   this.infestation = [];
   for (var i = 0; i < nb_strongles; i++) {
-    strongle = new StrongleIn("strongle_"+i, 1, param.PATHOGEN.valeur);
-    this.addStrongles(strongle);
+    strongle = new StrongleIn(1);
+    this.infestation.push(strongle);
   }
 };
 // Définit si un troupeau est contaminant
@@ -33,11 +33,6 @@ Troupeau.prototype.setContaminant = function(){
 
 //########################### PROCESSUS D'INFESTATION ##########################
 
-// Ajout de strongles à un troupeau: lors d'une creation de troupeau
-Troupeau.prototype.addStrongles = function (strongleObj) {
-    var strongle = new StrongleIn(strongleObj.id, strongleObj.age, strongleObj.pathogen);
-    this.infestation.push(strongle);
-};
 // Méthode d'infestation d'un troupeau par ajout d'un nombre donné de strongles
 Troupeau.prototype.sinfeste = function(nb_strongles){
   for(i = 1 ; i <= nb_strongles; i++)
@@ -46,14 +41,6 @@ Troupeau.prototype.sinfeste = function(nb_strongles){
     this.infestation.push(strongle);
   }
 }
-// AJout de strongles par contamination au paturage en fonction d'un nombre de jours
-Troupeau.prototype.sinfestePaturage = function (nb_strongles, jours) {
-    for(i = 1 ; i <= nb_strongles*jours; i++)
-    {
-      strongle = new StrongleIn(1);
-      this.infestation.push(strongle);
-    }
-};
 
 //########################## EVOLUTION INTERNE DU TROUPEAU #####################
 
@@ -122,14 +109,9 @@ Troupeau.prototype.maj_aspect_troupeau = function () {
   var image_troupeau = troupeau.espece+'_sante_'+indiceSante+'_contaminant_'+estContaminant+'.svg';
   $('#troupeau-image').attr('src', url_svg+image_troupeau);
   if(troupeau.sante == 0) {
-    troupeau_mort();
+    alerte_troupeau_mort();
   }
 };
-
-function troupeau_mort() {
-  alerte_troupeau_mort();
-}
-
 
 //############################## MOUVEMENTS DU TROUPEAU ########################
 

@@ -845,6 +845,11 @@ input::-o-inner-spin-button {
   grid-column: 2;
 }
 
+#TAUX_SURVIE_HIVER_L3 {
+  grid-row: 3;
+  grid-column: 1;
+}
+
 #param_model {
   grid-row: 1 /span 2;
   grid-column: 4;

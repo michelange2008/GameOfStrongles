@@ -286,10 +286,3 @@ $("#foncier").on('click', '.divise', function(element){
     }
   });
 })
-
-function majParcelles(pature) {
-// maintenant il faut redessiner le html
-var dessinParcelles = dessineParcelles(pature); // crée le HTML
-$('#pature_'+pature.id+'> .parcelles' ).remove();
-$('#pature_'+pature.id).prepend(dessinParcelles);
-}

@@ -19,6 +19,7 @@ Pature.prototype.addParcelle = function(parcelle)
 }
 
 Pature.prototype.divisePature = function (nb_parcelles) {
+  var pature_id = this.id;
   // savoir si la pature portait le troupeau
   var hasTroupeau = 0;
   this.parcelles.forEach( function(parcelle, clef) {
@@ -30,26 +31,54 @@ Pature.prototype.divisePature = function (nb_parcelles) {
   var lotStrongles = this.ramasseStrongles();
   // Supprimer les parcelles existantes
   this.parcelles = [];
-  var nb_strongles_par_parcelle = Math.ceil(lotStrongles.length/nb_parcelles);
+  //---------------------------------------------------
   for (var i = 0; i < nb_parcelles; i++) {
     // créer un objet parcelle en répartissant les strongles et la proportion
     parcelle = new Parcelle(this.id, i);
     parcelle.proportion = 100 / nb_parcelles;
-    for (var j = 0; j < nb_strongles_par_parcelle; j++) {
-      while(lotStrongles.length > 0) {
-        parcelle.infestation.push(lotStrongles[0]);
+    this.addParcelle(parcelle);
+  }
+  while(lotStrongles.length > 0) {
+    for (var i = 0; i < nb_parcelles; i++) {
+      if(lotStrongles[0] !== undefined) {
+        this.parcelles[i].infestation.push(lotStrongles[0]);
         lotStrongles.shift();
       }
     }
-    if (hasTroupeau > 0) {
-      parcelle.troupeau = troupeau;
-      hasTroupeau = 0;
-    }
-    // ajouter cet objet parcelle autant de fois qu'il y a un nombre de Parcelles
-    this.addParcelle(parcelle);
   }
-  // traduire tout ça en html
 };
+// écrit le html pour insérer dans un div pature : parcelles et strongles
+Pature.prototype.dessineUnePature = function () {
+  var dessinPature = "";
+  var pature = this;
+  pature.parcelles.forEach( function(parcelle, clef) {
+    dessinPature += '<div id="pature_'
+      +pature.id+'" style="width:'+pature.geometrie.longueur
+      +'%; height:'+pature.geometrie.longueur+'vh" class="pature">'
+        +pature.dessineParcelles()
+      +'<div id="entete_'+parcelle.id+'" class="entete">'
+        +'<p class="pature-nom">'+pature.nom+'</p>'
+        +'<p class="somme-des-jours"><span id="jours_'+parcelle.id+'" class="compte-jours">0</span><span class="jours"> j.</span></p>'
+        +'<div id="divise_'+parcelle.id+'" class="divise">'
+          +'<img src="public/svg/divise.svg" class="image-divise" alt="divise" title="diviser la parcelle">'
+        +'</div>'
+      +'</div>';
+  })
+    return dessinPature;
+};
+
+Pature.prototype.dessineParcelles = function () {
+   var pature = this;
+   var dessinParcelles = '<div id="parcelles_'+pature.id+'" class="parcelles">';
+   pature.parcelles.forEach( function(parcelle, clef) {
+     dessinParcelles += '<div id="'+parcelle.id+'" class="parcelle '+pature.histoire.id+'" style="width:'+parcelle.proportion+'%; height:100%">'
+       +parcelle.dessineStronglesOut()+'</div>';
+   })
+   dessinParcelles += '</div>';
+     return dessinParcelles;
+};
+
+
 // Constitue un array avec tous les strongles des parcelles d'une pature
 Pature.prototype.ramasseStrongles = function () {
   var lotStrongles = [];
@@ -60,3 +89,10 @@ Pature.prototype.ramasseStrongles = function () {
   });
   return lotStrongles;
 }
+// dessine les parcelles d'une pature
+Pature.prototype.majParcelles = function () {
+  // maintenant il faut redessiner le html
+  var dessinParcelles = this.dessineParcelles(); // crée le HTML
+  $('#pature_'+this.id+'> .parcelles' ).remove();
+  $('#pature_'+this.id).prepend(dessinParcelles);
+};

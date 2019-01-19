@@ -1,7 +1,8 @@
 //############### Division des parcelles #######################################
 function dialogueDiviseParcelle(pature, parcelle) {
   $.confirm({
-    title: 'Prompt!',
+    animation : 'opacity',
+    title: 'Pose des filets',
     content: '' +
     '<form action="" class="formName">' +
     '<div class="form-group">' +
@@ -20,7 +21,7 @@ function dialogueDiviseParcelle(pature, parcelle) {
             return false;
           }
           pature.divisePature(nombre);
-          majParcelles(pature)
+          pature.majParcelles();
         }
       },
       cancel: function () {
@@ -84,10 +85,12 @@ $("#pas_de_temps").on('click', function() {
 function alerte_troupeau_dehors(){
   $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
   $.alert({
-    escapeKey: 'Ok',
-      buttons: {
+    animation : 'zoom',
+    buttons: {
           Ok: function(){
-            // $("#troupeau").css('left', 0).css('top', 0);
+          },
+          Ok : {
+            keys: ['enter', 'esc']
           }
       },
     theme: 'dark',
@@ -100,10 +103,13 @@ function alerte_troupeau_dehors(){
 function alerte_troupeau_chevrerie(){
   $("#troupeau").css('background-image', 'url('+url_svg+'foin.svg)');
   $.alert({
+    animation : 'zoom',
     escapeKey: 'Ok',
       buttons: {
           Ok: function(){
-
+          },
+          Ok : {
+            keys: ['enter', 'esc']
           }
       },
     theme: 'dark',
@@ -115,13 +121,16 @@ function alerte_troupeau_chevrerie(){
 
 function alerte_troupeau_mort(){
   $.confirm({
+    animation : 'zoom',
       title: 'Désolé !',
       content: 'Le troupeau est mort',
       type: 'red',
       typeAnimated: true,
       buttons: {
-          close: function () {
-              location.reload();
+          fermer: function () {
+          },
+          fermer : {
+            keys: ['enter', 'esc']
           }
       }
   });
