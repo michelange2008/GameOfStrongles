@@ -21,3 +21,9 @@
     @include('newgos')
   </div>
 @endsection
+@section('planning')
+  <div id="page-planning" class="">
+    @include('titre')
+    @include('planning')
+  </div>
+@endsection

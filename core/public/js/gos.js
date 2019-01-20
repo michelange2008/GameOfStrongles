@@ -16,11 +16,81 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     troupeau.setStrongles(5);
     dates = new Dates();
     foncier = new Foncier();
+    chevrerie = new Batiment("chevrerie");
     liste_mois = [];
+    mouvement = [];
+    liste_mouvements = [];
+    troupeau.entreDansParcelle(chevrerie);
     setTimeLine(dates);
     dallage();
     demo();
 
+    var icones = document.documentURI+"public/svg/";
+    var tg_data_source = [
+
+      // Advantages of this method include being able to
+      // load from remote URLs, add comments to the data
+      // and of course, use functions!
+      {
+        "id":"SP", // a unique identifier
+        "title":"",
+        "focus_date":"2019-06-15",
+        "initial_zoom": 28,
+        "image_lane_height":200,
+        "events":[
+          {
+    				"id":            "truman",
+    				"title":         "Harry S. Truman",
+    				"startdate":     "2019-04-12",
+    				"enddate":       "2019-08-20",
+    				"importance":    "40",
+    				"span_color":"pink",
+    				"y_position": 0
+    			},
+          {
+    				"id":            "truman2",
+    				"title":         "Harry S. Truman",
+    				"startdate":     "2019-01-12",
+    				"enddate":       "2019-02-20",
+    				"importance":    "40",
+    				"span_color":"pink",
+            "y_position": 0
+    			},
+
+        ]
+          // more events
+      }
+    ]; // end of your data source array
+var event =  {
+            "event_id": "truman3",
+            "title": "Truman Capote",
+            "startdate": "2019-03-12",
+            "enddate": "2019-06-20",
+            "importance": "40",
+            "span_color":"lightgreen",
+            "y_position": 100
+          };
+    var url_tg = document.documentURI+"core/public/js/timeglider/json/";
+    var tg1 = $("#placement").timeline({
+   "data_source":tg_data_source,
+   "inverted": true,
+   "show_footer": false,
+   "display_zoom_level":true,
+   "min_zoom":27.5,
+   "max_zoom":28,
+});
+tg_data_source[0].events.push(event);
+var tg1 = $("#placement").timeline({
+"data_source":tg_data_source,
+"inverted": true,
+"show_footer": false,
+"mousewheel": "pan",
+"min_zoom":27.5,
+"max_zoom":28,
+});
+// var tg_instance = tg1.data("timeline");
+// tg_instance.addEvent(event, true);
+// console.log(tg_instance.getEventByID("truman3"));
   //------------------------------------------------------------------------------
       // $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
       $("#"+troupeau.espece).addClass('image_troupeau-choisi');
@@ -34,17 +104,12 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
   });
 
   $draggable.on( 'dragEnd', function( event, pointer ) {
-    $('.parcelle').each(function() { // on passe en revue toutes les parcelles
-      $(this).attr('troupeau', false); // on passe à false la variable troupeau de toutes les patures
-      $(this).css('border', 'solid 1px grey'); // suppression de la bordure des parcelles sans troupeau
-    })
     $('#troupeau').css('visibility', 'collapse'); // on rend invisible le troupeau (pour pouvoir connaitre l'élément qui est en dessous)
     $('.lot').css('visibility', 'collapse'); // et aussi les lots de strongle qui sont sur les parcelles
     var element_avec_troupeau = document.elementFromPoint(pointer.clientX, pointer.clientY); // on identifie l'élément qui est en dessous par la position du pointer
     // On enlève le troupeau de toutes les parcelles
     foncier.patures.forEach(function(pature, clef){
       pature.parcelles.forEach(function(parcelle, index) {
-        troupeau.sortDeParcelle();
         parcelle.sortTroupeau();
       });
     });
@@ -54,19 +119,21 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
       var pature_num = element_avec_troupeau.id.split("_")[1];
       var parcelle_num = element_avec_troupeau.id.split("_")[2];
       parcelle_avec_troupeau = foncier.patures[pature_num].parcelles[parcelle_num];
-      $("#troupeau").css('background-image', 'none');
+      troupeau.sortDeParcelle();
       troupeau.entreDansParcelle(parcelle_avec_troupeau);
       parcelle_avec_troupeau.entreTroupeau(troupeau);
-      // On traduit ça dans le html (est-utile ?)
-      $("#"+parcelle_avec_troupeau.id).css('border', 'dotted 2px black'); // attribution d'un couleur pour la parcelle avec troupeau
     }
     // Si le troupeau est dans la chevrerie il y a une alerte (et on attribue au troupeau la chevrerie ???)
     else if (element_avec_troupeau.id == "chevrerie") {
-      alerte_troupeau_chevrerie();
+      if(troupeau.parcelle != "chevrerie") {
+        alerte_troupeau_chevrerie();
+        troupeau.parcelle = "chevrerie";
+      }
     }
     // Si le troupeau n'est pas dans une parcelle, il y a une alerte
     else {
-      alerte_troupeau_dehors()
+      alerte_troupeau_dehors();
+      troupeau.parcelle = "dehors";
     }
     $('.lot').css('visibility', 'visible'); // et on réaffiche les strongles
     $('#troupeau').css('visibility', 'visible'); // on remet le troupeau visible
@@ -114,6 +181,8 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
           parcelle.infestationParTroupeau(troupeau); // la parcelle se contamine avec le troupeau
           parcelle.contaminant = parcelle.getContaminant(pature); // mise à jour du statut contaminant
+
+          // parcelle.addJoursPatures(dates.date_courante);
 
           // HTML: mise à jour de l'html sur la base de l'objet parcelle
           parcelle.majParcelle();

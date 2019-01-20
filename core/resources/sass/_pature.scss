@@ -46,6 +46,9 @@
   position: relative;
   border: solid 1px grey;
 }
+.parcelle-avec-troupeau {
+  border: dotted 3px black !important;
+}
 
 .pat {
   background: url("../svg/pat.svg") lightgreen repeat;

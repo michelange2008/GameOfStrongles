@@ -48,7 +48,7 @@ function setPatureNom(id, nom) {
   {
     pature = new Pature(id, nom); // creation
     foncier.addPature(pature); // ajout au foncier
-    parcelle = new Parcelle(id, 0); // on crée une nouvelle parcelle
+    parcelle = new Parcelle(pature, 0); // on crée une nouvelle parcelle
     foncier.patures[id].addParcelle(parcelle); // et on ajoute la parcelle à la pature
   }
   else
@@ -91,7 +91,7 @@ function creerDemo() {
   ];
   for (var i = 0; i < demo.length; i++) {
     pature = new Pature(i, demo[i][0], demo[i][1]);
-    parcelle = new Parcelle(i, 0);
+    parcelle = new Parcelle(pature, 0);
     for(types in patures_types){
       if(types == demo[i][2]){
         pature.histoire = patures_types[types];
