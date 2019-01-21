@@ -19,7 +19,7 @@ class Parcelle extends Lieu
   constructor(pature, id) {
     super();
     this.id = "parcelle_"+pature.id+"_"+id;
-    this.nom = pature.nom+"-"+id;
+    this.nom = pature.nom+" ("+(id+1)+")";
     this.proportion = 100;
     // this.jours_patures = [];
   }

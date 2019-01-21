@@ -46,21 +46,6 @@
       <script src="{{asset('core/public/js/plugin/jquery-3.3.1.min.js')}}"></script>
       <script src="{{asset('core/public/js/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
       <script src="{{asset('core/public/js/jQRangeSlider-5.7.2/jQDateRangeSlider-withRuler-min.js')}}"></script>
-      <script src="{{asset('core/public/js/fonctions_base.js')}}"></script>
-      <script src="{{asset('core/public/js/gos.js')}}"></script>
-      <!-- <script src="{{asset('core/public/js/plugin/jquery.cookie.js')}}"></script> -->
-      <script src="{{asset('core/public/js/constantes.js')}}"></script>
-      <script src="{{asset('core/public/js/classe-troupeau.js')}}"></script>
-      <script src="{{asset('core/public/js/classe-dates.js')}}"></script>
-      <script src="{{asset('core/public/js/classe-foncier.js')}}"></script>
-      <script src="{{asset('core/public/js/classe-pature.js')}}"></script>
-      <script src="{{asset('core/public/js/classe-parcelle.js')}}"></script>
-      <script src="{{asset('core/public/js/classe-strongle.js')}}"></script>
-      <script src="{{asset('core/public/js/dialogues.js')}}"></script>
-      <script src="{{asset('core/public/js/mise-en-place.js')}}"></script>
-      <script src="{{asset('core/public/js/plugin/jquery-confirm.min.js')}}"></script>
-      <script src="{{asset('core/public/js/plugin/draggabilly.pkgd.min.js')}}"></script>
-      <script src="{{asset('core/public/js/plugin/masonry.pkgd.min.js')}}"></script>
 
       <script src="{{asset('core/public/js/timeglider/js/underscore-min.js')}}" type="text/javascript" charset="utf-8"></script>
       <script src="{{asset('core/public/js/timeglider/js/backbone-min.js')}}" type="text/javascript" charset="utf-8"></script>
@@ -79,5 +64,22 @@
       <script src="{{asset('core/public/js/timeglider/timeglider/TG_Mediator.js')}}" type="text/javascript" charset="utf-8"></script>
       <script src="{{asset('core/public/js/timeglider/timeglider/timeglider.timeline.widget.js')}}" type="text/javascript" charset="utf-8"></script>
       <script src="{{asset('core/public/js/timeglider/timeglider/timeglider.datepicker.js')}}" type="text/javascript" charset="utf-8"></script>
+
+      <script src="{{asset('core/public/js/fonctions_base.js')}}"></script>
+      <script src="{{asset('core/public/js/gos.js')}}"></script>
+      <!-- <script src="{{asset('core/public/js/plugin/jquery.cookie.js')}}"></script> -->
+      <script src="{{asset('core/public/js/constantes.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-troupeau.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-dates.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-foncier.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-pature.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-parcelle.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-strongle.js')}}"></script>
+      <script src="{{asset('core/public/js/classe-deplacement.js')}}"></script>
+      <script src="{{asset('core/public/js/dialogues.js')}}"></script>
+      <script src="{{asset('core/public/js/mise-en-place.js')}}"></script>
+      <script src="{{asset('core/public/js/plugin/jquery-confirm.min.js')}}"></script>
+      <script src="{{asset('core/public/js/plugin/draggabilly.pkgd.min.js')}}"></script>
+      <script src="{{asset('core/public/js/plugin/masonry.pkgd.min.js')}}"></script>
     </body>
 </html>

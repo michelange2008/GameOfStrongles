@@ -11,83 +11,21 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     });
     $("#pas_de_temps").html(param.PAS_DE_TEMPS.valeur);
 
-    //---------------------------------------------------------------------------------
+    // création des objets de base ---------------------------------------------
     troupeau = new Troupeau();
     troupeau.setStrongles(5);
     dates = new Dates();
     foncier = new Foncier();
     chevrerie = new Batiment("chevrerie");
-    liste_mois = [];
-    mouvement = [];
-    liste_mouvements = [];
+    // liste_mois = [];
+    // mouvement = [];
+    // liste_mouvements = [];
     troupeau.entreDansParcelle(chevrerie);
     setTimeLine(dates);
     dallage();
     demo();
-
-    var icones = document.documentURI+"public/svg/";
-    var tg_data_source = [
-
-      // Advantages of this method include being able to
-      // load from remote URLs, add comments to the data
-      // and of course, use functions!
-      {
-        "id":"SP", // a unique identifier
-        "title":"",
-        "focus_date":"2019-06-15",
-        "initial_zoom": 28,
-        "image_lane_height":200,
-        "events":[
-          {
-    				"id":            "truman",
-    				"title":         "Harry S. Truman",
-    				"startdate":     "2019-04-12",
-    				"enddate":       "2019-08-20",
-    				"importance":    "40",
-    				"span_color":"pink",
-    				"y_position": 0
-    			},
-          {
-    				"id":            "truman2",
-    				"title":         "Harry S. Truman",
-    				"startdate":     "2019-01-12",
-    				"enddate":       "2019-02-20",
-    				"importance":    "40",
-    				"span_color":"pink",
-            "y_position": 0
-    			},
-
-        ]
-          // more events
-      }
-    ]; // end of your data source array
-var event =  {
-            "event_id": "truman3",
-            "title": "Truman Capote",
-            "startdate": "2019-03-12",
-            "enddate": "2019-06-20",
-            "importance": "40",
-            "span_color":"lightgreen",
-            "y_position": 100
-          };
-    var url_tg = document.documentURI+"core/public/js/timeglider/json/";
-    var tg1 = $("#placement").timeline({
-   "data_source":tg_data_source,
-   "inverted": true,
-   "show_footer": false,
-   "display_zoom_level":true,
-   "min_zoom":27.5,
-   "max_zoom":28,
-});
-tg_data_source[0].events.push(event);
-var tg1 = $("#placement").timeline({
-"data_source":tg_data_source,
-"inverted": true,
-"show_footer": false,
-"mousewheel": "pan",
-"min_zoom":27.5,
-"max_zoom":28,
-});
+    foncier.setListeParcelles();
+    troupeau.dessinePlanning();
 // var tg_instance = tg1.data("timeline");
 // tg_instance.addEvent(event, true);
 // console.log(tg_instance.getEventByID("truman3"));

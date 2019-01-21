@@ -8,6 +8,8 @@ function Troupeau()
   this.sinfeste(5);
   this.capaciteInfestante = 0;
   this.sante = 100;
+  this.deplacement = []; // déplacement du troupeau (entre, sortie, parcelle)
+  this.circuit = []; // ensemble des déplacements du troupeau
 }
 Troupeau.prototype.setEspece = function (espece) {
   this.espece = espece;
@@ -118,14 +120,60 @@ Troupeau.prototype.maj_aspect_troupeau = function () {
 Troupeau.prototype.entreDansParcelle = function(parcelle) {
   var date = new Date(dates.date_courante);
   this.parcelle = parcelle;
-  mouvement.push(parcelle.nom, date);
+  this.deplacement = new Deplacement(parcelle.nom, date);
   $("#troupeau").css('background-image', 'none');
 };
 
 Troupeau.prototype.sortDeParcelle = function () {
     var date = new Date(dates.date_courante);
-    mouvement.push(date);
-    liste_mouvements.push(mouvement);
-    mouvement= [];
+    this.deplacement.setDateSortie(date);
+    this.circuit.push(this.deplacement);
+
     this.parcelle = null;
 };
+
+//############################## PLANNING TROUPEAU #############################
+Troupeau.prototype.dessinePlanning = function() {
+      var url_tg = document.documentURI+"core/public/js/timeglider/json/";
+  circuit_paturage = [
+  {
+    "id":"SP", // a unique identifier
+    "title":"",
+    "focus_date":"2019-06-15",
+    "initial_zoom": 28,
+    "image_lane_height":200,
+    "events" : [
+      {
+        "id":            "saison",
+        "title":         "Saison de paturage",
+        "startdate":     dates.mise_a_l_herbe.toISOString(),
+        "enddate":       dates.entre_bergerie.toISOString(),
+        "importance":    "40",
+        "span_color":"grey",
+        "y_position": 0
+      }
+    ]
+  }
+]
+console.log(circuit_paturage);
+  var tg1 = $("#placement").timeline({
+  "data_source":circuit_paturage,
+  "inverted": true,
+  "show_footer": false,
+  "display_zoom_level":true,
+  "min_zoom":27.5,
+  "max_zoom":28,
+  });
+  var mouvement =
+  [
+    {
+      "id":            "truman",
+      "title":         "Harry S. Truman",
+      "startdate":     "2019-04-12",
+      "enddate":       "2019-08-20",
+      "importance":    "40",
+      "span_color":"pink",
+      "y_position": 0
+    }
+  ];
+}

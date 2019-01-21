@@ -216,5 +216,3 @@ function dallage() {
     columnWidth: 1
   });
 }
-
-// Obtient le numéro de la semaine
