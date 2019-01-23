@@ -91,10 +91,10 @@ function creerDemo() {
   ];
   for (var i = 0; i < demo.length; i++) {
     pature = new Pature(i, demo[i][0], demo[i][1]);
-    parcelle = new Parcelle(pature, 0);
     for(types in patures_types){
       if(types == demo[i][2]){
         pature.histoire = patures_types[types];
+        parcelle = new Parcelle(pature, 0);
         parcelle.addStrongles(pature.histoire.infestation_initiale);
       }
     }

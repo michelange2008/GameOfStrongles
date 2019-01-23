@@ -1,8 +1,12 @@
 //################################# CLASSES ET METHODES ##################################
-function Lieu() {
-  this.troupeau = null;
-  this.infestation = [];
-  this.contaminant = 0;
+class Lieu
+{
+  constructor() {
+    this.troupeau = null;
+    this.infestation = [];
+    this.contaminant = 0;
+    this.planning_index = 0;
+  }
 }
 
 class Batiment extends Lieu
@@ -21,7 +25,7 @@ class Parcelle extends Lieu
     this.id = "parcelle_"+pature.id+"_"+id;
     this.nom = pature.nom+" ("+(id+1)+")";
     this.proportion = 100;
-    // this.jours_patures = [];
+    this.histoire = pature.histoire;
   }
 }
 // Ajoute un jour paturé

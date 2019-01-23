@@ -8,7 +8,7 @@ function Troupeau()
   this.sinfeste(5);
   this.capaciteInfestante = 0;
   this.sante = 100;
-  this.deplacement = []; // déplacement du troupeau (entre, sortie, parcelle)
+  // this.deplacement = []; // déplacement du troupeau (entre, sortie, parcelle)
   this.circuit = []; // ensemble des déplacements du troupeau
 }
 Troupeau.prototype.setEspece = function (espece) {
@@ -120,60 +120,89 @@ Troupeau.prototype.maj_aspect_troupeau = function () {
 Troupeau.prototype.entreDansParcelle = function(parcelle) {
   var date = new Date(dates.date_courante);
   this.parcelle = parcelle;
-  this.deplacement = new Deplacement(parcelle.nom, date);
+  this.deplacement = new Deplacement(parcelle, date);
   $("#troupeau").css('background-image', 'none');
 };
 
 Troupeau.prototype.sortDeParcelle = function () {
     var date = new Date(dates.date_courante);
     this.deplacement.setDateSortie(date);
-    this.circuit.push(this.deplacement);
-
+    if(this.deplacement.date_sortie > this.deplacement.date_entree) {
+      this.circuit.push(this.deplacement);
+    }
+    majPlanning();
     this.parcelle = null;
 };
 
 //############################## PLANNING TROUPEAU #############################
-Troupeau.prototype.dessinePlanning = function() {
-      var url_tg = document.documentURI+"core/public/js/timeglider/json/";
-  circuit_paturage = [
-  {
-    "id":"SP", // a unique identifier
-    "title":"",
-    "focus_date":"2019-06-15",
-    "initial_zoom": 28,
-    "image_lane_height":200,
-    "events" : [
-      {
-        "id":            "saison",
-        "title":         "Saison de paturage",
-        "startdate":     dates.mise_a_l_herbe.toISOString(),
-        "enddate":       dates.entre_bergerie.toISOString(),
-        "importance":    "40",
-        "span_color":"grey",
-        "y_position": 0
-      }
-    ]
-  }
-]
-console.log(circuit_paturage);
-  var tg1 = $("#placement").timeline({
-  "data_source":circuit_paturage,
-  "inverted": true,
-  "show_footer": false,
-  "display_zoom_level":true,
-  "min_zoom":27.5,
-  "max_zoom":28,
-  });
-  var mouvement =
-  [
+// Définit le premier afffichage du planning avec la saison de paturage
+function planningPaturageInitial() {
+  var mise_a_l_herbe = new Date(dates.mise_a_l_herbe);
+  var date_milieu = new Date(mise_a_l_herbe.setDate(mise_a_l_herbe.getDate() + dates.duree_paturage/2));
+  planning = [
     {
-      "id":            "truman",
-      "title":         "Harry S. Truman",
-      "startdate":     "2019-04-12",
-      "enddate":       "2019-08-20",
-      "importance":    "40",
-      "span_color":"pink",
-      "y_position": 0
+      "id":"SP", // a unique identifier
+      "title":"",
+      "focus_date":date_milieu.toISOString(),
+      "initial_zoom": 28,
+      "image_lane_height":200,
+      "events" : [
+        {
+          "id":            "saison",
+          "title":         "Saison de paturage",
+          "startdate":     dates.mise_a_l_herbe.toISOString(),
+          "enddate":       dates.entre_bergerie.toISOString(),
+          "importance":    "40",
+          "span_color":"lightgreen",
+          "y_position": 0
+        }
+      ]
     }
   ];
+  return planning;
+}
+
+function majPlanning() {
+  planning = planningPaturageInitial();
+  // Attribuer à chaque parcelle une valeur y et une couleur
+  var nb_parcelles = foncier.liste_parcelles.length;
+  var y = 20;
+
+  foncier.liste_parcelles.forEach(function (parcelle, clef) {
+    troupeau.circuit.forEach( function(deplacement, index) {
+      if(deplacement.parcelle.id == parcelle.id){
+        var mouvement =
+        {
+          "id": parcelle.id,
+          "title": parcelle.nom,
+          "startdate": deplacement.date_entree.toISOString(),
+          "enddate": deplacement.date_sortie.toISOString(),
+          "importance": "40",
+          "span_color": parcelle.histoire.couleur,
+          "y_position": parcelle.planning_index
+        }
+        console.log(mouvement);
+        planning[0].events.push(mouvement);
+      }
+    })
+  })
+  $('#SP').remove();
+  dessinePlanning(planning);
+}
+
+function dessinePlanning(planning) {
+    var url_tg = document.documentURI+"core/public/js/timeglider/json/";
+
+    var tg1 = $("#placement").timeline({
+    "data_source":planning,
+    // "mousewheel": "zoom",
+    "inverted": true,
+    "show_footer": false,
+    "display_zoom_level":true,
+    "min_zoom":10,
+    "max_zoom":28,
+    });
+    // var tg_instance = tg1.data("timeline");
+    // tg_instance.addEvent(mouvement, true);
+    //   console.log(tg_instance.getMediator().getZoomLevel());
 }
