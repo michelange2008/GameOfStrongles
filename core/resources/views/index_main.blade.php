@@ -8,7 +8,7 @@
 </div>
 @endsection
 @section('param')
-<div id="page-param" class="masque">
+<div id="page-param" class="">
   @include('titreParam')
   @include('param', [
     'parametres' => $parametres,

@@ -56,9 +56,11 @@ input{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  img {
-    width: 50px;
-    cursor: pointer;
+  .boutons {
+    img {
+      width: 50px;
+      cursor: pointer;
+    }
   }
 }
 .titre {

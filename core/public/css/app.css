@@ -216,7 +216,6 @@
 
 #exploitation {
   width: 100%;
-  height: 100%;
 }
 
 .pature {
@@ -396,7 +395,7 @@ input::-o-inner-spin-button {
           justify-content: space-between;
 }
 
-.bandeau img {
+.bandeau .boutons img {
   width: 50px;
   cursor: pointer;
 }

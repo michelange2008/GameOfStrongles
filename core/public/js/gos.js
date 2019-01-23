@@ -17,18 +17,15 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
     dates = new Dates();
     foncier = new Foncier();
     chevrerie = new Batiment("chevrerie");
-    // liste_mois = [];
-    // mouvement = [];
-    // liste_mouvements = [];
     troupeau.entreDansParcelle(chevrerie);
+
     setTimeLine(dates);
     dallage();
     demo();
     foncier.setListeParcelles();
-    troupeau.dessinePlanning();
-// var tg_instance = tg1.data("timeline");
-// tg_instance.addEvent(event, true);
-// console.log(tg_instance.getEventByID("truman3"));
+    planning = "";
+    // dessinePlanning(planningPaturageInitial());
+
   //------------------------------------------------------------------------------
       // $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
       $("#"+troupeau.espece).addClass('image_troupeau-choisi');

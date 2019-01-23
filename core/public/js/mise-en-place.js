@@ -15,6 +15,11 @@ $("#sommaire").on('click', function() {
 $("#retour").on('click', function() {
   afficheIndex();
 });
+// passage de la page gos au planning
+$("#planning").on('click', function() {
+  dessinePlanning(planning);
+  affichePlanning();
+});
 // fonctions de démarrage
 function accueil() {
   afficheIndex();
@@ -24,12 +29,14 @@ function afficheTout() {
   $("#page-index").show();
   $("#page-param").show();
   $("#page-gos").show();
+  $('#page-planning').show();
   $('html').animate({scrollTop:0}, 'slow');
 }
 
 function afficheIndex() {
   $("#page-gos").hide();
   $("#page-param").hide();
+  $('#page-planning').hide();
   $("#page-index").show();
   $('html').animate({scrollTop:0}, 'slow');
 }
@@ -37,6 +44,7 @@ function afficheIndex() {
 function afficheGos() {
   $("#page-index").hide();
   $("#page-param").hide();
+  $('#page-planning').addClass("masque");
   $("#page-gos").show();
   $('html').animate({scrollTop:0}, 'slow');
 }
@@ -45,7 +53,16 @@ function afficheParam() {
   $("#page-param").show();
   $("#page-index").hide();
   $("#page-gos").hide();
+  $('#page-planning').hide();
   $('html').animate({scrollTop:0}, 'slow');
+}
+
+function affichePlanning() {
+  $("#page-param").hide();
+  $("#page-index").hide();
+  $("#page-gos").hide();
+  $('#page-planning').removeClass("masque");
+  // $('html').animate({scrollTop:0}, 'slow');
 }
 
 function start() {
