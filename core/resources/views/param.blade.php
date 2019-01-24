@@ -1,6 +1,6 @@
 {!! Form::open(['route' => 'action', "id" => "form"]) !!}
-<div class="categories">
-  <h5 class="categories-titres">Biologie des strongles</h5>
+<div class="categories categories-param">
+  <h5 class="categories-titres categories-param-titre">Biologie des strongles</h5>
   <div class="categories-biologie">
     <div class="categories-biologie-cycle">
       <img src="{{config('fichiers.svg')}}cycle.svg" alt=""> //<!-- affiche le cycle des strongles-->

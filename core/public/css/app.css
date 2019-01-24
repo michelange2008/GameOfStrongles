@@ -380,6 +380,7 @@ input::-o-inner-spin-button {
 }
 
 .bandeau {
+  height: 11vh;
   border: 0 !important;
   background-image: -webkit-gradient(linear, left top, right top, from(black), to(darkgrey));
   background-image: linear-gradient(to right, black, darkgrey);
@@ -393,6 +394,7 @@ input::-o-inner-spin-button {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  margin-bottom: 2vh !important;
 }
 
 .bandeau .boutons img {
@@ -647,8 +649,7 @@ input::-o-inner-spin-button {
 
 .demo {
   width: 230px;
-  margin: 1rem;
-  margin-top: 0;
+  margin: 0 1rem 1rem 1rem;
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
@@ -794,10 +795,21 @@ input::-o-inner-spin-button {
   color: red;
 }
 
+.categories-param {
+  height: 100vh;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.categories-param-titre {
+  height: 10vh;
+  margin-bottom: 1vh;
+}
+
 .categories-biologie {
   display: grid;
-  grid-template-columns: 17% 1fr 17% 30%;
-  grid-template-rows: 100px 1fr 100px;
+  grid-template-columns: 17vw 1fr 17vw 26vw;
+  grid-template-rows: 15vh 55vh 15vh;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -809,6 +821,7 @@ input::-o-inner-spin-button {
 }
 
 .categories-biologie-cycle img {
+  height: 55vh;
   display: block;
   margin: auto;
 }

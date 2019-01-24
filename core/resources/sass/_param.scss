@@ -1,13 +1,25 @@
+.categories-param {
+  height: 100vh;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.categories-param-titre {
+  height: 10vh;
+  margin-bottom: 1vh;
+}
+
 .categories-biologie {
   display: grid;
-  grid-template-columns: 17% 1fr 17% 30%;
-  grid-template-rows: 100px 1fr 100px;
+  grid-template-columns: 17vw 1fr 17vw 26vw;
+  grid-template-rows: 15vh 55vh 15vh;
   align-items: center;
   justify-items: center;
 }
 .categories-biologie-cycle {
   width: 100%;
   img {
+    height: 55vh;
     display: block;
     margin: auto;
   }

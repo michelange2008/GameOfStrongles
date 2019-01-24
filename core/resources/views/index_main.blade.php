@@ -9,7 +9,6 @@
 @endsection
 @section('param')
 <div id="page-param" class="">
-  @include('titreParam')
   @include('param', [
     'parametres' => $parametres,
   ])
@@ -17,13 +16,13 @@
 @endsection
 @section('gos')
   <div id="page-gos" class="">
-    @include('titre')
+    @include('titre-gos')
     @include('newgos')
   </div>
 @endsection
 @section('planning')
   <div id="page-planning" class="">
-    @include('titre')
+    @include('titre-planning')
     @include('planning')
   </div>
 @endsection

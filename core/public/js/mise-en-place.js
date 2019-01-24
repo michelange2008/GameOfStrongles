@@ -17,8 +17,12 @@ $("#retour").on('click', function() {
 });
 // passage de la page gos au planning
 $("#planning").on('click', function() {
-  dessinePlanning(planning);
   affichePlanning();
+  dessinePlanning(planning);
+});
+// passage de la page planning à la page vers_gos
+$("#vers_gos").on('click', function() {
+  afficheGos();
 });
 // fonctions de démarrage
 function accueil() {

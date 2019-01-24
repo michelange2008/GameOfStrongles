@@ -51,11 +51,13 @@ input{
 }
 
 .bandeau {
+  height: 11vh;
   border: 0 !important;
   background-image: linear-gradient(to right, black, darkgrey);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 2vh !important;
   .boutons {
     img {
       width: 50px;
