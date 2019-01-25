@@ -35,7 +35,7 @@ Pature.prototype.divisePature = function (nb_parcelles) {
   //---------------------------------------------------
   for (var i = 0; i < nb_parcelles; i++) {
     // créer un objet parcelle en répartissant les strongles et la proportion
-    parcelle = new Parcelle(this.id, i);
+    parcelle = new Parcelle(this, i);
     parcelle.proportion = 100 / nb_parcelles;
     this.addParcelle(parcelle);
   }
@@ -47,6 +47,8 @@ Pature.prototype.divisePature = function (nb_parcelles) {
       }
     }
   }
+  // mise à jour de la liste des parcelles
+  foncier.setListeParcelles();
   // repositionnement du troupeau dans la première parcelle
   if(hasTroupeau > 0) {
     var premiere_parcelle = this.parcelles[0];

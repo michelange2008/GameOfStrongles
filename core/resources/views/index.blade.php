@@ -46,6 +46,7 @@
         <div class="categories-contenu-ligne">
           <input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">
           <input class="pature-superficie" type="number" name="pature_superficie_0" value="" placeholder="superficie" disabled=true>
+          <label class="pature-superficie-label" for="pature_superficie_0"> (Ha) </label>
           <select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0" disabled=true>
           </select>
           <img id="efface_0" class="efface-ligne" src="public/svg/efface.svg">

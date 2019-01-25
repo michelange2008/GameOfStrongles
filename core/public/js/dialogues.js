@@ -1,3 +1,22 @@
+//############### Problème de saisie #######################################
+function dialogue(titre,texte, couleur, fonction) {
+  $.confirm({
+    animation : 'zoom',
+      title: titre,
+      content: texte,
+      type: couleur,
+      typeAnimated: true,
+      buttons: {
+          fermer: function () {
+            fonction
+          },
+          fermer : {
+            keys: ['enter', 'esc']
+          }
+      }
+  });
+}
+
 //############### Division des parcelles #######################################
 function dialogueDiviseParcelle(pature, parcelle) {
   $.confirm({

@@ -10,6 +10,9 @@
      font-family: "GameOfThrones";
      src: url("../font/Game_of_Thrones.ttf");
 }
+body {
+  background: forestgreen;
+}
 input{
 	/* Firefox */
 	-moz-appearance: textfield;

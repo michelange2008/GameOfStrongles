@@ -112,6 +112,7 @@ function creeLignesPatures(foncier) {
     var ligne = '<div class="categories-contenu-ligne">'+
       '<input class="pature-nom" type="text" name="pature_nom_'+i+'" value="'+pature.nom+'" placeholder="nom de la pature">'+
       '<input class="pature-superficie" type="number" name="pature_superficie_'+i+'" value="'+pature.superficie+'" placeholder="superficie">'+
+      '<label class="pature-superficie-label" for="pature_superficie_'+i+'"> (Ha) </label>'+
       '<select id="pature_histoire_'+i+'" class="pature-histoire" name="pature_histoire_'+i+'">'+
       '</select>'+
       '<img id="efface_'+i+'" class="efface-ligne" src="public/svg/efface.svg"></div>';
@@ -134,6 +135,7 @@ function ligneZero() {
   var ligne = '<div class="categories-contenu-ligne">'+
     '<input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">'+
     '<input class="pature-superficie" type="number" name="pature_superficie_0 " value="" placeholder="superficie">'+
+    '<label class="pature-superficie-label" for="pature_superficie_'+i+'"> (Ha) </label>'+
     '<select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0">'+
     '</select>'+
     '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>';

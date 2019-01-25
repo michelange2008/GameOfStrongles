@@ -69,13 +69,25 @@ function affichePlanning() {
   // $('html').animate({scrollTop:0}, 'slow');
 }
 
+function verifieSaisie() {
+  // pas de ligne remplie:
+  if(foncier.patures.length == 0) {
+    dialogue("Attention !", "Il faut définir le parcellaire", "red", $("input[name='pature_nom_0']").focus());
+    return false;
+  }
+  else {
+  }
+}
+
 function start() {
-  // effaceParcelles();
-  afficheGos();
-  calculPature();
-  dessinePatures();
-  ecritPaturesDansMoniteur();
-  dallage();
+  if(verifieSaisie()) {// verifie les donnees
+    effaceParcelles(); // efface le dessin des parcelles
+    afficheGos(); // affiche la page du dessin
+    calculPature(); // calcul les donnees des patures (taille, ...)
+    dessinePatures(); // dessine les patures
+    ecritPaturesDansMoniteur(); // met les donnees dans le panneau de gauche
+    dallage(); // fait le dallage
+  }
 }
 
 function demo() {
@@ -146,15 +158,17 @@ modifParam(id_input, value); // on applique la fonction modifParam
 //##############################################################################
 
 //############# AJOUT LIGNE PARCELLE EN CLIQUANT SUR BOUTON PLUS ###############
+// récupère le html de la première ligne
 var premiere_ligne = "<div class='categories-contenu-ligne'>"
 +$(".categories-contenu-ligne").first().html()
 +"</div>";
 
 $("#ajout").on('click',function() {
-  var nb_lignes = $("#liste_patures").children().length;
-  var nouvelle_ligne = premiere_ligne.replace(/_0/g, "_"+nb_lignes);
-  $(nouvelle_ligne).appendTo($("#liste_patures"));
-  $.each(patures_types, function(clef, objet) {
+  var nb_lignes = $("#liste_patures").children().length; // Nombre de lignes existantes
+  var nouvelle_ligne = premiere_ligne.replace(/_0/g, "_"+nb_lignes); //création d'une nouvelle ligne en remplaçant l'indice
+
+  $(nouvelle_ligne).appendTo($("#liste_patures")); // ajout de cette ligne en fin de liste
+  $.each(patures_types, function(clef, objet) { // ajout de la liste déroulante
     var type = '<option value="'+clef+'">'+objet.nom+'</option>';
     $("#pature_histoire_"+nb_lignes).append(type);
   });
@@ -281,6 +295,7 @@ $(".categories-contenu-patures").on('change', '.pature-nom', function(pature) {
 });
 // Ajout de la superficie
 $(".categories-contenu-patures").on('change', '.pature-superficie', function(superficie){
+  console.log(superficie.currentTarget.value);
   var id = superficie.currentTarget.name.split("_")[2];
   foncier.patures[parseInt(id)].superficie = superficie.currentTarget.value;
   var pature_histoire = '#pature_histoire_'+id;
@@ -288,7 +303,7 @@ $(".categories-contenu-patures").on('change', '.pature-superficie', function(sup
 
 });
 // Ajout de l'histoire sous forme d'un objet patures_types
-$(".categories-contenu-patures").on('click', '.pature-histoire', function(histoire){
+$(".categories-contenu-patures").on('click change', '.pature-histoire', function(histoire){
   var id = histoire.currentTarget.name.split("_")[2];
   setPatureParcelles(id, foncier, histoire.currentTarget.value);
 });

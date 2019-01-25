@@ -167,7 +167,7 @@ function majPlanning() {
   // Attribuer à chaque parcelle une valeur y et une couleur
   var nb_parcelles = foncier.liste_parcelles.length;
   var y = 20;
-
+console.log(foncier.liste_parcelles);
   foncier.liste_parcelles.forEach(function (parcelle, clef) {
     troupeau.circuit.forEach( function(deplacement, index) {
       if(deplacement.parcelle.id == parcelle.id){

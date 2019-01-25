@@ -21,7 +21,7 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
     setTimeLine(dates);
     dallage();
-    demo();
+    // demo();
     foncier.setListeParcelles();
     planning = "";
     // dessinePlanning(planningPaturageInitial());
