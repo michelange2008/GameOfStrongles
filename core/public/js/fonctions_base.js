@@ -30,17 +30,6 @@ function setTimeLine(dates) {
   }
 }
 
-// Ajoute la liste déroulante de parcelles types
-function ajoutPaturesTypes(id_pature, type_pature){
-  $.each(patures_types, function(clef, objet) {
-    if(type_pature == objet.id){
-    var type = '<option value="'+clef+'" selected="selected">'+objet.nom+'</option>';
-  } else {
-    var type = '<option value="'+clef+'">'+objet.nom+'</option>';
-  }
-  $("#pature_histoire_"+id_pature).append(type);
-  });
-}
 
 // Crée une nouvelle pature après que l'on ait rempli le champs nom
 function setPatureNom(id, nom) {
@@ -58,7 +47,7 @@ function setPatureNom(id, nom) {
 }
 
 // Complète le niveau d'infestation de la parcelle d'une pature en fonction de l'historique
-function setPatureParcelles(id, foncier, historique) {
+function setPatureParcelles(id, historique) {
   foncier.patures[id].parcelles[0].infestation = []; // on remet à zéro les parcelles de cette pature
   $.each(patures_types, function(clef, val) {// on recherche l'objet en fonction de son id
     if(clef == historique)
@@ -100,6 +89,8 @@ function creerDemo() {
     }
     pature.addParcelle(parcelle);
     foncier.addPature(pature);
+    troupeau.espece = "caprins";
+    troupeau.effectif = 45;
   }
   creeLignesPatures(foncier);
 }
@@ -117,8 +108,20 @@ function creeLignesPatures(foncier) {
       '</select>'+
       '<img id="efface_'+i+'" class="efface-ligne" src="public/svg/efface.svg"></div>';
       $("#liste_patures").append(ligne);
-      ajoutPaturesTypes(i, pature.histoire.id);
+      ajoutPaturesTypesPredefinie(i, pature.histoire.id);
   }
+}
+
+// Ajoute la liste déroulante de parcelles types avec un choix prédéfini (surtout pour démo ou toute configuration prexistante)
+function ajoutPaturesTypesPredefinie(id_pature, type_pature){
+  $.each(patures_types, function(clef, objet) {
+    if(type_pature == objet.id){
+    var type = '<option value="'+clef+'" selected="selected">'+objet.nom+'</option>';
+  } else {
+    var type = '<option value="'+clef+'">'+objet.nom+'</option>';
+  }
+  $("#pature_histoire_"+id_pature).append(type);
+  });
 }
 
 // efface toutes les lignes de parcelles pour ne laisser qu'une ligne vide
@@ -127,26 +130,40 @@ function effaceLigneParcelles() {
   effaceMoniteurParcelles();
   $("#liste_patures").html('');
   foncier = new Foncier();
-  ligneZero();
+  nouvelleLigne(0);
 }
 
 // construit une ligne vide de saisie de pature (à utiliser avec d'autres fonctions)
-function ligneZero() {
+function nouvelleLigne(i) {
   var ligne = '<div class="categories-contenu-ligne">'+
-    '<input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">'+
-    '<input class="pature-superficie" type="number" name="pature_superficie_0 " value="" placeholder="superficie">'+
+    '<input class="pature-nom" type="text" name="pature_nom_'+i+'" value="" placeholder="nom de la pature" required>'+
+    '<input class="pature-superficie" type="number" name="pature_superficie_'+i+' " value="" placeholder="superficie" required>'+
     '<label class="pature-superficie-label" for="pature_superficie_'+i+'"> (Ha) </label>'+
-    '<select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0">'+
+    '<select id="pature_histoire_'+i+'" class="pature-histoire" name="pature_histoire_'+i+'">'+
     '</select>'+
-    '<img id="efface_0" class="efface-ligne" src="public/svg/efface.svg"></div>';
+    '<img id="efface_'+i+'" class="efface-ligne" src="public/svg/efface.svg"></div>';
     $("#liste_patures").append(ligne);
-    ajoutPaturesTypes(0, 0);
+    ajoutPaturesTypes(i);
 }
+// Ajoute la liste déroulante de parcelles types avec un choix prédéfini (surtout pour démo ou toute configuration prexistante)
+function ajoutPaturesTypes(id_pature){
+  var ligne_vide = '<option value="" selected="selected" placeholder="coucou"></option>';
+  $("#pature_histoire_"+id_pature).append(ligne_vide);
+  $.each(patures_types, function(clef, objet) {
+    var type = '<option value="'+clef+'">'+objet.nom+'</option>';
+  $("#pature_histoire_"+id_pature).append(type);
+  });
+}
+
 
 // Efface une ligne de saisie de pature aussi bien dans l'objet foncier que à l'affichage
 function effaceUneLigne(id_ligne) {
   foncier.patures.splice(id_ligne, 1);
-  creeLignesPatures(foncier);
+  if(foncier.patures.length > 0) {
+    creeLignesPatures(foncier);
+  } else {
+    effaceLigneParcelles();
+  }
 }
 
 //############################ FONCTIONS POUR L'AFFICHAGE FINAL ###############

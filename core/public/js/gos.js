@@ -2,37 +2,31 @@ var GAMEOFSTRONGLE = GAMEOFSTRONGLE || {}
 
 //################################# START ######################################
   $(function() {
-    // mise à zéro du contenu des champs de patures et remplissage de la liste déroulante
-    $('.pature-nom').val('');
-    $('.pature-superficie').val('');
-    $.each(patures_types, function(clef, objet) {
-      var type = '<option value="'+clef+'">'+objet.nom+'</option>';
-      $("#pature_histoire_0").append(type);
-    });
+    // ajout d'une ligne de saisie pour la pature
+    nouvelleLigne(0);
     $("#pas_de_temps").html(param.PAS_DE_TEMPS.valeur);
 
     // création des objets de base ---------------------------------------------
     troupeau = new Troupeau();
-    troupeau.setStrongles(5);
+    // troupeau.setStrongles(5);
     dates = new Dates();
     foncier = new Foncier();
     chevrerie = new Batiment("chevrerie");
     troupeau.entreDansParcelle(chevrerie);
 
     setTimeLine(dates);
-    dallage();
+    dallage(); // fait un dallage même sans rien pour eviter les erreurs si on le Supprime
+    accueil();
+    $("#"+troupeau.espece).addClass('image_troupeau-choisi');
+    $('input[name=effectif]').val(troupeau.effectif);
+    $("#orange").addClass("feu-choisi");
+    troupeau.maj_aspect_troupeau();
+    troupeau.maj_moniteur();
+
     // demo();
     foncier.setListeParcelles();
     planning = "";
-    // dessinePlanning(planningPaturageInitial());
 
-  //------------------------------------------------------------------------------
-      // $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg"); // on attribue au troupeau l'image par défaut
-      $("#"+troupeau.espece).addClass('image_troupeau-choisi');
-      $('input[name=effectif]').val(troupeau.effectif);
-      $("#orange").addClass("feu-choisi");
-      troupeau.maj_aspect_troupeau();
-      troupeau.maj_moniteur();
 
 //############################ GESTION DU DEPLACEMENT DU TROUPEAU ##################################################
   var $draggable = $('#troupeau').draggabilly({

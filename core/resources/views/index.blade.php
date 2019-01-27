@@ -23,9 +23,9 @@
         </div>
         <div class="categories-infestation">
           <p>Niveau d'infestation</p>
-          <div id="vert" class="feu vert" title="troupeau non infesté"></div>
-          <div id="orange" class="feu orange" title="troupeau avec une infestation modérée"></div>
-          <div id="rouge" class="feu rouge" title="troupeau infesté"></div>
+          <div id="faible" class="feu vert" title="troupeau non infesté (clic pour valider)"></div>
+          <div id="moyen" class="feu orange" title="troupeau avec une infestation modérée (clic pour valider)"></div>
+          <div id="élevé" class="feu rouge" title="troupeau infesté (clic pour valider)"></div>
         </div>
     </div>
   </div>
@@ -43,14 +43,7 @@
     <h5 class=" categories-titres" >Patures</h5>
     <div class="categories-contenu-patures">
       <div id="liste_patures" class="sous-categories gauche">
-        <div class="categories-contenu-ligne">
-          <input class="pature-nom" type="text" name="pature_nom_0" value="" placeholder="nom de la pature">
-          <input class="pature-superficie" type="number" name="pature_superficie_0" value="" placeholder="superficie" disabled=true>
-          <label class="pature-superficie-label" for="pature_superficie_0"> (Ha) </label>
-          <select id="pature_histoire_0" class="pature-histoire" name="pature_histoire_0" disabled=true>
-          </select>
-          <img id="efface_0" class="efface-ligne" src="public/svg/efface.svg">
-        </div>
+    
       </div>
       <div class="sous-categories droite">
         <div id="efface" class="btn btn-lg btn-danger rounded-0 demo">

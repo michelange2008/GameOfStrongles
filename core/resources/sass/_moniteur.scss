@@ -1,17 +1,27 @@
-#moniteur {
-  background: darkgrey;
-}
 #resultats {
-  margin-left: -15px;
-  margin-right: -15px;
+  margin-left: -10px;
+  margin-right: -10px;
   text-align: center;
   border: none;
+}
+#plateau {
+
+}
+.infos {
+  padding: 0 10px;
+  max-width: 250px;
+  background: darkgrey;
+}
+.moniteur-titre {
+  font-family: 'GameOfThrones';
+  line-height: 3rem !important;
+  color: white
 }
 .cadran {
   border: solid 1px black;
   font-family: 'GameOfThrones';
   margin-bottom: 10px;
-  .titre {
+  .moniteur-sous-titre {
     padding: 5px;
     background: lightgrey
   }

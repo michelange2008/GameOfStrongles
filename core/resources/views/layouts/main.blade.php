@@ -10,6 +10,7 @@
         {{-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css"> --}}
         <link href="{{URL::asset('core/public/css')}}/app.css" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('core/public/css')}}/jquery-confirm.css" rel="stylesheet" type="text/css" />
+        {{-- <link href="{{URL::asset('core/public/css')}}/jquery.eatoast.min.css" rel="stylesheet" type="text/css" /> --}}
         <link rel="stylesheet" href="{{URL::asset('core/public/js/timeglider')}}/css/jquery-ui-1.10.3.custom.css" type="text/css" charset="utf-8">
         <link rel="stylesheet" href="{{URL::asset('core/public/js/timeglider')}}/timeglider/Timeglider.css" type="text/css" charset="utf-8">
         <link rel="stylesheet" href="{{URL::asset('core/public/js/timeglider')}}/timeglider/timeglider.datepicker.css" type="text/css" charset="utf-8">
@@ -65,6 +66,8 @@
       <script src="{{asset('core/public/js/timeglider/timeglider/timeglider.timeline.widget.js')}}" type="text/javascript" charset="utf-8"></script>
       <script src="{{asset('core/public/js/timeglider/timeglider/timeglider.datepicker.js')}}" type="text/javascript" charset="utf-8"></script>
 
+      <script src="{{asset('core/public/js/plugin/jquery.balloon.min.js')}}"></script>
+      <script src="{{asset('core/public/js/plugin/jquery.notify.js')}}"></script>
       <script src="{{asset('core/public/js/fonctions_base.js')}}"></script>
       <script src="{{asset('core/public/js/gos.js')}}"></script>
       <!-- <script src="{{asset('core/public/js/plugin/jquery.cookie.js')}}"></script> -->

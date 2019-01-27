@@ -1,8 +1,8 @@
 //################################ CLASSE ET SETTERS ####################################
 function Troupeau()
 {
-  this.espece = "caprins";
-  this.effectif = 45;
+  this.espece;
+  this.effectif;
   this.parcelle = "chevrerie";
   this.infestation = [];
   this.sinfeste(5);

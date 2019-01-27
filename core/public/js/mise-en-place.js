@@ -70,13 +70,42 @@ function affichePlanning() {
 }
 
 function verifieSaisie() {
+  var saisie_ok = true;
+  // tester TROUPEAU
+  var troupeau_ok = true;
+  troupeau_ok = (troupeau.espece == undefined) ? false : true;
+  troupeau_ok = (troupeau.effectif === "") ? false : true;
+  troupeau_ok = (troupeau.effectif == 0) ? false : true;
+  if(!troupeau_ok) {
+    dialogue("Attention !", "Le troupeau n'est pas correctement défini", "red", $("input[name='effectif']").val('').focus());
+    return false;
+  }
+  // tester foncier
+  saisie_ok = verifieFoncier();
+
+  return saisie_ok;
+}
+
+function verifieFoncier() {
+  var foncier_ok = true;
   // pas de ligne remplie:
   if(foncier.patures.length == 0) {
     dialogue("Attention !", "Il faut définir le parcellaire", "red", $("input[name='pature_nom_0']").focus());
-    return false;
+    foncier_ok = false;
   }
   else {
+    foncier.patures.forEach( function(pature, index) {
+      if(pature.superficie == undefined) {
+        dialogue("Attention !", "Cette pature n'a pas de superficie", "red", $("input[name='pature_superficie_"+index+"']").focus());
+        foncier_ok = false;
+      }
+      if(pature.histoire == undefined) {
+        dialogue("Attention !", "La nature de ce pâturage n'est pas définie", "red", $("input[name='pature_histoire_"+index+"']").focus());
+        foncier_ok = false;
+      }
+    });
   }
+  return foncier_ok;
 }
 
 function start() {
@@ -166,13 +195,8 @@ var premiere_ligne = "<div class='categories-contenu-ligne'>"
 $("#ajout").on('click',function() {
   var nb_lignes = $("#liste_patures").children().length; // Nombre de lignes existantes
   var nouvelle_ligne = premiere_ligne.replace(/_0/g, "_"+nb_lignes); //création d'une nouvelle ligne en remplaçant l'indice
-
-  $(nouvelle_ligne).appendTo($("#liste_patures")); // ajout de cette ligne en fin de liste
-  $.each(patures_types, function(clef, objet) { // ajout de la liste déroulante
-    var type = '<option value="'+clef+'">'+objet.nom+'</option>';
-    $("#pature_histoire_"+nb_lignes).append(type);
-  });
-  $("#liste_patures div:last-child").children().focus()[0].focus();
+  nouvelleLigne(nb_lignes);
+  $("input[name = 'pature_nom_"+nb_lignes+"']").focus();
 })
 //################## SUPPRESSION D'UNE LIGNE PARCELLE EN CLIQUANT SUR EFFACE ###
 $(".categories-contenu-patures").on('click', '.efface-ligne', function(ligne) {
@@ -230,7 +254,6 @@ function modifTroupeau(id_input, value) {
    "nom" : id_input,
    "valeur" : value
  };
-console.log(value);
   $.ajax({
      type:'POST',
      url:url,
@@ -250,31 +273,37 @@ console.log(value);
 $(".image_troupeau").on('click', function(espece){ // choix de l'espece
   modifTroupeau("espece", espece.currentTarget.id);
   troupeau.espece = espece.currentTarget.id;
+  troupeau.maj_aspect_troupeau();
   $(".image_troupeau").removeClass('image_troupeau-choisi');
   $("#"+espece.currentTarget.id).addClass('image_troupeau-choisi');
-  $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg");
+  $("input[name='effectif']").trigger('mouseover').focus();
+
+  // $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg");
 });
 // Choix de l'effectif
 $("input[name='effectif']").on('change', function(effectif){ // choix de l'effectif
   modifTroupeau("effectif", effectif.currentTarget.value);
   troupeau.effectif = effectif.currentTarget.value;
+
+  $(".categories-infestation").trigger('mouseover').css('border', 'solid white');
 });
  // choix du niveau d'infestation
 $(".feu").on('click', function(infestation){
   var nb_strongles = 0;
   switch (infestation.currentTarget.id) {
-	case 'rouge':
+	case 'élevé':
 		nb_strongles = 10;
 		break;
-	case 'orange':
+	case 'moyen':
 		nb_strongles = 5;
 		break;
-	case 'vert':
+	case 'faible':
 		nb_strongles = 0;
 		break;
 	default:
 		alert('Problème');
   }
+  $(".categories-infestation").css('border', 'none');
   $('.feu').removeClass('feu-choisi'); // annule les couleurs
   $('#'+infestation.currentTarget.id).addClass('feu-choisi'); // applique la couleur
 
@@ -287,8 +316,8 @@ $(".feu").on('click', function(infestation){
 //################################### AJOUT DES PATURES ########################
 // ajout du nom
 $(".categories-contenu-patures").on('change', '.pature-nom', function(pature) {
-
   var id = pature.currentTarget.name.split("_")[2]; // id de la pature
+  $("input[name = 'pature_nom_"+id+"']").hideBalloon();
   setPatureNom(id, pature.currentTarget.value);
   var pature_superficie = 'pature_superficie_'+id // creation d'une variable intermédiaire
   $('input[name='+pature_superficie+']').attr('disabled', false).focus(); // activation du champs superficie et focus
@@ -300,12 +329,17 @@ $(".categories-contenu-patures").on('change', '.pature-superficie', function(sup
   foncier.patures[parseInt(id)].superficie = superficie.currentTarget.value;
   var pature_histoire = '#pature_histoire_'+id;
   $(pature_histoire).attr('disabled', false).focus();
-
 });
 // Ajout de l'histoire sous forme d'un objet patures_types
 $(".categories-contenu-patures").on('click change', '.pature-histoire', function(histoire){
   var id = histoire.currentTarget.name.split("_")[2];
-  setPatureParcelles(id, foncier, histoire.currentTarget.value);
+  if(foncier.patures[id] == undefined) { // cas où le nom du paturage n'a pas été renseigné
+    $("input[name = 'pature_nom_"+id+"']").showBalloon({html:true, contents: "<h5>il faut d'abord donner un nom au pâturage</h5>"});
+    $("input[name = 'pature_nom_"+id+"']").focus();
+  }
+  else {
+    setPatureParcelles(id, histoire.currentTarget.value);
+  }
 });
 
 //########################### DIVISER LES PARCELLES ############################

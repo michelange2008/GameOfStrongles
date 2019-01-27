@@ -1,3 +1,59 @@
+//############################### ALERTES TROUPEAU #############################
+function information(texte) {
+  $.notify({
+    type: "success",
+    position: 5,
+    duration: 3000,
+    message: texte
+  });
+}
+function alerte_troupeau_chevrerie(){
+  $("#troupeau").css('background-image', 'url('+url_svg+'foin.svg)');
+  $.notify({
+    type: "success",
+    position: 5,
+    duration: 3000,
+    message: "Et voilà ! </br>Le troupeau est rentré."
+  });
+}
+
+function alerte_troupeau_dehors() {
+  $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
+  $.notify({
+    type: "warn",
+    position: 5,
+    duration: 3000,
+    message: "Le troupeau est sorti du pré.</br>Mais que fait le chien ?"
+  });
+}
+
+function alerte_troupeau_mort(){
+  $.notify({
+    type: "error",
+    position: 5,
+    duration: 8000,
+    message: "Désolé !.</br>Mais le troupeau est mort ?"
+  });
+}
+
+//################### balloon ####################################################
+$("input[name='effectif']").balloon({
+  tipSize: 12,
+  position: "bottom",
+  html: true,
+  contents: "<h5>Indiquez le nombre d'animaux dans le troupeau</h5>"});
+
+$(".categories-troupeau").balloon({
+  offsetY: -10,
+  tipSize: 0,
+  position: "bottom",
+  html: true,
+  contents: "<h5>Choisissez le type de troupeau</h5>"});
+$(".categories-infestation").balloon({html: true, contents:"indiquez le niveau d'infestation", css:{fontSize : '1rem'}});
+$("#faible").balloon({position: "left", css:{fontSize : '1rem'}});
+$("#moyen").balloon({position: "left", css:{fontSize : '1rem'}});
+$("#élevé").balloon({position: "left", css:{fontSize : '1rem'}});
+
 //############### Problème de saisie #######################################
 function dialogue(titre,texte, couleur, fonction) {
   $.confirm({
@@ -99,58 +155,3 @@ $("#pas_de_temps").on('click', function() {
     }
   });
 });
-
-//############################### ALERTES TROUPEAU #############################
-function alerte_troupeau_dehors(){
-  $("#troupeau").css('background-image', 'url('+url_svg+'chien.svg)');
-  $.alert({
-    animation : 'zoom',
-    buttons: {
-          Ok: function(){
-          },
-          Ok : {
-            keys: ['enter', 'esc']
-          }
-      },
-    theme: 'dark',
-    title: 'Attention !',
-    content: 'Le troupeau est sorti du pré !</br> Mais que fait le chien ?',
-    type: 'red',
-  });
-}
-
-function alerte_troupeau_chevrerie(){
-  $("#troupeau").css('background-image', 'url('+url_svg+'foin.svg)');
-  $.alert({
-    animation : 'zoom',
-    escapeKey: 'Ok',
-      buttons: {
-          Ok: function(){
-          },
-          Ok : {
-            keys: ['enter', 'esc']
-          }
-      },
-    theme: 'dark',
-    title: 'Et voilà...',
-    content: 'Le troupeau est rentré dans la chevrerie !',
-    type: 'green',
-  });
-}
-
-function alerte_troupeau_mort(){
-  $.confirm({
-    animation : 'zoom',
-      title: 'Désolé !',
-      content: 'Le troupeau est mort',
-      type: 'red',
-      typeAnimated: true,
-      buttons: {
-          fermer: function () {
-          },
-          fermer : {
-            keys: ['enter', 'esc']
-          }
-      }
-  });
-}

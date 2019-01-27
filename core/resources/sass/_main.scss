@@ -31,6 +31,9 @@ input{
 }
 #main {
   margin-left: 0;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-column-gap: 10px;
 }
 .main-titre {
   margin: 5px 0;
@@ -54,7 +57,7 @@ input{
 }
 
 .bandeau {
-  height: 11vh;
+  height: 4.5rem;
   border: 0 !important;
   background-image: linear-gradient(to right, black, darkgrey);
   display: flex;
