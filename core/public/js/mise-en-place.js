@@ -276,17 +276,33 @@ $(".image_troupeau").on('click', function(espece){ // choix de l'espece
   troupeau.maj_aspect_troupeau();
   $(".image_troupeau").removeClass('image_troupeau-choisi');
   $("#"+espece.currentTarget.id).addClass('image_troupeau-choisi');
-  $("input[name='effectif']").trigger('mouseover').focus();
+  $(".categories-infestation").trigger('mouseover').css('border', 'solid white');
 
   // $("#troupeau-image").attr('src', location+"public/svg/"+troupeau.espece+".svg");
 });
-// Choix de l'effectif
-$("input[name='effectif']").on('change', function(effectif){ // choix de l'effectif
-  modifTroupeau("effectif", effectif.currentTarget.value);
-  troupeau.effectif = effectif.currentTarget.value;
-
-  $(".categories-infestation").trigger('mouseover').css('border', 'solid white');
+// REmise à zéro de l'effectif quand on clique dessus
+$("input[name='effectif']").on('click', function(event) {
+  $(this).val("");
 });
+// Choix de l'effectif
+$("input[name='effectif']").on('keypress', function(effectif){ // choix de l'effectif
+  if(effectif.which == 13) {
+    // modifTroupeau("effectif", effectif.currentTarget.value);
+    troupeau.effectif = effectif.currentTarget.value;
+  }
+});
+// cas ou le contenu de effectif n'est pas un Nombre
+$("input[name='effectif']").on('blur', function(effectif) {
+  if(effectif.currentTarget.value == "") {
+    $.notify({
+      type: "error",
+      position: 5,
+      duration: 8000,
+      message: "Attention !</br>Il faut saisir un chiffre!"
+    });
+  }
+});
+
  // choix du niveau d'infestation
 $(".feu").on('click', function(infestation){
   var nb_strongles = 0;
@@ -306,6 +322,7 @@ $(".feu").on('click', function(infestation){
   $(".categories-infestation").css('border', 'none');
   $('.feu').removeClass('feu-choisi'); // annule les couleurs
   $('#'+infestation.currentTarget.id).addClass('feu-choisi'); // applique la couleur
+  $("input[name='effectif']").trigger('mouseover').focus();
 
   modifTroupeau("infestation",nb_strongles);
   troupeau.setStrongles(nb_strongles);

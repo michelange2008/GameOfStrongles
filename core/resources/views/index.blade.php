@@ -10,26 +10,7 @@
       <img src="public/haemonchus-petit.png" alt="haemonchus contortus">
     </div>
   </div>
-  <div class="categories">
-    <h5 class="categories-titres" >Troupeau</h5>
-    <div class="categories-contenu-troupeau">
-        <div class="categories-troupeau">
-          @foreach ($liste_espece as $espece)
-            <img id={{$espece->nom_court()}} class='image_troupeau' src="public/svg/{{$espece->icone()}}" alt="{{$espece->nom()}}" title="{{$espece->nom_court()}}">
-          @endforeach
-        </div>
-        <div class="categories-effectif">
-          <input placeholder="effectif" name="effectif" type="number" value="">
-        </div>
-        <div class="categories-infestation">
-          <p>Niveau d'infestation</p>
-          <div id="faible" class="feu vert" title="troupeau non infesté (clic pour valider)"></div>
-          <div id="moyen" class="feu orange" title="troupeau avec une infestation modérée (clic pour valider)"></div>
-          <div id="élevé" class="feu rouge" title="troupeau infesté (clic pour valider)"></div>
-        </div>
-    </div>
-  </div>
-  <div class="categories">
+  <div id="saison" class="categories">
     <h5 class="categories-titres">Saison de paturage</h5>
     <div class="categories-saison">
       <div id="slider"></div>
@@ -40,10 +21,29 @@
     </div>
   </div>
   <div class="categories">
+    <h5 class="categories-titres" >Troupeau</h5>
+    <div class="categories-contenu-troupeau">
+        <div class="categories-troupeau">
+          @foreach ($liste_espece as $espece)
+            <img id={{$espece->nom_court()}} class='image_troupeau' src="public/svg/{{$espece->icone()}}" alt="{{$espece->nom()}}" title="{{$espece->nom_court()}}">
+          @endforeach
+        </div>
+        <div class="categories-infestation">
+          <p>Niveau d'infestation</p>
+          <div id="faible" class="feu vert" title="troupeau non infesté (clic pour valider)"></div>
+          <div id="moyen" class="feu orange" title="troupeau avec une infestation modérée (clic pour valider)"></div>
+          <div id="élevé" class="feu rouge" title="troupeau infesté (clic pour valider)"></div>
+        </div>
+        <div class="categories-effectif">
+          <input placeholder="effectif" name="effectif" type="number" value="" min=1>
+        </div>
+    </div>
+  </div>
+  <div class="categories">
     <h5 class=" categories-titres" >Patures</h5>
     <div class="categories-contenu-patures">
       <div id="liste_patures" class="sous-categories gauche">
-    
+
       </div>
       <div class="sous-categories droite">
         <div id="efface" class="btn btn-lg btn-danger rounded-0 demo">

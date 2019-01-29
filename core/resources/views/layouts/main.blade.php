@@ -84,5 +84,6 @@
       <script src="{{asset('core/public/js/plugin/jquery-confirm.min.js')}}"></script>
       <script src="{{asset('core/public/js/plugin/draggabilly.pkgd.min.js')}}"></script>
       <script src="{{asset('core/public/js/plugin/masonry.pkgd.min.js')}}"></script>
+      <script src="{{asset('core/public/js/plugin/notify.min.js')}}"></script>
     </body>
 </html>

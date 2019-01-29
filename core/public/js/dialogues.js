@@ -37,16 +37,23 @@ function alerte_troupeau_mort(){
 }
 
 //################### balloon ####################################################
+$('#slider').balloon({
+  tipSize: 12,
+  position: "top",
+  html: true,
+  contents: "<h5>Définissez la période pâturage en déplaçant la barre verte</h5><h5>ou une de ses extémités<h5>"
+});
+
 $("input[name='effectif']").balloon({
   tipSize: 12,
-  position: "bottom",
+  position: "top",
   html: true,
   contents: "<h5>Indiquez le nombre d'animaux dans le troupeau</h5>"});
 
 $(".categories-troupeau").balloon({
   offsetY: -10,
   tipSize: 0,
-  position: "bottom",
+  position: "top",
   html: true,
   contents: "<h5>Choisissez le type de troupeau</h5>"});
 $(".categories-infestation").balloon({html: true, contents:"indiquez le niveau d'infestation", css:{fontSize : '1rem'}});
